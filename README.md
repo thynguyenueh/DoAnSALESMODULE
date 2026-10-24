@@ -1,4 +1,4 @@
-# ĐỒ ÁN MÔN HỌC / THỰC TẬP - SALES MODULE
+# ĐỒ ÁN THỰC TẬP - SALES MODULE
 
 - **Sinh viên thực hiện:** Nguyễn Ngô Bảo Thy
 - **Mã số sinh viên:** 31231021131
