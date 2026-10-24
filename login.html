@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Đăng nhập Hệ thống Quản lý">
+
+    <title>Sales Module - Đăng nhập</title>
+
+    <!-- Font Awesome CDN (Tránh lỗi ô vuông/tròn trống) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Font Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SB Admin 2 CSS -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            /* Tone màu xanh tím truyền thống của SB Admin 2 */
+            background-color: #4e73df;
+            background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2) !important;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+
+        .bg-login-image-custom {
+            /* Hình minh họa tông màu xanh tím đồng bộ */
+            background: linear-gradient(135deg, rgba(78, 115, 223, 0.85), rgba(34, 74, 190, 0.95)),
+                        url('https://images.unsplash.com/photo-1556742049-0a670f4a4591?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .input-group-custom {
+            position: relative;
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group-custom .icon-left {
+            position: absolute;
+            left: 1.1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            color: #b7b9cc;
+            font-size: 1rem;
+            transition: color 0.2s ease;
+        }
+
+        .input-group-custom .form-control {
+            border-radius: 10rem !important;
+            padding: 1.5rem 2.5rem 1.5rem 2.8rem !important;
+            font-size: 0.85rem;
+            border: 1px solid #d1d3e2;
+        }
+
+        .input-group-custom .form-control:focus {
+            border-color: #bac8f3;
+            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+        }
+
+        .input-group-custom .form-control:focus ~ .icon-left {
+            color: #4e73df;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            cursor: pointer;
+            color: #b7b9cc;
+        }
+
+        .toggle-password:hover {
+            color: #4e73df;
+        }
+
+        .btn-primary-custom {
+            background-color: #4e73df;
+            border-color: #4e73df;
+            color: #ffffff;
+            border-radius: 10rem !important;
+            padding: 0.75rem 1rem !important;
+            font-size: 0.85rem;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: #2e59d9;
+            border-color: #2653d4;
+            color: #ffffff;
+        }
+
+        .brand-icon-box {
+            width: 65px;
+            height: 65px;
+            background-color: rgba(78, 115, 223, 0.1);
+            color: #4e73df;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card login-card my-5">
+                    <div class="card-body p-0">
+                        <div class="row no-gutters">
+                            
+                            <!-- Cột Trái: Banner trang trí Tone Primary -->
+                            <div class="col-lg-6 d-none d-lg-flex bg-login-image-custom">
+                                <i class="fa-solid fa-boxes-packing fa-4x mb-4"></i>
+                                <h3 class="font-weight-bold">Sales Module</h3>
+                                <p class="mb-0 small">Hệ thống Quản lý Đơn hàng & Bán hàng</p>
+                            </div>
+
+                            <!-- Cột Phải: Form Đăng nhập -->
+                            <div class="col-lg-6">
+                                <div class="p-4 p-sm-5">
+                                    <div class="text-center mb-4">
+                                        <div class="brand-icon-box">
+                                            <i class="fa-solid fa-user-shield"></i>
+                                        </div>
+                                        <h1 class="h4 text-gray-900 font-weight-bold mb-1">Đăng nhập quản trị</h1>
+                                        <p class="text-muted small">Nhập thông tin tài khoản để truy cập hệ thống</p>
+                                    </div>
+
+                                    <form class="user" id="login-form">
+                                        <!-- Tên đăng nhập -->
+                                        <div class="input-group-custom">
+                                            <i class="fa-solid fa-user icon-left"></i>
+                                            <input type="text" class="form-control"
+                                                id="login-username" placeholder="Tên đăng nhập"
+                                                autocomplete="username" required>
+                                        </div>
+
+                                        <!-- Mật khẩu -->
+                                        <div class="input-group-custom">
+                                            <i class="fa-solid fa-lock icon-left"></i>
+                                            <input type="password" class="form-control"
+                                                id="login-password" placeholder="Mật khẩu"
+                                                autocomplete="current-password" required>
+                                            <i class="fa-solid fa-eye toggle-password" id="togglePassword"></i>
+                                        </div>
+
+                                        <!-- Thông báo lỗi -->
+                                        <div id="login-error" class="alert alert-danger py-2 d-none" role="alert">
+                                            <i class="fa-solid fa-circle-exclamation me-1"></i> <span id="error-text"></span>
+                                        </div>
+
+                                        <!-- Nút Đăng nhập -->
+                                        <button class="btn btn-primary-custom btn-block mt-4" id="login-submit" type="submit">
+                                            Đăng nhập
+                                        </button>
+                                    </form>
+
+                                    <hr class="my-4">
+
+                                    <div class="text-center">
+                                        <span class="small text-muted">Nguyễn Ngô Bảo Thy &copy; 2026</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS Libraries -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <script>
+        // Xử lý Ẩn/Hiện mật khẩu
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('login-password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Xử lý Xát thực Đăng nhập
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const errorText = document.getElementById('error-text');
+        const loginButton = document.getElementById('login-submit');
+
+        loginForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            loginError.classList.add('d-none');
+            loginButton.disabled = true;
+            loginButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Đang xử lý...';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('login-username').value.trim(),
+                        password: document.getElementById('login-password').value
+                    })
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Đăng nhập không thành công.');
+
+                const requestedNext = new URLSearchParams(window.location.search).get('next');
+                const nextPath = requestedNext && requestedNext.startsWith('/') && !requestedNext.startsWith('//')
+                    ? requestedNext
+                    : '/index.html';
+                window.location.replace(nextPath);
+            } catch (error) {
+                errorText.textContent = error.message;
+                loginError.classList.remove('d-none');
+            } finally {
+                loginButton.disabled = false;
+                loginButton.innerHTML = 'Đăng nhập';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

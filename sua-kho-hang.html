@@ -1,0 +1,121 @@
+<script src="vendor/jquery/jquery.min.js"></script><script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script><script src="js/sb-admin-2.min.js"></script><script src="js/sidebar-account.js"></script><script src="js/vietnam-address.js"></script>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Chỉnh Sửa Kho Hàng</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html"><div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div><div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div></a>
+            <hr class="sidebar-divider my-0"><li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a></li><hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item active"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="pos-tao-don.html"><i class="fas fa-fw fa-shopping-cart"></i><span>Tạo Đơn Bán Hàng</span></a></li><li class="nav-item"><a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a></li><li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li><li class="nav-item"><a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a></li>
+            <hr class="sidebar-divider d-none d-md-block"><div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column"><div id="content">
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button><h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5></nav>
+            <div class="container-fluid">
+                <div class="mb-4"><h1 class="h3 mb-1 text-gray-800">Chỉnh sửa kho hàng</h1><p class="text-muted mb-0">Cập nhật thông tin kho rồi chọn Lưu thay đổi.</p></div>
+                <div id="form-error" class="alert alert-danger d-none" role="alert"></div>
+                <div class="card shadow mb-4"><div class="card-header py-3"><h2 class="h6 m-0 font-weight-bold text-primary">Thông tin kho hàng</h2></div><div class="card-body">
+                    <form id="warehouse-form">
+                        <div class="form-row">
+                            <div class="form-group col-md-6"><label for="warehouse-code">Mã kho <span class="text-danger">*</span></label><input id="warehouse-code" name="code" class="form-control" maxlength="250" required></div>
+                            <div class="form-group col-md-6"><label for="warehouse-name">Tên kho <span class="text-danger">*</span></label><input id="warehouse-name" name="name" class="form-control" maxlength="250" required></div>
+                            <div class="form-group col-md-6"><label for="address-city">Tỉnh / thành phố</label><select id="address-city" class="form-control"><option value="">Đang tải danh sách...</option></select></div>
+                            <div class="form-group col-md-6"><label for="address-ward">Phường / xã / đặc khu</label><select id="address-ward" class="form-control" disabled><option value="">Chọn tỉnh / thành phố trước</option></select></div>
+                            <div class="form-group col-md-6"><label for="warehouse-location-detail">Địa chỉ chi tiết</label><input id="warehouse-location-detail" class="form-control" maxlength="150" placeholder="Số nhà, đường, khu vực..."></div>
+                            <div class="form-group col-md-6"><label for="warehouse-status">Trạng thái</label><select id="warehouse-status" name="isactive" class="form-control"><option value="true">Hoạt động</option><option value="false">Ngưng hoạt động</option></select></div>
+                        </div>
+                        <div class="d-flex justify-content-end"><a class="btn btn-light mr-2" href="quan-ly-kho.html">Hủy</a><button id="save-warehouse" class="btn btn-primary" type="submit"><i class="fas fa-save mr-1"></i>Lưu thay đổi</button></div>
+                    </form>
+                </div></div>
+            </div>
+        </div><footer class="sticky-footer bg-white"><div class="container my-auto text-center"><span>Quản Lý Bán Hàng 2026</span></div></footer></div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script><script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script><script src="js/sb-admin-2.min.js"></script><script src="js/vietnam-address.js"></script>
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+        const warehouseId = new URLSearchParams(window.location.search).get('id');
+        const form = document.getElementById('warehouse-form');
+        const errorBox = document.getElementById('form-error');
+        const saveButton = document.getElementById('save-warehouse');
+        const citySelect = document.getElementById('address-city');
+        const wardSelect = document.getElementById('address-ward');
+        const detailInput = document.getElementById('warehouse-location-detail');
+        let administrativeUnits = [];
+        const addressReady = VietnamAddress.loadUnits().then(units => {
+            administrativeUnits = units;
+            VietnamAddress.setOptions(citySelect, units, 'Chọn tỉnh / thành phố');
+            citySelect.addEventListener('change', () => VietnamAddress.fillWardSelect(units, citySelect, wardSelect));
+        }).catch(error => {
+            console.error('Không tải được danh sách địa giới hành chính:', error);
+            errorBox.textContent = error.message;
+            errorBox.classList.remove('d-none');
+            saveButton.disabled = true;
+        });
+        async function api(url, options) {
+            const response = await fetch(`${API_BASE_URL}${url}`, options);
+            if (!(response.headers.get('content-type') || '').includes('application/json')) throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+            const result = await response.json();
+            if (!response.ok || !result.success) throw new Error(result.message || 'Yêu cầu không thành công.');
+            return result;
+        }
+        async function loadWarehouse() {
+            if (!/^\d+$/.test(warehouseId || '')) throw new Error('Mã kho không hợp lệ.');
+            await addressReady;
+            if (!administrativeUnits.length) return;
+            const result = await api('/api/catalogs/warehouses');
+            const warehouse = result.data.find(item => String(item.id) === warehouseId);
+            if (!warehouse) throw new Error('Không tìm thấy kho hàng.');
+            form.elements.code.value = warehouse.code || '';
+            form.elements.name.value = warehouse.name || '';
+            const address = VietnamAddress.parseAddress(warehouse.location, administrativeUnits);
+            citySelect.value = String(address.cityCode || '');
+            VietnamAddress.fillWardSelect(administrativeUnits, citySelect, wardSelect, address.wardCode);
+            detailInput.value = address.detail;
+            form.elements.isactive.value = String(warehouse.isactive);
+        }
+        form.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+            await addressReady;
+            if (!administrativeUnits.length) return;
+            saveButton.disabled = true;
+            errorBox.classList.add('d-none');
+            const body = Object.fromEntries(new FormData(form).entries());
+            body.isactive = body.isactive === 'true';
+            body.location = VietnamAddress.formatAddress(detailInput.value, citySelect, wardSelect);
+            try {
+                await api(`/api/catalogs/warehouses/${encodeURIComponent(warehouseId)}`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+                });
+                window.location.href = 'quan-ly-kho.html?updated=1';
+            } catch (error) {
+                console.error('Không thể cập nhật kho hàng:', error);
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+            } finally {
+                saveButton.disabled = false;
+            }
+        });
+        loadWarehouse().catch(error => {
+            console.error('Không tải được kho hàng:', error);
+            errorBox.textContent = error.message;
+            errorBox.classList.remove('d-none');
+            saveButton.disabled = true;
+        });
+    </script>
+</body>
+</html>

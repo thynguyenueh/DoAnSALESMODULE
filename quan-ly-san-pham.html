@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản Lý Sản Phẩm - Sales Module</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <link href="css/table-tools.css" rel="stylesheet">
+    <style>
+        .product-filter-menu {
+            width: 280px;
+            max-width: min(280px, calc(100vw - 2rem));
+            margin-top: .5rem;
+            padding: .875rem !important;
+            border: 1px solid #e5eaf2;
+            border-radius: .75rem;
+            background: #fff;
+            box-shadow: 0 .5rem 1.25rem rgba(31, 45, 61, .12);
+            z-index: 1050;
+        }
+        .product-filter-menu label {
+            margin-bottom: .35rem;
+            color: #596579;
+            font-size: .75rem;
+            font-weight: 700;
+        }
+        .product-filter-menu .form-control {
+            min-height: 2.4rem;
+            border-color: #dce3ed;
+            border-radius: .45rem;
+        }
+        .product-filter-trigger {
+            width: 1.75rem;
+            height: 1.75rem;
+            margin-left: .15rem;
+            border-radius: .45rem;
+            color: #718096;
+            vertical-align: middle;
+        }
+        .product-filter-trigger:hover,
+        .product-filter-trigger:focus {
+            background: #edf3ff;
+            color: #4e73df;
+            text-decoration: none;
+        }
+        .product-filter-trigger.text-primary {
+            background: #eaf0ff;
+            color: #3b5fc0 !important;
+        }
+        .product-filter-menu .product-clear-filters {
+            display: block;
+            width: 100%;
+            margin-top: .75rem !important;
+            padding: .65rem 0 0;
+            border: 0;
+            border-top: 1px solid #edf0f4;
+            border-radius: 0;
+            background: transparent;
+            color: #4e73df;
+            text-align: left;
+            font-weight: 700;
+        }
+        .product-filter-menu .product-clear-filters:hover:not(:disabled) {
+            color: #3456b4;
+        }
+        .product-filter-menu .product-clear-filters:disabled {
+            color: #a0a8b5;
+        }
+        .product-search-box {
+            width: min(100%, 360px);
+        }
+        .stock-badge-clickable {
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .stock-badge-clickable:hover {
+            transform: scale(1.05);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Báo Cáo</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-kho.html">
+                    <i class="fas fa-fw fa-boxes"></i>
+                    <span>Quản Lý Kho Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-khach-hang.html">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Quản Lý Khách Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="quan-ly-san-pham.html">
+                    <i class="fas fa-fw fa-box-open"></i>
+                    <span>Quản Lý Sản Phẩm</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="danh-sach-don-hang.html">
+                    <i class="fas fa-fw fa-list-alt"></i>
+                    <span>Quản Lý Đơn Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="thu-chi.html">
+                    <i class="fas fa-fw fa-money-bill-wave"></i>
+                    <span>Phiếu Thu</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="tra-hang.html">
+                    <i class="fas fa-fw fa-undo"></i>
+                    <span>Trả Hàng / Phiếu Chi</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+
+                <!-- Page Content -->
+                <div class="container-fluid">
+                    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4">
+                        <div>
+                            <h1 class="h3 mb-1 text-gray-800">Quản Lý Sản Phẩm</h1>
+                            <p class="text-muted small mb-0">Theo dõi danh mục sản phẩm, mức tồn kho khả dụng và thao tác nhập kho nhanh chóng.</p>
+                        </div>
+                        <div class="d-flex flex-wrap mt-3 mt-sm-0">
+                            <button type="button" class="btn btn-outline-primary mr-2 mb-2 mb-sm-0" id="btn-quick-import">
+                                <i class="fas fa-plus-circle mr-1"></i> Lập phiếu nhập kho
+                            </button>
+                            <a class="btn btn-primary mb-2 mb-sm-0" href="them-san-pham.html">
+                                <i class="fas fa-plus mr-1"></i> Thêm sản phẩm
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div id="page-success" class="alert alert-success alert-dismissible fade show d-none" role="status">
+                        <span id="page-success-text"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div id="page-error" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+                        <span id="page-error-text"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    </div>
+
+                    <!-- Overview KPI Cards -->
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body py-2">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tổng sản phẩm</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="card-total-products">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-boxes fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body py-2">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Đang hoạt động</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="card-active-products">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body py-2">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tổng tồn khả dụng</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="card-total-stock">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-warehouse fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-3">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body py-2">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Hết hàng (Tồn = 0)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="card-out-of-stock">0</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-exclamation-triangle fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Table Card -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+                            <h2 class="h6 m-0 font-weight-bold text-primary">Danh sách sản phẩm</h2>
+                            <div class="d-flex flex-column flex-sm-row align-items-sm-center mt-2 mt-md-0">
+                                <div class="input-group input-group-sm product-search-box mr-sm-3 mb-2 mb-sm-0">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-search"></i></span></div>
+                                    <input id="product-search" type="search" class="form-control" placeholder="Tìm theo mã, tên, trạng thái..." aria-label="Tìm sản phẩm">
+                                </div>
+                                <div class="small text-muted text-nowrap">Hiển thị: <span id="product-count">0 / 0</span></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover table-sm mb-0" data-table-tools="columns" width="100%">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Mã sản phẩm
+                                                <div class="dropdown d-inline-block ml-1">
+                                                    <button class="btn btn-sm btn-link p-0 product-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc mã sản phẩm"><i class="fas fa-filter"></i></button>
+                                                    <div class="dropdown-menu p-3 product-filter-menu">
+                                                        <label for="filter-code">Mã sản phẩm</label>
+                                                        <input id="filter-code" type="search" class="form-control form-control-sm" placeholder="VD: SP001...">
+                                                        <button class="btn btn-sm btn-outline-secondary product-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>Tên sản phẩm
+                                                <div class="dropdown d-inline-block ml-1">
+                                                    <button class="btn btn-sm btn-link p-0 product-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc tên sản phẩm"><i class="fas fa-filter"></i></button>
+                                                    <div class="dropdown-menu p-3 product-filter-menu">
+                                                        <label for="filter-name">Tên sản phẩm</label>
+                                                        <input id="filter-name" type="search" class="form-control form-control-sm" placeholder="VD: Áo thun...">
+                                                        <button class="btn btn-sm btn-outline-secondary product-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="text-right">Tồn khả dụng
+                                                <div class="dropdown d-inline-block ml-1">
+                                                    <button class="btn btn-sm btn-link p-0 product-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc tồn kho"><i class="fas fa-filter"></i></button>
+                                                    <div class="dropdown-menu p-3 product-filter-menu" style="min-width: 200px;">
+                                                        <label for="filter-stock-level">Tình trạng tồn</label>
+                                                        <select id="filter-stock-level" class="form-control form-control-sm">
+                                                            <option value="">Tất cả</option>
+                                                            <option value="in_stock">Còn hàng (> 0)</option>
+                                                            <option value="out_of_stock">Hết hàng (= 0)</option>
+                                                        </select>
+                                                        <button class="btn btn-sm btn-outline-secondary product-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="text-center" style="width: 90px;">Nhập kho</th>
+                                            <th>Ngày tạo
+                                                <div class="dropdown d-inline-block ml-1">
+                                                    <button class="btn btn-sm btn-link p-0 product-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc ngày tạo"><i class="fas fa-filter"></i></button>
+                                                    <div class="dropdown-menu p-3 product-filter-menu" style="min-width: 230px;">
+                                                        <label for="filter-created-from">Từ ngày</label>
+                                                        <input id="filter-created-from" type="date" class="form-control form-control-sm mb-2">
+                                                        <label for="filter-created-to">Đến ngày</label>
+                                                        <input id="filter-created-to" type="date" class="form-control form-control-sm">
+                                                        <button class="btn btn-sm btn-outline-secondary product-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>Cập nhật lần cuối
+                                                <div class="dropdown d-inline-block ml-1">
+                                                    <button class="btn btn-sm btn-link p-0 product-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc ngày cập nhật"><i class="fas fa-filter"></i></button>
+                                                    <div class="dropdown-menu p-3 product-filter-menu" style="min-width: 230px;">
+                                                        <label for="filter-updated-from">Từ ngày</label>
+                                                        <input id="filter-updated-from" type="date" class="form-control form-control-sm mb-2">
+                                                        <label for="filter-updated-to">Đến ngày</label>
+                                                        <input id="filter-updated-to" type="date" class="form-control form-control-sm">
+                                                        <button class="btn btn-sm btn-outline-secondary product-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>Trạng thái
+                                                <div class="dropdown d-inline-block ml-1">
+                                                    <button class="btn btn-sm btn-link p-0 product-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc trạng thái"><i class="fas fa-filter"></i></button>
+                                                    <div class="dropdown-menu p-3 product-filter-menu">
+                                                        <label for="filter-status">Trạng thái</label>
+                                                        <select id="filter-status" class="form-control form-control-sm">
+                                                            <option value="">Tất cả trạng thái</option>
+                                                            <option value="true">Hoạt động</option>
+                                                            <option value="false">Ngưng hoạt động</option>
+                                                        </select>
+                                                        <button class="btn btn-sm btn-outline-secondary product-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th class="text-nowrap" style="width: 140px;">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="product-rows">
+                                        <tr><td colspan="8" class="text-center text-muted py-4"><i class="fas fa-spinner fa-spin mr-1"></i> Đang tải dữ liệu sản phẩm...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto text-center">
+                    <span>Quản Lý Bán Hàng 2026</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+    <!-- Modal Lập Phiếu Nhập Kho -->
+    <div class="modal fade" id="inventory-modal" tabindex="-1" role="dialog" aria-labelledby="inventory-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="inventory-form">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5 font-weight-bold text-primary" id="inventory-modal-title">Lập phiếu nhập kho</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="inventory-modal-error" class="alert alert-danger d-none" role="alert"></div>
+                        <div class="form-group">
+                            <label for="inventory-docno">Mã phiếu nhập (tự sinh)</label>
+                            <input id="inventory-docno" class="form-control bg-light font-weight-bold text-primary" readonly required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-product">Sản phẩm <span class="text-danger">*</span></label>
+                            <select id="inventory-product" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-warehouse">Kho nhận <span class="text-danger">*</span></label>
+                            <select id="inventory-warehouse" class="form-control" required></select>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label for="inventory-quantity">Số lượng nhập <span class="text-danger">*</span></label>
+                            <input id="inventory-quantity" type="number" class="form-control" min="1" step="1" value="1" required placeholder="Nhập số lượng lớn hơn 0">
+                        </div>
+                        <p class="small text-muted mb-0">Phiếu nhập kho này sẽ tăng lượng tồn khả dụng của sản phẩm tại kho được chọn.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Hủy</button>
+                        <button class="btn btn-primary" id="submit-inventory" type="submit">
+                            <i class="fas fa-save mr-1"></i> Ghi nhận nhập kho
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chi Tiết Tồn Kho Theo Kho -->
+    <div class="modal fade" id="stock-detail-modal" tabindex="-1" role="dialog" aria-labelledby="stock-detail-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold text-primary" id="stock-detail-title">Chi tiết tồn kho sản phẩm</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <div class="h6 font-weight-bold mb-1" id="detail-product-name">-</div>
+                        <div class="small text-muted" id="detail-product-code">Mã: -</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm mb-0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Kho hàng</th>
+                                    <th class="text-right">Đã nhập</th>
+                                    <th class="text-right">Đã bán</th>
+                                    <th class="text-right">Tồn khả dụng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail-stock-rows"></tbody>
+                            <tfoot class="font-weight-bold bg-light">
+                                <tr>
+                                    <td>Tổng cộng</td>
+                                    <td class="text-right" id="detail-total-imported">0</td>
+                                    <td class="text-right" id="detail-total-sold">0</td>
+                                    <td class="text-right text-success" id="detail-total-available">0</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btn-import-from-detail">
+                        <i class="fas fa-plus mr-1"></i> Lập phiếu nhập cho sản phẩm này
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sidebar-account.js"></script>
+    <script src="js/table-tools.js"></script>
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+
+        let products = [];
+        let stockRecords = [];
+        let activeProducts = [];
+        let activeWarehouses = [];
+        let currentDetailProduct = null;
+
+        const productSearch = document.getElementById('product-search');
+        const filterCode = document.getElementById('filter-code');
+        const filterName = document.getElementById('filter-name');
+        const filterStockLevel = document.getElementById('filter-stock-level');
+        const filterCreatedFrom = document.getElementById('filter-created-from');
+        const filterCreatedTo = document.getElementById('filter-created-to');
+        const filterUpdatedFrom = document.getElementById('filter-updated-from');
+        const filterUpdatedTo = document.getElementById('filter-updated-to');
+        const filterStatus = document.getElementById('filter-status');
+
+        const pageSuccess = document.getElementById('page-success');
+        const pageSuccessText = document.getElementById('page-success-text');
+        const pageError = document.getElementById('page-error');
+        const pageErrorText = document.getElementById('page-error-text');
+
+        function showSuccess(msg) {
+            pageSuccessText.textContent = msg;
+            pageSuccess.classList.remove('d-none');
+            pageError.classList.add('d-none');
+        }
+
+        function showError(msg) {
+            pageErrorText.textContent = msg;
+            pageError.classList.remove('d-none');
+            pageSuccess.classList.add('d-none');
+        }
+
+        function esc(val) {
+            return String(val == null ? '' : val).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[char]));
+        }
+
+        function formatQuantity(val) {
+            return Number(val || 0).toLocaleString('vi-VN');
+        }
+
+        function normalizeText(val) {
+            return String(val == null ? '' : val)
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[đĐ]/g, 'd')
+                .toLocaleLowerCase('vi');
+        }
+
+        function formatDateFilter(val) {
+            if (!val) return '';
+            const d = new Date(val);
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        }
+
+        function generateFallbackDocNo() {
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const d = String(now.getDate()).padStart(2, '0');
+            const rand = Math.floor(1000 + Math.random() * 9000);
+            return `PN-${y}${m}${d}-${rand}`;
+        }
+
+        function getStockForProduct(productId) {
+            return stockRecords
+                .filter(s => Number(s.product_id) === Number(productId))
+                .reduce((total, s) => total + Number(s.available_stock || 0), 0);
+        }
+
+        function renderProducts() {
+            const query = normalizeText(productSearch.value.trim());
+            const codeVal = normalizeText(filterCode.value.trim());
+            const nameVal = normalizeText(filterName.value.trim());
+            const stockLevelVal = filterStockLevel.value;
+            const createdFromVal = filterCreatedFrom.value;
+            const createdToVal = filterCreatedTo.value;
+            const updatedFromVal = filterUpdatedFrom.value;
+            const updatedToVal = filterUpdatedTo.value;
+            const statusVal = filterStatus.value;
+
+            const filteredProducts = products.filter(product => {
+                const stock = getStockForProduct(product.id);
+                const codeNorm = normalizeText(product.code);
+                const nameNorm = normalizeText(product.name);
+                const statusNorm = product.isactive ? 'hoat dong' : 'ngung hoat dong';
+
+                if (query) {
+                    const searchable = `${codeNorm} ${nameNorm} ${statusNorm} ${product.createdat || ''} ${product.updatedat || ''}`;
+                    if (!searchable.includes(query)) return false;
+                }
+
+                if (codeVal && !codeNorm.includes(codeVal)) return false;
+                if (nameVal && !nameNorm.includes(nameVal)) return false;
+
+                if (stockLevelVal === 'in_stock' && stock <= 0) return false;
+                if (stockLevelVal === 'out_of_stock' && stock > 0) return false;
+
+                if (statusVal !== '' && String(product.isactive) !== statusVal) return false;
+
+                const createdDate = formatDateFilter(product.createdat);
+                if (createdFromVal && (!createdDate || createdDate < createdFromVal)) return false;
+                if (createdToVal && (!createdDate || createdDate > createdToVal)) return false;
+
+                const updatedDate = formatDateFilter(product.updatedat);
+                if (updatedFromVal && (!updatedDate || updatedDate < updatedFromVal)) return false;
+                if (updatedToVal && (!updatedDate || updatedDate > updatedToVal)) return false;
+
+                return true;
+            });
+
+            document.getElementById('product-count').textContent =
+                `${filteredProducts.length.toLocaleString('vi-VN')} / ${products.length.toLocaleString('vi-VN')}`;
+
+            document.getElementById('card-total-products').textContent = products.length.toLocaleString('vi-VN');
+            const activeCount = products.filter(p => p.isactive).length;
+            document.getElementById('card-active-products').textContent = activeCount.toLocaleString('vi-VN');
+
+            const totalStockAll = products.reduce((sum, p) => sum + getStockForProduct(p.id), 0);
+            document.getElementById('card-total-stock').textContent = totalStockAll.toLocaleString('vi-VN');
+
+            const outOfStockCount = products.filter(p => p.isactive && getStockForProduct(p.id) === 0).length;
+            document.getElementById('card-out-of-stock').textContent = outOfStockCount.toLocaleString('vi-VN');
+
+            const hasAnyFilter = Boolean(query || codeVal || nameVal || stockLevelVal || createdFromVal || createdToVal || updatedFromVal || updatedToVal || statusVal);
+            document.querySelectorAll('.product-clear-filters').forEach(btn => { btn.disabled = !hasAnyFilter; });
+
+            document.querySelectorAll('.product-filter-trigger').forEach(trigger => {
+                const menu = trigger.nextElementSibling;
+                const active = Boolean(menu && [...menu.querySelectorAll('input, select')].some(c => c.value));
+                trigger.classList.toggle('text-primary', active);
+            });
+
+            const tbody = document.getElementById('product-rows');
+            if (filteredProducts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center text-muted py-4">${hasAnyFilter ? 'Không tìm thấy sản phẩm phù hợp với bộ lọc.' : 'Chưa có sản phẩm nào.'}</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filteredProducts.map((p, idx) => {
+                const stock = getStockForProduct(p.id);
+                const stockClass = stock > 0 ? 'text-success font-weight-bold' : 'text-danger font-weight-bold';
+                const createdStr = p.createdat ? new Date(p.createdat).toLocaleString('vi-VN') : '-';
+                const updatedStr = p.updatedat ? new Date(p.updatedat).toLocaleString('vi-VN') : '-';
+
+                return `
+                    <tr>
+                        <td class="font-weight-bold text-primary">${esc(p.code)}</td>
+                        <td>${esc(p.name)}</td>
+                        <td class="text-right">
+                            <span class="stock-badge-clickable ${stockClass}" data-product-id="${p.id}" title="Nhấn để xem chi tiết tồn kho theo từng kho">
+                                ${formatQuantity(stock)}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-outline-primary btn-import-row" data-product-id="${p.id}" ${p.isactive ? '' : 'disabled title="Sản phẩm đã ngưng hoạt động"'} style="white-space: nowrap;">
+                                <i class="fas fa-plus mr-1"></i>Nhập
+                            </button>
+                        </td>
+                        <td class="small text-nowrap">${createdStr}</td>
+                        <td class="small text-nowrap">${updatedStr}</td>
+                        <td>
+                            <select class="form-control form-control-sm product-status-select" data-id="${p.id}" aria-label="Trạng thái ${esc(p.name)}">
+                                <option value="true" ${p.isactive ? 'selected' : ''}>Hoạt động</option>
+                                <option value="false" ${!p.isactive ? 'selected' : ''}>Ngưng hoạt động</option>
+                            </select>
+                        </td>
+                        <td class="text-nowrap">
+                            <button type="button" class="btn btn-sm btn-outline-info btn-view-stock mr-1" data-product-id="${p.id}" title="Xem tồn kho theo kho">
+                                <i class="fas fa-warehouse mr-1"></i>Tồn
+                            </button>
+                            <a class="btn btn-sm btn-info" href="them-san-pham.html?id=${encodeURIComponent(p.id)}" title="Chỉnh sửa sản phẩm">
+                                <i class="fas fa-edit mr-1"></i>Sửa
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function loadData() {
+            try {
+                const [prodsRes, stockRes, activeProdsRes, activeWhsRes] = await Promise.all([
+                    fetch(`${API_BASE_URL}/api/catalogs/products`),
+                    fetch(`${API_BASE_URL}/api/stock`),
+                    fetch(`${API_BASE_URL}/api/products`),
+                    fetch(`${API_BASE_URL}/api/warehouses`)
+                ]);
+
+                const prodsJson = await prodsRes.json();
+                const stockJson = await stockRes.json();
+                const activeProdsJson = await activeProdsRes.json();
+                const activeWhsJson = await activeWhsRes.json();
+
+                if (!prodsJson.success) throw new Error(prodsJson.message || 'Không tải được danh mục sản phẩm');
+                if (!stockJson.success) throw new Error(stockJson.message || 'Không tải được tồn kho');
+
+                products = prodsJson.data || [];
+                stockRecords = stockJson.data || [];
+                activeProducts = activeProdsJson.data || [];
+                activeWarehouses = activeWhsJson.data || [];
+
+                populateModalDropdowns();
+                renderProducts();
+            } catch (err) {
+                console.error('Lỗi tải dữ liệu:', err);
+                showError(err.message);
+                document.getElementById('product-rows').innerHTML =
+                    `<tr><td colspan="8" class="text-center text-danger py-4">Lỗi tải danh sách sản phẩm: ${esc(err.message)}</td></tr>`;
+            }
+        }
+
+        function populateModalDropdowns() {
+            const productSelect = document.getElementById('inventory-product');
+            const warehouseSelect = document.getElementById('inventory-warehouse');
+
+            productSelect.innerHTML = '<option value="">-- Chọn sản phẩm --</option>' +
+                activeProducts.map(p => `<option value="${p.id}">${esc(p.code)} - ${esc(p.name)}</option>`).join('');
+
+            warehouseSelect.innerHTML = '<option value="">-- Chọn kho nhận --</option>' +
+                activeWarehouses.map(w => `<option value="${w.id}">${esc(w.code)} - ${esc(w.name)}</option>`).join('');
+        }
+
+        async function openInventoryModal(preselectedProductId) {
+            document.getElementById('inventory-modal-error').classList.add('d-none');
+            document.getElementById('inventory-form').reset();
+            document.getElementById('inventory-product').value = preselectedProductId ? String(preselectedProductId) : '';
+            document.getElementById('inventory-quantity').value = '1';
+
+            const docnoInput = document.getElementById('inventory-docno');
+            const submitBtn = document.getElementById('submit-inventory');
+
+            $('#inventory-modal').modal('show');
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/inventory/next-docno`);
+                const json = await res.json();
+                const nextDocNo = json && (json.docno || (json.data && json.data.docno));
+                if (json && json.success && nextDocNo) {
+                    docnoInput.value = nextDocNo;
+                } else {
+                    docnoInput.value = generateFallbackDocNo();
+                }
+            } catch (err) {
+                console.warn('Tự sinh mã:', err.message);
+                docnoInput.value = generateFallbackDocNo();
+            } finally {
+                submitBtn.disabled = false;
+            }
+        }
+
+        function openStockDetailModal(productId) {
+            const product = products.find(p => Number(p.id) === Number(productId));
+            if (!product) return;
+            currentDetailProduct = product;
+
+            document.getElementById('detail-product-name').textContent = product.name;
+            document.getElementById('detail-product-code').textContent = `Mã sản phẩm: ${product.code}`;
+
+            const whStocks = stockRecords.filter(s => Number(s.product_id) === Number(productId));
+            const tbody = document.getElementById('detail-stock-rows');
+
+            let totalImp = 0;
+            let totalSold = 0;
+            let totalAvail = 0;
+
+            if (whStocks.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-3">Chưa có giao dịch nhập/xuất kho nào cho sản phẩm này.</td></tr>';
+            } else {
+                tbody.innerHTML = whStocks.map(row => {
+                    totalImp += Number(row.total_imported || 0);
+                    totalSold += Number(row.total_sold || 0);
+                    totalAvail += Number(row.available_stock || 0);
+
+                    return `
+                        <tr>
+                            <td class="font-weight-bold">${esc(row.warehouse_code)} - ${esc(row.warehouse_name)}</td>
+                            <td class="text-right">${formatQuantity(row.total_imported)}</td>
+                            <td class="text-right">${formatQuantity(row.total_sold)}</td>
+                            <td class="text-right font-weight-bold ${Number(row.available_stock) > 0 ? 'text-success' : 'text-danger'}">
+                                ${formatQuantity(row.available_stock)}
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            document.getElementById('detail-total-imported').textContent = formatQuantity(totalImp);
+            document.getElementById('detail-total-sold').textContent = formatQuantity(totalSold);
+            document.getElementById('detail-total-available').textContent = formatQuantity(totalAvail);
+
+            $('#stock-detail-modal').modal('show');
+        }
+
+        async function updateProductStatus(select) {
+            const id = select.dataset.id;
+            const product = products.find(p => String(p.id) === id);
+            if (!product) return;
+
+            const prevVal = product.isactive;
+            const nextVal = select.value === 'true';
+            select.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/catalogs/products/${encodeURIComponent(id)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ isactive: nextVal })
+                });
+
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không thể cập nhật trạng thái.');
+
+                product.isactive = nextVal;
+                showSuccess(`Đã cập nhật trạng thái sản phẩm ${product.code} sang "${nextVal ? 'Hoạt động' : 'Ngưng hoạt động'}".`);
+                renderProducts();
+            } catch (err) {
+                console.error('Lỗi cập nhật trạng thái:', err);
+                select.value = String(prevVal);
+                showError(err.message);
+            } finally {
+                select.disabled = false;
+            }
+        }
+
+        // Inventory Form Submit (Xử lý chặt chẽ Client-Side Validation & Type Casting)
+        document.getElementById('inventory-form').addEventListener('submit', async event => {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-inventory');
+            const errorBox = document.getElementById('inventory-modal-error');
+
+            const docno = document.getElementById('inventory-docno').value.trim();
+            const productid = Number(document.getElementById('inventory-product').value);
+            const warehouseid = Number(document.getElementById('inventory-warehouse').value);
+            const quantity = parseInt(document.getElementById('inventory-quantity').value, 10);
+
+            // Client-Side Validation
+            if (!docno) {
+                showModalError('Mã phiếu nhập không được để trống.');
+                return;
+            }
+            if (!productid || isNaN(productid)) {
+                showModalError('Vui lòng chọn Sản phẩm hợp lệ.');
+                return;
+            }
+            if (!warehouseid || isNaN(warehouseid)) {
+                showModalError('Vui lòng chọn Kho nhận hợp lệ.');
+                return;
+            }
+            if (isNaN(quantity) || quantity < 1) {
+                showModalError('Số lượng nhập phải lớn hơn hoặc bằng 1.');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            errorBox.classList.add('d-none');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/inventory/movements`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ docno, productid, warehouseid, quantity })
+                });
+
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không thể ghi nhận nhập kho.');
+
+                $('#inventory-modal').modal('hide');
+                showSuccess(`Đã ghi nhận phiếu nhập kho ${docno} thành công (${quantity} sản phẩm)!`);
+                await loadData();
+            } catch (err) {
+                console.error('Lỗi khi lập phiếu nhập kho:', err);
+                showModalError(err.message);
+            } finally {
+                submitBtn.disabled = false;
+            }
+
+            function showModalError(msg) {
+                errorBox.textContent = msg;
+                errorBox.classList.remove('d-none');
+            }
+        });
+
+        // Chặn nhập số âm, số 0, dấu -, +, e, .
+        const qtyInputModal = document.getElementById('inventory-quantity');
+        qtyInputModal.addEventListener('keydown', function(e) {
+            if (['-', '+', 'e', 'E', '.'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        qtyInputModal.addEventListener('input', function() {
+            if (this.value !== '' && (parseInt(this.value, 10) < 1 || isNaN(this.value))) {
+                this.value = 1;
+            }
+        });
+
+        qtyInputModal.addEventListener('blur', function() {
+            if (!this.value || parseInt(this.value, 10) < 1) {
+                this.value = 1;
+            }
+        });
+
+        // Event Listeners
+        productSearch.addEventListener('input', renderProducts);
+        filterCode.addEventListener('input', renderProducts);
+        filterName.addEventListener('input', renderProducts);
+        filterStockLevel.addEventListener('change', renderProducts);
+        filterCreatedFrom.addEventListener('change', renderProducts);
+        filterCreatedTo.addEventListener('change', renderProducts);
+        filterUpdatedFrom.addEventListener('change', renderProducts);
+        filterUpdatedTo.addEventListener('change', renderProducts);
+        filterStatus.addEventListener('change', renderProducts);
+
+        document.querySelectorAll('.product-clear-filters').forEach(btn => {
+            btn.addEventListener('click', () => {
+                productSearch.value = '';
+                filterCode.value = '';
+                filterName.value = '';
+                filterStockLevel.value = '';
+                filterCreatedFrom.value = '';
+                filterCreatedTo.value = '';
+                filterUpdatedFrom.value = '';
+                filterUpdatedTo.value = '';
+                filterStatus.value = '';
+                renderProducts();
+            });
+        });
+
+        document.getElementById('btn-quick-import').addEventListener('click', () => openInventoryModal(null));
+
+        document.getElementById('product-rows').addEventListener('click', event => {
+            const importBtn = event.target.closest('.btn-import-row');
+            if (importBtn) {
+                openInventoryModal(importBtn.dataset.productId);
+                return;
+            }
+            const stockBadge = event.target.closest('.stock-badge-clickable');
+            if (stockBadge) {
+                openStockDetailModal(stockBadge.dataset.productId);
+                return;
+            }
+            const viewStockBtn = event.target.closest('.btn-view-stock');
+            if (viewStockBtn) {
+                openStockDetailModal(viewStockBtn.dataset.productId);
+            }
+        });
+
+        document.getElementById('product-rows').addEventListener('change', event => {
+            if (event.target.matches('.product-status-select')) {
+                updateProductStatus(event.target);
+            }
+        });
+
+        document.getElementById('btn-import-from-detail').addEventListener('click', () => {
+            if (currentDetailProduct) {
+                $('#stock-detail-modal').modal('hide');
+                setTimeout(() => openInventoryModal(currentDetailProduct.id), 300);
+            }
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('created') === '1') {
+            showSuccess('Đã thêm sản phẩm mới thành công!');
+        } else if (urlParams.get('updated') === '1') {
+            showSuccess('Đã cập nhật thông tin sản phẩm thành công!');
+        }
+
+        loadData();
+    </script>
+</body>
+</html>

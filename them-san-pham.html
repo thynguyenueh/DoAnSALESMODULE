@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Thêm Sản Phẩm - Sales Module</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Báo Cáo</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-kho.html">
+                    <i class="fas fa-fw fa-boxes"></i>
+                    <span>Quản Lý Kho Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-khach-hang.html">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Quản Lý Khách Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="quan-ly-san-pham.html">
+                    <i class="fas fa-fw fa-box-open"></i>
+                    <span>Quản Lý Sản Phẩm</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-danh-muc.html">
+                    <i class="fas fa-fw fa-address-book"></i>
+                    <span>Danh Mục</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pos-tao-don.html">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Tạo Đơn Bán Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="danh-sach-don-hang.html">
+                    <i class="fas fa-fw fa-list-alt"></i>
+                    <span>Quản Lý Đơn Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="thu-chi.html">
+                    <i class="fas fa-fw fa-money-bill-wave"></i>
+                    <span>Phiếu Thu</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="tra-hang.html">
+                    <i class="fas fa-fw fa-undo"></i>
+                    <span>Trả Hàng / Phiếu Chi</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+
+                <!-- Page Content -->
+                <div class="container-fluid">
+                    <div class="mb-4">
+                        <h1 id="page-title" class="h3 mb-1 text-gray-800">Thêm sản phẩm mới</h1>
+                        <p id="page-description" class="text-muted mb-0">Nhập thông tin sản phẩm mới để đưa vào danh mục kinh doanh.</p>
+                    </div>
+
+                    <div class="card shadow mb-4" style="max-width: 800px;">
+                        <div class="card-header py-3">
+                            <h2 id="form-title" class="h6 m-0 font-weight-bold text-primary">Thông tin sản phẩm</h2>
+                        </div>
+                        <div class="card-body">
+                            <div id="form-error" class="alert alert-danger d-none" role="alert"></div>
+                            <form id="product-form" novalidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="product-code">Mã sản phẩm <span class="text-danger">*</span></label>
+                                        <input id="product-code" name="code" class="form-control" maxlength="250" placeholder="VD: SP001, IP15, AO-THUN..." required>
+                                        <small class="form-text text-muted">Mã định danh duy nhất của sản phẩm trong hệ thống.</small>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="product-name">Tên sản phẩm <span class="text-danger">*</span></label>
+                                        <input id="product-name" name="name" class="form-control" maxlength="250" placeholder="VD: iPhone 15 Pro Max 256GB..." required>
+                                        <small class="form-text text-muted">Tên hiển thị khi bán hàng và lập chứng từ kho.</small>
+                                    </div>
+                                    <div class="form-group col-md-6 d-none" id="product-status-group">
+                                        <label for="product-status">Trạng thái</label>
+                                        <select id="product-status" name="isactive" class="form-control">
+                                            <option value="true">Hoạt động (Đang kinh doanh)</option>
+                                            <option value="false">Ngưng hoạt động</option>
+                                        </select>
+                                        <small class="form-text text-muted">Sản phẩm ngưng hoạt động sẽ không hiển thị khi tạo đơn bán hàng mới.</small>
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-info py-2 small mb-4">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Sau khi tạo sản phẩm, bạn có thể lập <strong>phiếu nhập kho</strong> tại trang Quản lý sản phẩm để ghi nhận số lượng tồn ban đầu.
+                                </div>
+
+                                <div class="d-flex flex-column flex-sm-row justify-content-end">
+                                    <a class="btn btn-light mr-sm-2 mb-2 mb-sm-0" href="quan-ly-san-pham.html">
+                                        <i class="fas fa-arrow-left mr-1"></i> Quay lại
+                                    </a>
+                                    <button id="submit-product" class="btn btn-primary" type="submit">
+                                        <i class="fas fa-plus mr-1"></i> <span id="submit-label">Thêm mới sản phẩm</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto text-center">
+                    <span>Quản Lý Bán Hàng 2026</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+        <script src="js/sidebar-account.js"></script>
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+        const productForm = document.getElementById('product-form');
+        const submitButton = document.getElementById('submit-product');
+        const errorBox = document.getElementById('form-error');
+        const productId = new URLSearchParams(window.location.search).get('id');
+        const isEditing = productId !== null && productId.trim() !== '';
+
+        if (isEditing) {
+            document.title = 'Chỉnh Sửa Sản Phẩm - Sales Module';
+            document.getElementById('page-title').textContent = 'Chỉnh sửa sản phẩm';
+            document.getElementById('page-description').textContent = 'Cập nhật thông tin sản phẩm rồi chọn Lưu thay đổi.';
+            document.getElementById('form-title').textContent = 'Cập nhật thông tin sản phẩm';
+            document.getElementById('submit-label').textContent = 'Lưu thay đổi';
+            submitButton.querySelector('i').className = 'fas fa-save mr-1';
+            document.getElementById('product-status-group').classList.remove('d-none');
+        }
+
+        async function loadProductForEdit() {
+            if (!isEditing) return;
+            if (!/^\d+$/.test(productId)) {
+                errorBox.textContent = 'Mã sản phẩm không hợp lệ.';
+                errorBox.classList.remove('d-none');
+                submitButton.disabled = true;
+                return;
+            }
+            submitButton.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/catalogs/products`);
+                if (!(response.headers.get('content-type') || '').includes('application/json')) {
+                    throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+                }
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không tải được thông tin sản phẩm.');
+                const product = result.data.find(record => String(record.id) === productId);
+                if (!product) throw new Error('Không tìm thấy sản phẩm cần chỉnh sửa.');
+
+                productForm.elements.code.value = product.code || '';
+                productForm.elements.name.value = product.name || '';
+                productForm.elements.isactive.value = String(product.isactive);
+            } catch (error) {
+                console.error('Không tải được thông tin sản phẩm:', error);
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+            } finally {
+                submitButton.disabled = !errorBox.classList.contains('d-none');
+            }
+        }
+
+        productForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            const codeInput = productForm.elements.code;
+            const nameInput = productForm.elements.name;
+
+            const code = (codeInput.value || '').trim();
+            const name = (nameInput.value || '').trim();
+
+            if (!code) {
+                errorBox.textContent = 'Vui lòng nhập mã sản phẩm.';
+                errorBox.classList.remove('d-none');
+                codeInput.focus();
+                return;
+            }
+            if (!name) {
+                errorBox.textContent = 'Vui lòng nhập tên sản phẩm.';
+                errorBox.classList.remove('d-none');
+                nameInput.focus();
+                return;
+            }
+
+            submitButton.disabled = true;
+            errorBox.classList.add('d-none');
+
+            const payload = { code, name };
+            if (isEditing) {
+                payload.isactive = productForm.elements.isactive.value === 'true';
+            }
+
+            try {
+                const url = isEditing
+                    ? `${API_BASE_URL}/api/catalogs/products/${encodeURIComponent(productId)}`
+                    : `${API_BASE_URL}/api/catalogs/products`;
+                const method = isEditing ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!(response.headers.get('content-type') || '').includes('application/json')) {
+                    throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+                }
+
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || (isEditing ? 'Không thể cập nhật sản phẩm.' : 'Không thể thêm sản phẩm.'));
+                }
+
+                window.location.href = `quan-ly-san-pham.html?${isEditing ? 'updated=1' : 'created=1'}`;
+            } catch (error) {
+                console.error('Lỗi khi lưu sản phẩm:', error);
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+                submitButton.disabled = false;
+            }
+        });
+
+        loadProductForEdit();
+    </script>
+</body>
+</html>
+

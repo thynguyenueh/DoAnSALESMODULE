@@ -1,0 +1,6 @@
+BEGIN;
+
+ALTER TABLE cash_disbursements
+    ADD COLUMN IF NOT EXISTS createdby VARCHAR(100) NOT NULL DEFAULT 'System';
+
+COMMIT;

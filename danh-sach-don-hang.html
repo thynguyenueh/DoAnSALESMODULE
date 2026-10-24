@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản Lý Đơn Hàng - Sales Module</title>
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <link href="css/table-tools.css" rel="stylesheet">
+
+    <style>
+        select.status-select {
+            font-weight: bold !important;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        select.status-select.status-pending {
+            background-color: #f6c23e !important;
+            color: #ffffff !important;
+            border: 1px solid #f6c23e !important;
+        }
+
+        select.status-select.status-paid {
+            background-color: #4e73df !important;
+            color: #ffffff !important;
+            border: 1px solid #4e73df !important;
+        }
+
+        select.status-select.status-delivered {
+            background-color: #36b9cc !important;
+            color: #ffffff !important;
+            border: 1px solid #36b9cc !important;
+        }
+
+        .badge-status {
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .badge-status.badge-completed {
+            background-color: #1cc88a;
+            color: white;
+        }
+
+        .badge-status.badge-cancelled {
+            background-color: #e74a3b;
+            color: white;
+        }
+
+        .badge-status.badge-returned {
+            background-color: #6f42c1;
+            color: white;
+        }
+
+        .badge-status.badge-delivered {
+            background-color: #36b9cc;
+            color: white;
+        }
+
+        .badge-payment {
+            display: inline-block;
+            padding: .3rem .5rem;
+            border-radius: 4px;
+            font-size: .75rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .nav-tabs .nav-link {
+            font-weight: bold;
+            color: #5a5c69;
+        }
+        .nav-tabs .nav-link.active {
+            color: #4e73df;
+            border-bottom: 3px solid #4e73df;
+        }
+
+        /* Nút Hóa Đơn */
+        .btn-invoice {
+            background-color: #6f42c1;
+            color: white;
+            border: none;
+        }
+        .btn-invoice:hover {
+            background-color: #59339d;
+            color: white;
+        }
+
+        /* GIAO DIỆN HÓA ĐƠN MẪU SỐ 02/BH */
+        .invoice-box {
+            background: #fff;
+            padding: 20px 30px;
+            font-family: "Times New Roman", Times, serif;
+            color: #000;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .invoice-header-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+        .invoice-meta-table td {
+            padding: 2px 0;
+            vertical-align: top;
+        }
+        .invoice-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .invoice-items-table th, .invoice-items-table td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+        }
+        .invoice-items-table th {
+            text-align: center;
+            font-weight: bold;
+            background-color: #f2f2f2;
+        }
+
+        /* CSS IN ẤN HÓA ĐƠN */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoiceModal, #invoiceModal * {
+                visibility: visible;
+            }
+            #invoiceModal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            .modal-header, .modal-footer {
+                display: none !important;
+            }
+            .modal-content {
+                border: none !important;
+                box-shadow: none !important;
+            }
+            .invoice-box {
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Báo Cáo</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+
+            <li class="nav-item"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="pos-tao-don.html">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Tạo Đơn Bán Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="danh-sach-don-hang.html">
+                    <i class="fas fa-fw fa-list-alt"></i>
+                    <span>Quản Lý Đơn Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="tra-hang.html">
+                    <i class="fas fa-fw fa-undo"></i>
+                    <span>Trả Hàng / Phiếu Chi</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+
+                <div class="container-fluid">
+
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-list-alt text-primary mr-2"></i>Quản Lý Vòng Đời Đơn Hàng</h1>
+                        <a href="pos-tao-don.html" class="btn btn-primary btn-sm shadow-sm">
+                            <i class="fas fa-plus fa-sm text-white-50 mr-1"></i> Tạo Đơn Mới (POS)
+                        </a>
+                    </div>
+
+                    <!-- THANH BỘ LỌC TABS -->
+                    <ul class="nav nav-tabs mb-3" id="orderStatusTabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-status="ALL">
+                                <i class="fas fa-list mr-1"></i> Tất Cả (<span id="count-all">0</span>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="#" data-status="Pending">
+                                <i class="fas fa-clock mr-1"></i> Pending (<span id="count-pending">0</span>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#" data-status="Paid">
+                                <i class="fas fa-check-circle mr-1"></i> Paid (<span id="count-paid">0</span>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-info" href="#" data-status="Delivered">
+                                <i class="fas fa-truck mr-1"></i> Delivered (<span id="count-delivered">0</span>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-success" href="#" data-status="Completed">
+                                <i class="fas fa-flag-checkered mr-1"></i> Completed (<span id="count-completed">0</span>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="#" data-status="Cancelled">
+                                <i class="fas fa-times-circle mr-1"></i> Cancelled (<span id="count-cancelled">0</span>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" href="#" data-status="Returned">
+                                <i class="fas fa-undo mr-1"></i> Returned (<span id="count-returned">0</span>)
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 bg-primary text-white">
+                            <h6 class="m-0 font-weight-bold" id="table-title">Danh Sách Tất Cả Đơn Hàng</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" id="dataTableOrders" data-table-tools="all" width="100%" cellspacing="0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Mã Đơn</th>
+                                            <th>Ngày Tạo</th>
+                                            <th>Người Tạo</th>
+                                            <th>Khách Hàng</th>
+                                            <th>Số Điện Thoại</th>
+                                            <th class="text-center">Trạng Thái Thanh Toán</th>
+                                            <th class="text-right">Tổng Tiền</th>
+                                            <th class="text-right">Hoàn Trả</th>
+                                            <th style="width: 160px; text-align: center;">Trạng Thái Vòng Đời</th>
+                                            <th style="width: 220px; text-align: center;">Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody-orders">
+                                        <tr>
+                                            <td colspan="10" class="text-center">Đang tải dữ liệu từ máy chủ...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Quản Lý Bán Hàng 2026</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Xem Chi Tiết Đơn Hàng -->
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modal-order-title">Chi Tiết Đơn Hàng</h5>
+                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Khách Hàng:</strong> <span id="detail-customer-name">-</span></p>
+                            <p class="mb-1"><strong>SĐT:</strong> <span id="detail-customer-phone">-</span></p>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <p class="mb-1"><strong>Ngày Tạo:</strong> <span id="detail-order-date">-</span></p>
+                            <p class="mb-1"><strong>Người Tạo:</strong> <span id="detail-order-createdby">-</span></p>
+                            <p class="mb-1"><strong>Trạng Thái:</strong> <span id="detail-order-status" class="badge badge-info p-2 font-weight-bold">-</span></p>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã SP</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Kho Xuất</th>
+                                <th class="text-center">SL</th>
+                                <th class="text-right">Đơn Giá</th>
+                                <th class="text-right">Chiết Khấu</th>
+                                <th class="text-right">Thành Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-items-tbody"></tbody>
+                    </table>
+                    <div class="text-right font-weight-bold h5 text-danger">
+                        <span id="detail-total-amount-label">Tổng Cộng:</span> <span id="detail-total-amount">0</span> VNĐ
+                    </div>
+                    <div class="text-right small text-muted">
+                        Tiền hàng: <span id="detail-gross-amount">0</span> VNĐ ·
+                        Chiết khấu: <span id="detail-discount-amount">0</span> VNĐ
+                    </div>
+                    <div id="returned-items-section" class="mt-4 d-none">
+                        <h6 class="font-weight-bold text-warning"><i class="fas fa-undo mr-1"></i>Sản Phẩm Đã Trả</h6>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Mã SP</th>
+                                        <th>Tên Sản Phẩm</th>
+                                        <th>Kho</th>
+                                        <th class="text-center">Số Lượng Trả</th>
+                                        <th class="text-right">Tiền Hoàn</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="detail-returned-items-tbody"></tbody>
+                            </table>
+                        </div>
+                        <div class="text-right font-weight-bold text-warning">
+                            Tổng Tiền Hoàn: <span id="detail-refund-total">0</span> VNĐ
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL XEM VÀ IN HÓA ĐƠN BÁN HÀNG (MẪU SỐ 02/BH) -->
+    <div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title"><i class="fas fa-file-invoice mr-2"></i>Hóa Đơn Bán Hàng (Mẫu số 02/BH)</h5>
+                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="invoice-box" id="print-area">
+                        <div class="d-flex justify-content-between">
+                            <div style="font-size: 13px;">
+                                <strong>Mẫu số 02/BH</strong><br>
+                                (Thông tư số 78/2021/TT-BTC)
+                            </div>
+                            <div class="text-right" style="font-size: 13px;">
+                                Ký hiệu: <span id="inv-symbol">1C26MBH</span><br>
+                                Số: <span id="inv-no" class="font-weight-bold text-danger">00000000</span>
+                            </div>
+                        </div>
+
+                        <div class="invoice-header-title mt-2">HÓA ĐƠN BÁN HÀNG</div>
+                        <div class="text-center font-italic mb-3" style="font-size: 13px;">
+                            Ngày <span id="inv-day">...</span> tháng <span id="inv-month">...</span> năm <span id="inv-year">...</span>
+                        </div>
+
+                        <!-- THÔNG TIN BÊN BÁN -->
+                        <table class="w-100 invoice-meta-table mb-2">
+                            <tr>
+                                <td style="width: 140px;"><strong>Tên người bán:</strong></td>
+                                <td><strong id="inv-seller-name">CÔNG TY TNHH QUẢN LÝ BÁN HÀNG SALES MODULE</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mã số thuế:</strong></td>
+                                <td id="inv-seller-tax">0302378687</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Địa chỉ:</strong></td>
+                                <td id="inv-seller-address">279 Nguyễn Tri Phương, Phường Diên Hồng, TP. Hồ Chí Minh</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Điện thoại:</strong></td>
+                                <td id="inv-seller-phone">028 7306 1976</td>
+                            </tr>
+                        </table>
+
+                        <hr class="my-2" style="border-top: 1px dashed #000;">
+
+                        <!-- THÔNG TIN BÊN MUA -->
+                        <table class="w-100 invoice-meta-table mb-2">
+                            <tr>
+                                <td style="width: 170px;"><strong>Họ tên người mua hàng:</strong></td>
+                                <td id="inv-buyer-name">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tên người mua:</strong></td>
+                                <td id="inv-buyer-company">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Địa chỉ:</strong></td>
+                                <td id="inv-buyer-address">-</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Hình thức thanh toán:</strong></td>
+                                <td><span id="inv-payment-method">Tiền mặt / Chuyển khoản</span> &nbsp;&nbsp;&nbsp;&nbsp; <strong>MST:</strong> <span id="inv-buyer-tax">-</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Đồng tiền thanh toán:</strong></td>
+                                <td>VND</td>
+                            </tr>
+                        </table>
+
+                        <!-- BẢNG SẢN PHẨM / DỊCH VỤ -->
+                        <table class="invoice-items-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;">STT</th>
+                                    <th>Tên hàng hóa, dịch vụ</th>
+                                    <th style="width: 80px;">Đơn vị tính</th>
+                                    <th style="width: 70px;">Số lượng</th>
+                                    <th style="width: 110px;">Đơn giá</th>
+                                    <th style="width: 130px;">Thành tiền</th>
+                                </tr>
+                                <tr style="font-size: 11px; text-align: center; background-color: #fafafa;">
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>5</td>
+                                    <td>6 = 4x5</td>
+                                </tr>
+                            </thead>
+                            <tbody id="inv-items-tbody">
+                                <tr><td colspan="6" class="text-center py-2">Chưa có sản phẩm</td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="d-flex justify-content-between align-items-center font-weight-bold" style="font-size: 15px;">
+                            <span>Tổng tiền thanh toán:</span>
+                            <span id="inv-total-amount">0 VND</span>
+                        </div>
+                        <div class="font-italic mb-4" style="font-size: 13px;">
+                            Số tiền viết bằng chữ: <span id="inv-total-text" class="font-weight-bold">Không đồng</span>
+                        </div>
+
+                        <!-- KÝ TÊN -->
+                        <table class="w-100 text-center mt-3">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <strong>NGƯỜI MUA HÀNG</strong><br>
+                                    <span class="small text-muted">(Chữ ký số (nếu có))</span>
+                                    <br><br><br><br>
+                                    <span id="inv-buyer-sign-name"></span>
+                                </td>
+                                <td style="width: 50%;">
+                                    <strong>NGƯỜI BÁN HÀNG</strong><br>
+                                    <span class="small text-muted">(Chữ ký điện tử, chữ ký số)</span>
+                                    <br><br><br><br>
+                                    <strong>CÔNG TY TNHH SALES MODULE</strong>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" onclick="window.print()">
+                        <i class="fas fa-print mr-1"></i> In Hóa Đơn
+                    </button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sidebar-account.js"></script>
+    <script src="js/table-tools.js"></script>
+
+    <script>
+        const API_BASE_URL = window.location.port === '3000' ? '' : 'http://localhost:3000';
+        let allOrdersList = [];
+        let currentFilterStatus = 'ALL';
+        const orderStatuses = ['ALL', 'Pending', 'Paid', 'Delivered', 'Completed', 'Cancelled', 'Returned'];
+        const orderStatusTitles = {
+            ALL: 'Danh Sách Tất Cả Đơn Hàng',
+            Pending: 'Danh Sách Đơn Hàng Chờ Thanh Toán',
+            Paid: 'Danh Sách Đơn Hàng Đã Thanh Toán',
+            Delivered: 'Danh Sách Đơn Hàng Đã Giao',
+            Completed: 'Danh Sách Đơn Hàng Hoàn Tất',
+            Cancelled: 'Danh Sách Đơn Hàng Đã Hủy',
+            Returned: 'Danh Sách Đơn Hàng Đã Trả'
+        };
+
+        function updateOrdersTableTitle() {
+            $('#table-title').text(orderStatusTitles[currentFilterStatus]);
+        }
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[char]));
+        }
+
+        async function loadOrdersList() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/orders`);
+                const data = await res.json();
+
+                if (data.success) {
+                    allOrdersList = data.data;
+                    updateTabCounters();
+                    renderOrdersTable();
+                } else {
+                    $('#tbody-orders').html('<tr><td colspan="10" class="text-center text-danger">Lỗi dữ liệu server!</td></tr>');
+                }
+            } catch (err) {
+                console.error('Lỗi tải danh sách đơn hàng:', err);
+                $('#tbody-orders').html('<tr><td colspan="10" class="text-center text-danger">Không thể kết nối máy chủ Node.js!</td></tr>');
+            }
+        }
+
+        function updateTabCounters() {
+            $('#count-all').text(allOrdersList.length);
+            $('#count-pending').text(allOrdersList.filter(o => o.status === 'Pending').length);
+            $('#count-paid').text(allOrdersList.filter(o => o.status === 'Paid').length);
+            $('#count-delivered').text(allOrdersList.filter(o => o.status === 'Delivered').length);
+            $('#count-completed').text(allOrdersList.filter(o => o.status === 'Completed').length);
+            $('#count-cancelled').text(allOrdersList.filter(o => o.status === 'Cancelled').length);
+            $('#count-returned').text(allOrdersList.filter(o => o.status === 'Returned').length);
+        }
+
+        function renderOrdersTable() {
+            const tbody = $('#tbody-orders');
+            tbody.empty();
+
+            let filtered = allOrdersList;
+            if (currentFilterStatus !== 'ALL') {
+                filtered = allOrdersList.filter(o => o.status === currentFilterStatus);
+            }
+
+            if (filtered.length === 0) {
+                tbody.append('<tr><td colspan="10" class="text-center text-muted">Không có đơn hàng nào ở mục này</td></tr>');
+                return;
+            }
+
+            filtered.forEach(order => {
+                const dateFormatted = new Date(order.orderdate).toLocaleString('vi-VN');
+                const statusHtml = renderStatusControl(order.id, order.status);
+                const totalAmount = Number(order.totalamount || 0);
+                const totalRefund = Number(order.total_refund || 0);
+                const paymentStatuses = {
+                    Unpaid: ['Chưa thanh toán', 'badge-warning'],
+                    'Partially Paid': ['Thanh toán một phần', 'badge-info'],
+                    Paid: ['Đã thanh toán', 'badge-success'],
+                    Refunded: ['Đã hoàn tiền', 'badge-secondary']
+                };
+                const [paymentLabel, paymentClass] = paymentStatuses[order.payment_status] || paymentStatuses.Unpaid;
+
+                // NÚT CHI TIẾT & HÓA ĐƠN CÓ MẶC ĐỊNH
+                let actionBtns = `
+                    <button class="btn btn-info btn-sm btn-view-detail" data-id="${order.id}" title="Xem Chi Tiết">
+                        <i class="fas fa-eye"></i> Xem
+                    </button>
+                    <button class="btn btn-invoice btn-sm ml-1 btn-view-invoice" data-id="${order.id}" title="Xuất / In Hóa Đơn (Mẫu 02/BH)">
+                        <i class="fas fa-file-invoice"></i> Hóa đơn
+                    </button>
+                `;
+
+                // PENDING: NÚT HỦY
+                if (order.status === 'Pending') {
+                    actionBtns += `
+                        <button class="btn btn-danger btn-sm ml-1 btn-cancel-order" data-id="${order.id}" title="Hủy đơn hàng">
+                            <i class="fas fa-times"></i> Hủy
+                        </button>
+                    `;
+                }
+
+                // PAID: CHỈ CÓ NÚT TRẢ HÀNG
+                if (order.status === 'Paid') {
+                    actionBtns += `
+                        <a href="tra-hang.html?orderid=${order.id}" class="btn btn-warning btn-sm ml-1" title="Trả Hàng / Hoàn Tiền">
+                            <i class="fas fa-undo"></i> Trả
+                        </a>
+                    `;
+                }
+
+                // DELIVERED: NÚT TRẢ HÀNG (CÙNG NÚT THU TIỀN NẾU CHƯA TT)
+                if (order.status === 'Delivered') {
+                    if (order.payment_status !== 'Paid') {
+                        actionBtns += `
+                            <a href="thu-chi.html?orderid=${order.id}&from=Delivered" class="btn btn-success btn-sm ml-1" title="Lập Phiếu Thu">
+                                <i class="fas fa-file-invoice-dollar"></i> Thu tiền
+                            </a>
+                        `;
+                    }
+                    actionBtns += `
+                        <a href="tra-hang.html?orderid=${order.id}" class="btn btn-warning btn-sm ml-1" title="Trả Hàng / Hoàn Tiền">
+                            <i class="fas fa-undo"></i> Trả
+                        </a>
+                    `;
+                }
+
+                const rowHtml = `
+                    <tr>
+                        <td class="font-weight-bold text-primary">${escapeHtml(order.docno)}</td>
+                        <td>${dateFormatted}</td>
+                        <td>${escapeHtml(order.createdby || 'System')}</td>
+                        <td>${escapeHtml(order.customer_name || 'Khách Lẻ')}</td>
+                        <td>${escapeHtml(order.customer_phone || '-')}</td>
+                        <td class="text-center"><span class="badge ${paymentClass} badge-payment">${paymentLabel}</span></td>
+                        <td class="text-right">${totalAmount.toLocaleString('vi-VN')} VNĐ</td>
+                        <td class="font-weight-bold text-danger text-right">${totalRefund.toLocaleString('vi-VN')} VNĐ</td>
+                        <td class="text-center">${statusHtml}</td>
+                        <td class="text-center">${actionBtns}</td>
+                    </tr>
+                `;
+                tbody.append(rowHtml);
+            });
+        }
+
+        function renderStatusControl(orderId, status) {
+            const currentSt = status || 'Pending';
+
+            if (currentSt === 'Pending') {
+                return `
+                    <select class="form-control form-control-sm select-order-status status-pending" data-id="${orderId}">
+                        <option value="Pending" selected>Pending (Chờ TT)</option>
+                        <option value="Paid" class="bg-white text-dark">Paid (Thanh Toán)</option>
+                        <option value="Delivered" class="bg-white text-dark">Delivered (Đã Giao)</option>
+                    </select>
+                `;
+            }
+
+            if (currentSt === 'Paid') {
+                return `
+                    <select class="form-control form-control-sm select-order-status status-paid" data-id="${orderId}">
+                        <option value="Paid" selected>Paid (Đã TT)</option>
+                        <option value="Delivered" class="bg-white text-dark">Delivered (Đã Giao)</option>
+                    </select>
+                `;
+            }
+
+            if (currentSt === 'Delivered') {
+                return `
+                    <select class="form-control form-control-sm select-order-status status-delivered" data-id="${orderId}">
+                        <option value="Delivered" selected>Delivered (Đã Giao)</option>
+                        <option value="Completed" class="bg-white text-dark">Completed (Hoàn Tất)</option>
+                    </select>
+                `;
+            }
+
+            if (currentSt === 'Completed') {
+                return `<span class="badge-status badge-completed"><i class="fas fa-check-double mr-1"></i>Completed</span>`;
+            }
+
+            if (currentSt === 'Returned') {
+                return `<span class="badge-status badge-returned"><i class="fas fa-undo mr-1"></i>Returned</span>`;
+            }
+
+            return `<span class="badge-status badge-cancelled"><i class="fas fa-times-circle mr-1"></i>Cancelled</span>`;
+        }
+
+        $('#orderStatusTabs a').on('click', function(e) {
+            e.preventDefault();
+            $('#orderStatusTabs a').removeClass('active');
+            $(this).addClass('active');
+
+            currentFilterStatus = $(this).data('status');
+            history.replaceState(null, '', `${location.pathname}${location.search}#${currentFilterStatus}`);
+            updateOrdersTableTitle();
+            renderOrdersTable();
+        });
+
+        $(document).on('change', '.select-order-status', async function() {
+            const orderId = $(this).data('id');
+            const newStatus = $(this).val();
+            const statusSelect = $(this);
+            const targetOrder = allOrdersList.find(o => String(o.id) === String(orderId));
+            const previousStatus = targetOrder ? targetOrder.status : 'Pending';
+
+            if (newStatus === 'Paid') {
+                window.location.href = `thu-chi.html?orderid=${encodeURIComponent(orderId)}`;
+                return;
+            }
+
+            if (newStatus === 'Completed' && targetOrder && targetOrder.payment_status !== 'Paid') {
+                alert('⚠️ Đơn hàng này chưa thanh toán đủ! Bạn cần hoàn tất lập phiếu thu trước khi kết thúc đơn hàng.');
+                window.location.href = `thu-chi.html?orderid=${encodeURIComponent(orderId)}&from=Delivered`;
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    await loadOrdersList();
+                } else {
+                    statusSelect.val(previousStatus);
+                    alert('❌ Lỗi cập nhật: ' + data.message);
+                }
+            } catch (err) {
+                console.error('Lỗi kết nối server:', err);
+                statusSelect.val(previousStatus);
+                alert('Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại.');
+            }
+        });
+
+        // XỬ LÝ HỦY ĐƠN HÀNG PENDING
+        $(document).on('click', '.btn-cancel-order', async function() {
+            const orderId = $(this).data('id');
+            const order = allOrdersList.find(item => String(item.id) === String(orderId));
+            if (!order) return;
+
+            if (!confirm(`Bạn có chắc chắn muốn hủy đơn hàng #${order.docno}? Toàn bộ sản phẩm sẽ được tự động hoàn lại vào kho.`)) return;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: 'Cancelled' })
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không hủy được đơn hàng.');
+                
+                currentFilterStatus = 'Cancelled';
+                $('#orderStatusTabs a').removeClass('active').filter('[data-status="Cancelled"]').addClass('active');
+                history.replaceState(null, '', `${location.pathname}${location.search}#Cancelled`);
+                updateOrdersTableTitle();
+                await loadOrdersList();
+            } catch (error) {
+                console.error('Lỗi hủy đơn hàng:', error);
+                alert('❌ Lỗi: ' + error.message);
+            }
+        });
+
+        // HÀM CHUYỂN SỐ THÀNH CHỮ TIẾNG VIỆT
+        function numberToWords(number) {
+            if (number === 0) return "Không đồng";
+            const units = ["", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"];
+            const scales = ["", "nghìn", "triệu", "tỷ", "nghìn tỷ", "triệu tỷ"];
+            
+            function readTriple(num) {
+                let hundred = Math.floor(num / 100);
+                let ten = Math.floor((num % 100) / 10);
+                let unit = num % 10;
+                let str = "";
+
+                if (hundred > 0 || num >= 100) {
+                    str += units[hundred] + " trăm ";
+                }
+                if (ten > 1) {
+                    str += "mươi ";
+                    if (unit === 1) str += "mốt ";
+                    else if (unit === 5) str += "lăm ";
+                    else if (unit > 0) str += units[unit] + " ";
+                } else if (ten === 1) {
+                    str += "mười ";
+                    if (unit === 1) str += "một ";
+                    else if (unit === 5) str += "lăm ";
+                    else if (unit > 0) str += units[unit] + " ";
+                } else {
+                    if (unit > 0) {
+                        if (hundred > 0) str += "lẻ ";
+                        if (unit === 5) str += "năm ";
+                        else str += units[unit] + " ";
+                    }
+                }
+                return str;
+            }
+
+            let num = Math.abs(number);
+            let str = "";
+            let scaleIdx = 0;
+
+            while (num > 0) {
+                let triple = num % 1000;
+                if (triple > 0) {
+                    let tripleStr = readTriple(triple);
+                    str = tripleStr + scales[scaleIdx] + " " + str;
+                }
+                num = Math.floor(num / 1000);
+                scaleIdx++;
+            }
+
+            str = str.trim();
+            str = str.charAt(0).toUpperCase() + str.slice(1) + " đồng";
+            return str;
+        }
+
+        // XỬ LÝ MỞ MODAL HÓA ĐƠN (MẪU SỐ 02/BH)
+        $(document).on('click', '.btn-view-invoice', async function() {
+            const orderId = $(this).data('id');
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}`);
+                const data = await res.json();
+
+                if (data.success) {
+                    const order = data.order;
+                    const date = new Date(order.orderdate);
+
+                    $('#inv-day').text(date.getDate().toString().padStart(2, '0'));
+                    $('#inv-month').text((date.getMonth() + 1).toString().padStart(2, '0'));
+                    $('#inv-year').text(date.getFullYear());
+                    $('#inv-no').text(String(order.id).padStart(8, '0'));
+
+                    $('#inv-buyer-name').text(order.customer_name || 'Khách Mua Lẻ');
+                    $('#inv-buyer-company').text(order.customer_name || 'Khách Hàng Cá Nhân');
+                    $('#inv-buyer-address').text(order.customer_address || 'TP. Hồ Chí Minh');
+                    $('#inv-buyer-tax').text(order.tax_code || '-');
+                    $('#inv-payment-method').text(order.payment_status === 'Paid' ? 'Chuyển khoản / Tiền mặt' : 'Tiền mặt');
+                    $('#inv-buyer-sign-name').text(order.customer_name || '');
+
+                    const tbody = $('#inv-items-tbody');
+                    tbody.empty();
+
+                    let grandTotal = 0;
+                    data.details.forEach((item, index) => {
+                        const qty = Number(item.quantity);
+                        const price = Number(item.unitprice);
+                        const discount = Number(item.discountamount || 0);
+                        const lineTotal = (qty * price) - discount;
+                        grandTotal += lineTotal;
+
+                        tbody.append(`
+                            <tr>
+                                <td class="text-center">${index + 1}</td>
+                                <td>${escapeHtml(item.product_name)} (${escapeHtml(item.product_code)})</td>
+                                <td class="text-center">Cái/Cặp</td>
+                                <td class="text-center">${qty}</td>
+                                <td class="text-right">${price.toLocaleString('vi-VN')}</td>
+                                <td class="text-right font-weight-bold">${lineTotal.toLocaleString('vi-VN')}</td>
+                            </tr>
+                        `);
+                    });
+
+                    $('#inv-total-amount').text(grandTotal.toLocaleString('vi-VN') + ' VND');
+                    $('#inv-total-text').text(numberToWords(grandTotal));
+
+                    $('#invoiceModal').modal('show');
+                }
+            } catch (err) {
+                console.error('Lỗi khi tải hóa đơn:', err);
+                alert('Không thể tải thông tin hóa đơn!');
+            }
+        });
+
+        // XỬ LÝ CHI TIẾT ĐƠN HÀNG
+        $(document).on('click', '.btn-view-detail', async function() {
+            const orderId = $(this).data('id');
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/orders/${orderId}`);
+                const data = await res.json();
+
+                if (data.success) {
+                    const order = data.order;
+                    $('#modal-order-title').text(`Chi Tiết Đơn Hàng #${order.docno}`);
+                    $('#detail-customer-name').text(order.customer_name || 'Khách Lẻ');
+                    $('#detail-customer-phone').text(order.customer_phone || '-');
+                    $('#detail-order-date').text(new Date(order.orderdate).toLocaleString('vi-VN'));
+                    $('#detail-order-createdby').text(order.createdby || 'System');
+                    
+                    const statusBadge = $('#detail-order-status');
+                    statusBadge.text(order.status);
+                    statusBadge.removeClass('badge-warning badge-primary badge-success badge-danger badge-secondary');
+                    if (order.status === 'Pending') statusBadge.addClass('badge-warning');
+                    if (order.status === 'Paid') statusBadge.addClass('badge-primary');
+                    if (order.status === 'Completed') statusBadge.addClass('badge-success');
+                    if (order.status === 'Cancelled') statusBadge.addClass('badge-danger');
+                    if (order.status === 'Returned') statusBadge.addClass('badge-secondary');
+
+                    const isReturned = order.status === 'Returned';
+                    $('#detail-total-amount-label').text(isReturned ? 'Tổng Tiền Hoàn:' : 'Tổng Cộng:');
+                    $('#detail-total-amount').text(
+                        Number(isReturned ? order.total_refund : order.totalamount).toLocaleString('vi-VN')
+                    );
+
+                    const tbody = $('#detail-items-tbody');
+                    tbody.empty();
+
+                    let grossTotal = 0;
+                    let discountTotal = 0;
+                    data.details.forEach(item => {
+                        const gross = Number(item.quantity) * Number(item.unitprice);
+                        const discount = Number(item.discountamount || 0);
+                        const total = gross - discount;
+                        grossTotal += gross;
+                        discountTotal += discount;
+                        tbody.append(`
+                            <tr>
+                                <td>${escapeHtml(item.product_code)}</td>
+                                <td>${escapeHtml(item.product_name)}</td>
+                                <td>${escapeHtml(item.warehouse_name || 'Kho Mặc Định')}</td>
+                                <td class="text-center">${item.quantity}</td>
+                                <td class="text-right">${Number(item.unitprice).toLocaleString()}</td>
+                                <td class="text-right">${discount.toLocaleString('vi-VN')}</td>
+                                <td class="text-right font-weight-bold">${Number(total).toLocaleString()}</td>
+                            </tr>
+                        `);
+                    });
+                    $('#detail-gross-amount').text(grossTotal.toLocaleString('vi-VN'));
+                    $('#detail-discount-amount').text(discountTotal.toLocaleString('vi-VN'));
+
+                    const returnedItemsBody = $('#detail-returned-items-tbody');
+                    returnedItemsBody.empty();
+                    (data.returnedItems || []).forEach(item => {
+                        returnedItemsBody.append(`
+                            <tr>
+                                <td>${escapeHtml(item.product_code)}</td>
+                                <td>${escapeHtml(item.product_name)}</td>
+                                <td>${escapeHtml(item.warehouse_name || 'Kho Mặc Định')}</td>
+                                <td class="text-center font-weight-bold">${Number(item.quantity_returned).toLocaleString('vi-VN')}</td>
+                                <td class="text-right">${Number(item.item_refund).toLocaleString('vi-VN')} VNĐ</td>
+                            </tr>
+                        `);
+                    });
+                    $('#detail-refund-total').text(Number(order.total_refund || 0).toLocaleString('vi-VN'));
+                    $('#returned-items-section').toggleClass('d-none', !data.returnedItems || data.returnedItems.length === 0);
+
+                    $('#orderDetailModal').modal('show');
+                }
+            } catch (err) {
+                console.error('Lỗi chi tiết:', err);
+            }
+        });
+
+        $(document).ready(function() {
+            const requestedStatus = decodeURIComponent(location.hash.slice(1));
+            if (orderStatuses.includes(requestedStatus)) {
+                currentFilterStatus = requestedStatus;
+                $('#orderStatusTabs a').removeClass('active')
+                    .filter(`[data-status="${requestedStatus}"]`).addClass('active');
+            }
+            updateOrdersTableTitle();
+            loadOrdersList();
+        });
+    </script>
+</body>
+</html>

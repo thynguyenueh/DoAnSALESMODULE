@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Thêm Khách Hàng</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a></li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="pos-tao-don.html"><i class="fas fa-fw fa-shopping-cart"></i><span>Tạo Đơn Bán Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a></li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+                <div class="container-fluid">
+                    <div class="mb-4">
+                        <h1 id="page-title" class="h3 mb-1 text-gray-800">Thêm khách hàng</h1>
+                        <p id="page-description" class="text-muted mb-0">Nhập thông tin khách hàng mới vào hệ thống.</p>
+                    </div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3"><h2 id="form-title" class="h6 m-0 font-weight-bold text-primary">Thông tin khách hàng</h2></div>
+                        <div class="card-body">
+                            <div id="form-error" class="alert alert-danger d-none" role="alert"></div>
+                            <form id="customer-form" novalidate>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="customer-code">Mã khách hàng <span class="text-danger">*</span></label>
+                                        <input id="customer-code" name="code" class="form-control" maxlength="250" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="customer-name">Tên khách hàng <span class="text-danger">*</span></label>
+                                        <input id="customer-name" name="name" class="form-control" maxlength="250" required>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="customer-phone">Điện thoại</label>
+                                        <input id="customer-phone" name="phone" type="tel" class="form-control" maxlength="250">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="customer-email">Email</label>
+                                        <input id="customer-email" name="email" type="email" class="form-control" maxlength="250">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="address-city">Tỉnh / thành phố</label>
+                                        <select id="address-city" class="form-control"><option value="">Đang tải danh sách...</option></select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="address-ward">Phường / xã / đặc khu</label>
+                                        <select id="address-ward" class="form-control" disabled><option value="">Chọn thành phố trước</option></select>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="customer-address-detail">Địa chỉ chi tiết</label>
+                                        <textarea id="customer-address-detail" class="form-control" rows="2" maxlength="150" placeholder="Số nhà, đường, khu vực..."></textarea>
+                                    </div>
+                                    <div class="form-group col-md-6 d-none" id="customer-status-group">
+                                        <label for="customer-status">Trạng thái</label>
+                                        <select id="customer-status" name="isactive" class="form-control">
+                                            <option value="true">Hoạt động</option>
+                                            <option value="false">Ngưng hoạt động</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-column flex-sm-row justify-content-end">
+                                    <a class="btn btn-light mr-sm-2 mb-2 mb-sm-0" href="quan-ly-khach-hang.html">Quay lại</a>
+                                    <button id="submit-customer" class="btn btn-primary" type="submit"><i class="fas fa-plus mr-1"></i> <span id="submit-label">Thêm mới</span></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white"><div class="container my-auto text-center"><span>Quản Lý Bán Hàng 2026</span></div></footer>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+        <script src="js/sidebar-account.js"></script>
+    <script src="js/vietnam-address.js"></script>
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+        const customerForm = document.getElementById('customer-form');
+        const submitButton = document.getElementById('submit-customer');
+        const errorBox = document.getElementById('form-error');
+        const customerId = new URLSearchParams(window.location.search).get('id');
+        const isEditing = customerId !== null;
+        const citySelect = document.getElementById('address-city');
+        const wardSelect = document.getElementById('address-ward');
+        const detailInput = document.getElementById('customer-address-detail');
+        let administrativeUnits = [];
+        const addressReady = VietnamAddress.loadUnits().then(units => {
+            administrativeUnits = units;
+            VietnamAddress.setOptions(citySelect, units, 'Chọn tỉnh / thành phố');
+            citySelect.addEventListener('change', () => VietnamAddress.fillWardSelect(units, citySelect, wardSelect));
+        }).catch(error => {
+            console.error('Không tải được danh sách địa giới hành chính:', error);
+            errorBox.textContent = error.message;
+            errorBox.classList.remove('d-none');
+            submitButton.disabled = true;
+        });
+        if (isEditing) {
+            document.getElementById('page-title').textContent = 'Chỉnh sửa khách hàng';
+            document.getElementById('page-description').textContent = 'Cập nhật thông tin khách hàng rồi chọn Lưu thay đổi.';
+            document.getElementById('submit-label').textContent = 'Lưu thay đổi';
+            submitButton.querySelector('i').className = 'fas fa-save mr-1';
+            document.getElementById('customer-status-group').classList.remove('d-none');
+        }
+        async function loadCustomerForEdit() {
+            if (!isEditing) return;
+            if (!/^\d+$/.test(customerId)) {
+                errorBox.textContent = 'Mã khách hàng không hợp lệ.';
+                errorBox.classList.remove('d-none');
+                submitButton.disabled = true;
+                return;
+            }
+            submitButton.disabled = true;
+            try {
+                await addressReady;
+                if (!administrativeUnits.length) return;
+                const response = await fetch(`${API_BASE_URL}/api/catalogs/customers`);
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không tải được thông tin khách hàng.');
+                const customer = result.data.find(record => String(record.id) === customerId);
+                if (!customer) throw new Error('Không tìm thấy khách hàng cần chỉnh sửa.');
+                for (const field of ['code', 'name', 'phone', 'email']) {
+                    customerForm.elements[field].value = customer[field] || '';
+                }
+                const address = VietnamAddress.parseAddress(customer.address, administrativeUnits);
+                citySelect.value = String(address.cityCode || '');
+                VietnamAddress.fillWardSelect(administrativeUnits, citySelect, wardSelect, address.wardCode);
+                detailInput.value = address.detail;
+                customerForm.elements.isactive.value = String(customer.isactive);
+            } catch (error) {
+                console.error('Không tải được thông tin khách hàng:', error);
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+            } finally {
+                submitButton.disabled = !errorBox.classList.contains('d-none');
+            }
+        }
+        customerForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            if (!customerForm.reportValidity()) return;
+            await addressReady;
+            if (!administrativeUnits.length) return;
+            submitButton.disabled = true;
+            errorBox.classList.add('d-none');
+            const body = Object.fromEntries(new FormData(customerForm).entries());
+            body.address = VietnamAddress.formatAddress(detailInput.value, citySelect, wardSelect);
+            if (isEditing) body.isactive = body.isactive === 'true';
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/catalogs/customers${isEditing ? `/${encodeURIComponent(customerId)}` : ''}`, {
+                    method: isEditing ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không thể thêm khách hàng.');
+                window.location.href = `quan-ly-khach-hang.html?${isEditing ? 'updated=1' : 'created=1'}`;
+            } catch (error) {
+                console.error('Không thể thêm khách hàng:', error);
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+        loadCustomerForEdit();
+    </script>
+</body>
+</html>

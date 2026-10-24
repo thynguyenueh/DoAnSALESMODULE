@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Phiếu Thu - Sales Module</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <link href="css/table-tools.css" rel="stylesheet">
+    <style>
+        .finance-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: .75rem;
+        }
+        .finance-search-box {
+            width: min(100%, 360px);
+        }
+        .finance-filter-menu {
+            position: fixed;
+            width: 260px;
+            max-width: min(260px, calc(100vw - 2rem));
+            margin-top: 0;
+            padding: .875rem !important;
+            border: 1px solid #e5eaf2;
+            border-radius: .75rem;
+            background: #fff;
+            box-shadow: 0 .5rem 1.25rem rgba(31, 45, 61, .12);
+            z-index: 1050;
+        }
+        .finance-filter-menu label {
+            margin-bottom: .35rem;
+            color: #596579;
+            font-size: .75rem;
+            font-weight: 700;
+        }
+        .finance-filter-menu .form-control {
+            min-height: 2.4rem;
+            border-color: #dce3ed;
+            border-radius: .45rem;
+        }
+        .finance-filter-trigger,
+        .finance-sort-trigger {
+            margin-left: .15rem;
+            padding: 0 .2rem;
+            color: #718096;
+            vertical-align: middle;
+        }
+        .finance-filter-trigger:hover,
+        .finance-filter-trigger:focus,
+        .finance-filter-trigger.text-primary,
+        .finance-sort-trigger.text-primary {
+            color: #3b5fc0 !important;
+        }
+        .finance-filter-selection {
+            display: block;
+            margin-top: .25rem;
+            color: #3b5fc0;
+            font-size: .7rem;
+            font-weight: 700;
+            white-space: normal;
+        }
+        .docno-badge {
+            font-family: monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a></li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="pos-tao-don.html"><i class="fas fa-fw fa-shopping-cart"></i><span>Tạo Đơn Bán Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a></li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+        </ul>
+
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+
+                <div class="container-fluid">
+                    <h1 class="h3 mb-3 text-gray-800"><i class="fas fa-file-invoice-dollar text-success mr-2"></i>Quản Lý Phiếu Thu</h1>
+                    
+                    <div id="page-error" class="alert alert-danger d-none"></div>
+
+                    <div class="alert alert-info shadow-sm mb-4">
+                        <i class="fas fa-info-circle mr-1"></i> <strong>Quy trình thu tiền:</strong> Chọn đơn hàng còn công nợ để ghi nhận tiền thanh toán từ khách. Tiền hoàn do trả hàng sẽ được thực hiện tại trang <a href="tra-hang.html" class="alert-link">Trả Hàng / Phiếu Chi</a>.
+                    </div>
+
+                    <div class="row">
+                        <!-- Form Lập Phiếu Thu -->
+                        <div class="col-xl-4 col-lg-5 mb-4">
+                            <div class="card shadow border-left-success">
+                                <div class="card-header py-3 bg-white">
+                                    <h6 class="m-0 font-weight-bold text-success"><i class="fas fa-plus-circle mr-1"></i> Ghi Nhận Phiếu Thu Tiền</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="receipt-form">
+                                        <div class="form-group">
+                                            <label class="small font-weight-bold text-dark" for="receipt-docno">Mã phiếu thu (Tự động)</label>
+                                            <input id="receipt-docno" class="form-control bg-light font-weight-bold text-primary" readonly required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small font-weight-bold text-dark" for="order-select">Chọn đơn hàng còn công nợ <span class="text-danger">*</span></label>
+                                            <select id="order-select" class="form-control" required></select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small font-weight-bold text-dark" for="receipt-customer">Khách hàng</label>
+                                            <input id="receipt-customer" class="form-control bg-light" readonly placeholder="Tự điền theo đơn...">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="small font-weight-bold text-dark" for="receipt-amount">Số tiền thu</label>
+                                            <input id="receipt-amount" class="form-control bg-light font-weight-bold text-success" placeholder="0 VNĐ" readonly required>
+                                        </div>
+                                        <button class="btn btn-success btn-block font-weight-bold py-2 mt-4" type="submit">
+                                            <i class="fas fa-file-invoice-dollar mr-1"></i> Xác Nhận Thu Tiền
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bảng Lịch Sử Phiếu Thu -->
+                        <div class="col-xl-8 col-lg-7 mb-4">
+                            <div class="card shadow">
+                                <div class="card-header py-3 bg-white d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                                    <h6 class="m-0 font-weight-bold text-primary mb-2 mb-md-0">
+                                        <i class="fas fa-history mr-1"></i> Lịch Sử Các Phiếu Thu Tiền
+                                    </h6>
+                                    <div class="finance-toolbar mt-2 mt-md-0">
+                                        <div class="input-group input-group-sm finance-search-box">
+                                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-search"></i></span></div>
+                                            <input id="receipt-history-search" type="search" class="form-control" placeholder="Tìm mã phiếu, đơn hàng, khách..." aria-label="Tìm phiếu thu">
+                                        </div>
+                                        <span class="small text-muted text-nowrap">Hiển thị: <span id="receipt-history-count">0 / 0</span></span>
+                                        <button id="receipt-history-clear" class="btn btn-sm btn-link p-0 ml-1" type="button" disabled>Xóa lọc</button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-sm" id="receipt-history-table" width="100%">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="text-nowrap" style="width: 140px;">Thời gian
+                                                        <button class="btn btn-sm btn-link finance-sort-trigger" type="button" data-sort="docdate"><i class="fas fa-sort-alpha-down"></i></button>
+                                                        <div class="dropdown d-inline-block">
+                                                            <button class="btn btn-sm btn-link finance-filter-trigger" type="button" data-filter="date"><i class="fas fa-filter"></i></button>
+                                                            <div class="dropdown-menu p-3 finance-filter-menu">
+                                                                <label for="receipt-history-from">Từ ngày</label><input id="receipt-history-from" type="date" class="form-control form-control-sm mb-2">
+                                                                <label for="receipt-history-to">Đến ngày</label><input id="receipt-history-to" type="date" class="form-control form-control-sm mb-2">
+                                                                <button class="btn btn-sm btn-outline-secondary finance-clear-column" type="button">Bỏ lọc ngày</button>
+                                                            </div>
+                                                        </div><span class="finance-filter-selection" data-filter-selection="date"></span>
+                                                    </th>
+                                                    <th class="text-nowrap">Mã phiếu thu
+                                                        <button class="btn btn-sm btn-link finance-sort-trigger" type="button" data-sort="docno"><i class="fas fa-sort-alpha-down"></i></button>
+                                                        <div class="dropdown d-inline-block">
+                                                            <button class="btn btn-sm btn-link finance-filter-trigger" type="button" data-filter="docno"><i class="fas fa-filter"></i></button>
+                                                            <div class="dropdown-menu p-3 finance-filter-menu">
+                                                                <label for="receipt-filter-docno">Mã phiếu thu</label><input id="receipt-filter-docno" data-filter-field="docno" type="search" class="form-control form-control-sm" placeholder="Nhập mã phiếu...">
+                                                                <button class="btn btn-sm btn-outline-secondary finance-clear-column mt-2" type="button">Bỏ lọc</button>
+                                                            </div>
+                                                        </div><span class="finance-filter-selection" data-filter-selection="docno"></span>
+                                                    </th>
+                                                    <th class="text-nowrap">Mã đơn
+                                                        <button class="btn btn-sm btn-link finance-sort-trigger" type="button" data-sort="order_docno"><i class="fas fa-sort-alpha-down"></i></button>
+                                                        <div class="dropdown d-inline-block">
+                                                            <button class="btn btn-sm btn-link finance-filter-trigger" type="button" data-filter="order_docno"><i class="fas fa-filter"></i></button>
+                                                            <div class="dropdown-menu p-3 finance-filter-menu">
+                                                                <label for="receipt-filter-order">Mã đơn hàng</label><input id="receipt-filter-order" data-filter-field="order_docno" type="search" class="form-control form-control-sm" placeholder="Nhập mã đơn...">
+                                                                <button class="btn btn-sm btn-outline-secondary finance-clear-column mt-2" type="button">Bỏ lọc</button>
+                                                            </div>
+                                                        </div><span class="finance-filter-selection" data-filter-selection="order_docno"></span>
+                                                    </th>
+                                                    <th class="text-nowrap">Khách hàng
+                                                        <button class="btn btn-sm btn-link finance-sort-trigger" type="button" data-sort="customer_name"><i class="fas fa-sort-alpha-down"></i></button>
+                                                        <div class="dropdown d-inline-block">
+                                                            <button class="btn btn-sm btn-link finance-filter-trigger" type="button" data-filter="customer_name"><i class="fas fa-filter"></i></button>
+                                                            <div class="dropdown-menu p-3 finance-filter-menu">
+                                                                <label for="receipt-filter-customer">Tên khách hàng</label><input id="receipt-filter-customer" data-filter-field="customer_name" type="search" class="form-control form-control-sm" placeholder="Nhập tên khách...">
+                                                                <button class="btn btn-sm btn-outline-secondary finance-clear-column mt-2" type="button">Bỏ lọc</button>
+                                                            </div>
+                                                        </div><span class="finance-filter-selection" data-filter-selection="customer_name"></span>
+                                                    </th>
+                                                    <th class="text-right" style="width: 130px;">Số tiền</th>
+                                                    <th class="text-nowrap" style="width: 110px;">Người tạo</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="receipt-rows">
+                                                <tr><td colspan="6" class="text-center text-muted py-3">Đang tải lịch sử phiếu thu...</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto text-center">
+                    <span>Quản Lý Bán Hàng 2026</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sidebar-account.js"></script>
+    <script src="js/table-tools.js"></script>
+    <script>
+        const API_BASE_URL = window.location.port === '3000' ? '' : 'http://localhost:3000';
+        const errorBox = document.getElementById('page-error');
+        let outstandingOrders = [];
+        let receiptsHistory = [];
+        let financePopup = null;
+        let financeSort = { field: '', direction: 'asc' };
+        const financeFilters = { docno: '', order_docno: '', customer_name: '' };
+
+        function esc(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+        }
+
+        function money(value) {
+            return `${Number(value || 0).toLocaleString('vi-VN')} VNĐ`;
+        }
+
+        function normalizeText(value) {
+            return String(value == null ? '' : value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLocaleLowerCase('vi');
+        }
+
+        function dateKey(value) {
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) return '';
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        async function api(url, options) {
+            const response = await fetch(`${API_BASE_URL}${url}`, options);
+            if (!(response.headers.get('content-type') || '').includes('application/json')) {
+                throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+            }
+            const result = await response.json();
+            if (!response.ok || !result.success) throw new Error(result.message || 'Yêu cầu không thành công.');
+            return result;
+        }
+
+        function showError(message) {
+            errorBox.textContent = message;
+            errorBox.classList.remove('d-none');
+        }
+
+        function newDocno() {
+            const date = new Date();
+            const dateStr = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}`;
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('receipt-docno').value = `PT-${dateStr}-${randomNum}`;
+        }
+
+        function positionFilter(menu, trigger) {
+            const triggerRect = trigger.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+            const gutter = 8;
+            const left = Math.max(gutter, Math.min(triggerRect.left, window.innerWidth - menuRect.width - gutter));
+            const below = triggerRect.bottom + gutter;
+            const top = below + menuRect.height <= window.innerHeight - gutter ? below : Math.max(gutter, triggerRect.top - menuRect.height - gutter);
+            menu.style.left = `${left}px`;
+            menu.style.top = `${top}px`;
+        }
+
+        function closeFilter(returnFocus) {
+            if (!financePopup) return;
+            const { menu, trigger } = financePopup;
+            menu.classList.remove('show');
+            trigger.setAttribute('aria-expanded', 'false');
+            financePopup = null;
+            if (returnFocus) trigger.focus();
+        }
+
+        function renderReceiptsHistory() {
+            const query = normalizeText(document.getElementById('receipt-history-search').value.trim());
+            const from = document.getElementById('receipt-history-from').value;
+            const to = document.getElementById('receipt-history-to').value;
+
+            const filteredRows = receiptsHistory.filter(row => {
+                const searchable = normalizeText([row.docno, row.order_docno, row.customer_name, money(row.amount)].join(' '));
+                const d = dateKey(row.docdate);
+                return searchable.includes(query) &&
+                    (!from || (d && d >= from)) &&
+                    (!to || (d && d <= to)) &&
+                    Object.entries(financeFilters).every(([field, value]) => !value || normalizeText(row[field]).includes(normalizeText(value)));
+            });
+
+            if (financeSort.field) {
+                const { field, direction } = financeSort;
+                const sortDirection = direction === 'asc' ? 1 : -1;
+                filteredRows.sort((a, b) => {
+                    if (field === 'docdate') return ((new Date(a.docdate).getTime() || 0) - (new Date(b.docdate).getTime() || 0)) * sortDirection;
+                    return String(a[field] || '').localeCompare(String(b[field] || ''), 'vi', { sensitivity: 'base', numeric: true }) * sortDirection;
+                });
+            } else {
+                filteredRows.sort((a, b) => (new Date(b.docdate).getTime() || 0) - (new Date(a.docdate).getTime() || 0));
+            }
+
+            document.getElementById('receipt-history-count').textContent = `${filteredRows.length.toLocaleString('vi-VN')} / ${receiptsHistory.length.toLocaleString('vi-VN')}`;
+            const hasFilters = Boolean(query || from || to || financeSort.field || Object.values(financeFilters).some(Boolean));
+            document.getElementById('receipt-history-clear').disabled = !hasFilters;
+
+            const selections = { date: from || to ? `${from || 'Đầu kỳ'} → ${to || 'Hiện tại'}` : '', ...financeFilters };
+            document.querySelectorAll('.finance-filter-trigger').forEach(trigger => {
+                const field = trigger.dataset.filter;
+                const selection = document.querySelector(`[data-filter-selection="${field}"]`);
+                if (selection) {
+                    selection.textContent = selections[field] || '';
+                    selection.classList.toggle('d-none', !selections[field]);
+                }
+                trigger.classList.toggle('text-primary', Boolean(selections[field]));
+            });
+
+            document.getElementById('receipt-rows').innerHTML = filteredRows.map(row => `
+                <tr>
+                    <td class="small">${new Date(row.docdate).toLocaleString('vi-VN')}</td>
+                    <td><span class="badge badge-success docno-badge">${esc(row.docno)}</span></td>
+                    <td class="font-weight-bold text-primary">${esc(row.order_docno || '-')}</td>
+                    <td>${esc(row.customer_code ? '[' + row.customer_code + '] ' : '')}${esc(row.customer_name || '')}</td>
+                    <td class="text-right font-weight-bold text-success">+${money(row.amount)}</td>
+                    <td class="small text-muted">${esc(row.createdby || 'System')}</td>
+                </tr>
+            `).join('') || `<tr><td colspan="6" class="text-center text-muted py-3">${receiptsHistory.length ? 'Không tìm thấy kết quả phù hợp.' : 'Chưa có phiếu thu nào.'}</td></tr>`;
+        }
+
+        function initializeFilters() {
+            document.querySelectorAll('.finance-filter-trigger').forEach(trigger => {
+                const menu = trigger.closest('.dropdown').querySelector('.finance-filter-menu');
+                trigger.dataset.menuId = menu.id || `finance-filter-menu-${trigger.dataset.filter}`;
+                menu.id = trigger.dataset.menuId;
+                document.body.appendChild(menu);
+            });
+
+            document.getElementById('receipt-history-search').addEventListener('input', renderReceiptsHistory);
+            document.querySelectorAll('.finance-filter-menu input').forEach(input => {
+                input.addEventListener('input', () => {
+                    if (input.dataset.filterField) financeFilters[input.dataset.filterField] = input.value.trim();
+                    renderReceiptsHistory();
+                });
+            });
+
+            document.querySelectorAll('.finance-sort-trigger').forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const field = trigger.dataset.sort;
+                    financeSort = { field, direction: financeSort.field === field && financeSort.direction === 'asc' ? 'desc' : 'asc' };
+                    renderReceiptsHistory();
+                });
+            });
+
+            document.querySelectorAll('.finance-filter-trigger').forEach(trigger => {
+                trigger.addEventListener('click', event => {
+                    event.preventDefault();
+                    if (financePopup && financePopup.trigger === trigger) { closeFilter(false); return; }
+                    closeFilter(false);
+                    const menu = document.getElementById(trigger.dataset.menuId);
+                    financePopup = { menu, trigger };
+                    menu.classList.add('show');
+                    trigger.setAttribute('aria-expanded', 'true');
+                    positionFilter(menu, trigger);
+                });
+            });
+
+            document.addEventListener('click', event => {
+                if (!financePopup || financePopup.menu.contains(event.target) || event.target.closest('.finance-filter-trigger')) return;
+                closeFilter(false);
+            });
+
+            document.querySelectorAll('.finance-clear-column').forEach(button => {
+                button.addEventListener('click', () => {
+                    const menu = button.closest('.finance-filter-menu');
+                    menu.querySelectorAll('input').forEach(input => {
+                        input.value = '';
+                        if (input.dataset.filterField) financeFilters[input.dataset.filterField] = '';
+                    });
+                    renderReceiptsHistory();
+                });
+            });
+
+            document.getElementById('receipt-history-clear').addEventListener('click', () => {
+                document.getElementById('receipt-history-search').value = '';
+                document.getElementById('receipt-history-from').value = '';
+                document.getElementById('receipt-history-to').value = '';
+                financeSort = { field: '', direction: 'asc' };
+                Object.keys(financeFilters).forEach(k => { financeFilters[k] = ''; });
+                document.querySelectorAll('.finance-filter-menu input').forEach(i => { i.value = ''; });
+                renderReceiptsHistory();
+            });
+        }
+
+        async function loadFinanceData() {
+            try {
+                const [balancesResult, receiptsResult] = await Promise.all([
+                    api('/api/finance/order-balances'),
+                    api('/api/finance/receipts')
+                ]);
+
+                receiptsHistory = receiptsResult.data || [];
+                outstandingOrders = (balancesResult.data || [])
+                    .map(order => ({ ...order, due: Number(order.outstanding_amount) }))
+                    .filter(order => order.due > 0);
+
+                document.getElementById('order-select').innerHTML = '<option value="">-- Chọn đơn hàng --</option>' +
+                    outstandingOrders.map(order => `<option value="${Number(order.id)}">${esc(order.docno)} - ${esc(order.customer_name || order.customername || '')} (Nợ: ${money(order.due)})</option>`).join('');
+
+                renderReceiptsHistory();
+            } catch (error) {
+                console.error('Không tải được dữ liệu thu chi:', error);
+                showError(error.message);
+            }
+        }
+
+        document.getElementById('order-select').addEventListener('change', event => {
+            const order = outstandingOrders.find(row => Number(row.id) === Number(event.target.value));
+            document.getElementById('receipt-amount').value = order ? money(order.due) : '';
+            document.getElementById('receipt-customer').value = order ? order.customer_name || '' : '';
+        });
+
+        document.getElementById('receipt-form').addEventListener('submit', async event => {
+            event.preventDefault();
+            const orderId = Number(document.getElementById('order-select').value);
+            const docno = document.getElementById('receipt-docno').value.trim();
+            const order = outstandingOrders.find(row => Number(row.id) === orderId);
+
+            if (!order || order.due <= 0 || !docno) {
+                showError('Vui lòng chọn đơn hàng còn công nợ hợp lệ.');
+                return;
+            }
+
+            try {
+                const result = await api(`/api/orders/${orderId}/receipts`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ docno, amount: order.due })
+                });
+
+                if (result.remainingDebt === 0) {
+                    const fromStatus = new URLSearchParams(window.location.search).get('from');
+                    window.location.href = 'danh-sach-don-hang.html' + (fromStatus ? '#' + encodeURIComponent(fromStatus) : '#Paid');
+                } else {
+                    event.target.reset();
+                    document.getElementById('receipt-customer').value = '';
+                    newDocno();
+                    await loadFinanceData();
+                }
+            } catch (error) {
+                showError(error.message);
+            }
+        });
+
+        newDocno();
+        initializeFilters();
+        loadFinanceData().then(() => {
+            const orderId = new URLSearchParams(window.location.search).get('orderid');
+            if (orderId && outstandingOrders.some(order => String(order.id) === orderId)) {
+                document.getElementById('order-select').value = orderId;
+                document.getElementById('order-select').dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+</html>

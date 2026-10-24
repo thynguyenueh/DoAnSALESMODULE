@@ -1,0 +1,9 @@
+BEGIN;
+
+CREATE SEQUENCE IF NOT EXISTS inventory_docno_seq
+    AS BIGINT
+    START WITH 1
+    INCREMENT BY 1
+    NO CYCLE;
+
+COMMIT;

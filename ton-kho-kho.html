@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tồn Kho Theo Kho Hàng</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <link href="css/table-tools.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-boxes-packing"></i></div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">OMS Admin</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a>
+            </li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item active">
+                <a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a>
+            </li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        </ul>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+
+                <div class="container-fluid">
+                    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4">
+                        <div>
+                            <h1 class="h3 mb-1 text-gray-800">Tồn kho theo kho</h1>
+                            <div id="warehouse-title" class="text-muted"></div>
+                        </div>
+                        <a class="btn btn-outline-secondary mt-3 mt-sm-0" href="quan-ly-kho.html">
+                            <i class="fas fa-arrow-left mr-1"></i>Danh sách kho hàng
+                        </a>
+                    </div>
+
+                    <div id="page-error" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="page-success" class="alert alert-success d-none" role="status"></div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h2 class="h6 m-0 font-weight-bold text-primary">Danh sách sản phẩm tồn kho</h2>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-bordered table-hover" data-table-tools="all">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th class="text-right">Đã nhập</th>
+                                        <th class="text-right">Đã bán</th>
+                                        <th class="text-right">Tồn khả dụng</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-rows">
+                                    <tr><td colspan="6" class="text-center text-muted">Đang tải...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto text-center">
+                    <span>Quản Lý Bán Hàng 2026</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Modal Lập Phiếu Nhập Kho -->
+    <div class="modal fade" id="inventory-modal" tabindex="-1" role="dialog" aria-labelledby="inventory-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form id="inventory-form">
+                    <div class="modal-header">
+                        <h2 class="modal-title h5 font-weight-bold text-primary" id="inventory-modal-title">Lập phiếu nhập kho</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Đóng"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="inventory-error" class="alert alert-danger d-none" role="alert"></div>
+                        <div class="form-group">
+                            <label for="inventory-docno">Mã phiếu nhập (tự sinh)</label>
+                            <input id="inventory-docno" class="form-control bg-light font-weight-bold text-primary" readonly required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-product">Sản phẩm</label>
+                            <input id="inventory-product" class="form-control bg-light" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory-quantity">Số lượng nhập <span class="text-danger">*</span></label>
+                            <input id="inventory-quantity" type="number" class="form-control" min="1" step="1" value="1" required placeholder="Nhập số lượng từ 1 trở lên...">
+                        </div>
+                        <p class="small text-muted mb-0">Phiếu nhập sẽ được lưu vào lịch sử giao dịch kho.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Hủy</button>
+                        <button id="submit-inventory" class="btn btn-primary" type="submit">
+                            <i class="fas fa-save mr-1"></i>Ghi nhận nhập kho
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sidebar-account.js"></script>
+    <script src="js/table-tools.js"></script>
+
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+        const warehouseId = new URLSearchParams(window.location.search).get('warehouseid');
+        const rows = document.getElementById('stock-rows');
+        let selectedProduct = null;
+        let warehouse = null;
+        let products = [];
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[char]));
+        }
+
+        function generateFallbackDocNo() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const random = Math.floor(1000 + Math.random() * 9000);
+            return `PN-${year}${month}${day}-${random}`;
+        }
+
+        async function api(url, options) {
+            const response = await fetch(`${API_BASE_URL}${url}`, options);
+            if (!(response.headers.get('content-type') || '').includes('application/json')) {
+                throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+            }
+            const result = await response.json();
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || 'Yêu cầu không thành công.');
+            }
+            return result;
+        }
+
+        async function loadStock() {
+            if (!/^\d+$/.test(warehouseId || '')) throw new Error('Mã kho không hợp lệ.');
+            const [warehousesResult, productsResult, stockResult] = await Promise.all([
+                api('/api/catalogs/warehouses'), api('/api/catalogs/products'), api('/api/stock')
+            ]);
+            warehouse = warehousesResult.data.find(item => String(item.id) === warehouseId);
+            if (!warehouse) throw new Error('Không tìm thấy kho hàng.');
+            products = productsResult.data.filter(product => product.isactive);
+            document.getElementById('warehouse-title').textContent = `${warehouse.code} - ${warehouse.name}${warehouse.location ? ` · ${warehouse.location}` : ''}`;
+            
+            const stockByProduct = new Map(stockResult.data
+                .filter(item => Number(item.warehouse_id) === Number(warehouseId))
+                .map(item => [Number(item.product_id), item]));
+            
+            rows.innerHTML = products.map(product => {
+                const stock = stockByProduct.get(Number(product.id)) || {};
+                return `<tr>
+                    <td class="font-weight-bold">${escapeHtml(product.code)}</td>
+                    <td>${escapeHtml(product.name)}</td>
+                    <td class="text-right">${Number(stock.total_imported || 0).toLocaleString('vi-VN')}</td>
+                    <td class="text-right">${Number(stock.total_sold || 0).toLocaleString('vi-VN')}</td>
+                    <td class="text-right font-weight-bold">${Number(stock.available_stock || 0).toLocaleString('vi-VN')}</td>
+                    <td><button type="button" class="btn btn-sm btn-outline-primary stock-entry" data-product-id="${Number(product.id)}"><i class="fas fa-plus mr-1"></i>Nhập kho</button></td>
+                </tr>`;
+            }).join('') || '<tr><td colspan="6" class="text-center text-muted">Chưa có sản phẩm hoạt động.</td></tr>';
+        }
+
+        // Xử lý nút Click Nhập Kho
+        document.getElementById('stock-rows').addEventListener('click', async event => {
+            const button = event.target.closest('.stock-entry');
+            if (!button) return;
+
+            selectedProduct = products.find(product => Number(product.id) === Number(button.dataset.productId));
+            if (!selectedProduct) return;
+
+            const errorBox = document.getElementById('inventory-error');
+            const docnoInput = document.getElementById('inventory-docno');
+            const submitButton = document.getElementById('submit-inventory');
+
+            errorBox.classList.add('d-none');
+            document.getElementById('inventory-product').value = `${selectedProduct.code} - ${selectedProduct.name}`;
+            document.getElementById('inventory-quantity').value = '1';
+            
+            $('#inventory-modal').modal('show');
+
+            try {
+                const result = await api('/api/inventory/next-docno');
+                if (result && result.data && result.data.docno) {
+                    docnoInput.value = result.data.docno;
+                } else {
+                    docnoInput.value = generateFallbackDocNo();
+                }
+            } catch (error) {
+                console.warn('Tự động tạo mã tự sinh:', error.message);
+                docnoInput.value = generateFallbackDocNo();
+            } finally {
+                submitButton.disabled = false;
+            }
+        });
+
+        // Xử lý gửi Form Nhập Kho (Kiểm tra & Ép kiểu dữ liệu chuẩn)
+        document.getElementById('inventory-form').addEventListener('submit', async event => {
+            event.preventDefault();
+            const submitButton = document.getElementById('submit-inventory');
+            const errorBox = document.getElementById('inventory-error');
+            
+            const docno = document.getElementById('inventory-docno').value.trim();
+            const productid = Number(selectedProduct ? selectedProduct.id : 0);
+            const whid = Number(warehouse ? warehouse.id : 0);
+            const quantity = parseInt(document.getElementById('inventory-quantity').value, 10);
+
+            if (!docno) {
+                showError('Mã phiếu nhập không được để trống.');
+                return;
+            }
+            if (!productid || isNaN(productid)) {
+                showError('Vui lòng chọn sản phẩm hợp lệ.');
+                return;
+            }
+            if (!whid || isNaN(whid)) {
+                showError('Mã kho không hợp lệ.');
+                return;
+            }
+            if (isNaN(quantity) || quantity < 1) {
+                showError('Số lượng nhập phải lớn hơn hoặc bằng 1.');
+                return;
+            }
+
+            submitButton.disabled = true;
+            errorBox.classList.add('d-none');
+
+            try {
+                const result = await api('/api/inventory/movements', {
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        docno: docno,
+                        productid: productid,
+                        warehouseid: whid,
+                        quantity: quantity
+                    })
+                });
+
+                $('#inventory-modal').modal('hide');
+                await loadStock();
+                
+                const success = document.getElementById('page-success');
+                success.textContent = `Ghi nhận nhập kho thành công! Mã chứng từ: ${result.docno || docno}`;
+                success.classList.remove('d-none');
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                submitButton.disabled = false;
+            }
+
+            function showError(msg) {
+                errorBox.textContent = msg;
+                errorBox.classList.remove('d-none');
+            }
+        });
+
+        // Chặn nhập số âm, số 0, dấu -, +, e, .
+        const qtyInput = document.getElementById('inventory-quantity');
+        qtyInput.addEventListener('keydown', function(e) {
+            if (['-', '+', 'e', 'E', '.'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        qtyInput.addEventListener('input', function() {
+            if (this.value !== '' && (parseInt(this.value, 10) < 1 || isNaN(this.value))) {
+                this.value = 1;
+            }
+        });
+
+        qtyInput.addEventListener('blur', function() {
+            if (!this.value || parseInt(this.value, 10) < 1) {
+                this.value = 1;
+            }
+        });
+
+        loadStock().catch(error => {
+            console.error('Không tải được tồn kho:', error);
+            rows.innerHTML = `<tr><td colspan="6" class="text-center text-danger">${escapeHtml(error.message)}</td></tr>`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tạo Đơn Bán Hàng (POS)</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+
+    <style>
+        .error-border {
+            border: 1px solid #e74a3b !important;
+            box-shadow: 0 0 0 0.2rem rgba(231, 74, 59, 0.25) !important;
+        }
+        .error-message {
+            color: #e74a3b;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 3px;
+            display: block;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Báo Cáo</span>
+                </a>
+            </li>
+
+            <hr class="sidebar-divider">
+
+            <div class="sidebar-heading">
+                Nghiệp Vụ Bán Hàng
+            </div>
+
+            <li class="nav-item"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-danh-muc.html">
+                    <i class="fas fa-fw fa-address-book"></i>
+                    <span>Danh Mục</span>
+                </a>
+            </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="pos-tao-don.html">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Tạo Đơn Bán Hàng</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="danh-sach-don-hang.html">
+                    <i class="fas fa-fw fa-list-alt"></i>
+                    <span>Quản Lý Đơn Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="tra-hang.html">
+                    <i class="fas fa-fw fa-undo"></i>
+                    <span>Trả Hàng / Phiếu Chi</span>
+                </a>
+            </li>
+
+            
+
+            
+            
+            
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <h4 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng</h4>
+                </nav>
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800"><i class="fas fa-shopping-cart text-primary mr-2"></i>Tạo Đơn Bán Hàng Mới (POS)</h1>
+                    </div>
+
+                    <div class="row">
+
+                        <!-- CỘT BÊN TRÁI: THÔNG TIN CHỌN HÀNG & DANH SÁCH MUA -->
+                        <div class="col-lg-8">
+                            
+                            <!-- Card 1: Chọn Thông Tin Chung (Khách hàng, Kho) -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 bg-primary text-white">
+                                    <h6 class="m-0 font-weight-bold">1. Thông Tin Khách Hàng & Kho Xuất</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="font-weight-bold text-gray-700">Khách Hàng (<span class="text-danger">*</span>):</label>
+                                            <select class="form-control" id="customerSelect">
+                                                <option value="">-- Đang tải danh sách Khách hàng... --</option>
+                                            </select>
+                                            <small class="error-message" id="customerErr"></small>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="font-weight-bold text-gray-700">Kho Xuất Hàng (<span class="text-danger">*</span>):</label>
+                                            <select class="form-control" id="warehouseSelect">
+                                                <option value="">-- Chọn Kho Xuất Hàng --</option>
+                                            </select>
+                                            <small class="error-message" id="warehouseErr"></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Chi Tiết Sản Phẩm Chọn Mua -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 bg-secondary text-white d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold">2. Danh Sách Sản Phẩm Mua</h6>
+                                    <button class="btn btn-sm btn-light font-weight-bold text-primary" id="btnAddRow">
+                                        <i class="fas fa-plus mr-1"></i>Thêm Dòng
+                                    </button>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered mb-0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th style="width: 35%;">Sản Phẩm</th>
+                                                    <th style="width: 10%;">Số Lượng</th>
+                                                    <th style="width: 15%;">Đơn Giá (VNĐ)</th>
+                                                    <th style="width: 15%;">Giảm Giá (VNĐ)</th>
+                                                    <th style="width: 15%;">Thành Tiền</th>
+                                                    <th style="width: 10%; text-align: center;">Xóa</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cartTableBody">
+                                                <!-- Các dòng sản phẩm sẽ được thêm động vào đây -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- CỘT BÊN PHẢI: TÍNH TIỀN & XÁC NHẬN THANH TOÁN -->
+                        <div class="col-lg-4">
+                            <div class="card shadow mb-4 border-left-success">
+                                <div class="card-header py-3 bg-success text-white">
+                                    <h6 class="m-0 font-weight-bold"><i class="fas fa-calculator mr-2"></i>Thanh Toán & Hóa Đơn</h6>
+                                </div>
+                                <div class="card-body">
+                                    
+                                    <div class="form-group">
+                                        <label class="text-xs font-weight-bold text-uppercase text-gray-600 mb-1">Mã Số Đơn Hàng (Tự sinh):</label>
+                                        <input type="text" id="docNoInput" class="form-control bg-light font-weight-bold text-danger" readonly>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <span class="h5 font-weight-bold text-gray-800">TỔNG CẦN THANH TOÁN:</span>
+                                        <span class="h5 font-weight-bold text-danger" id="totalAmountText">0 VNĐ</span>
+                                    </div>
+
+                                    <button class="btn btn-success btn-block btn-lg font-weight-bold shadow-sm mt-4" id="btnSubmitOrder">
+                                        <i class="fas fa-check-circle mr-2"></i>HOÀN TẤT & XUẤT ĐƠN
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Hệ Thống Bán Hàng 2026</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sidebar-account.js"></script>
+
+    <!-- SCRIPT TƯƠNG TÁC API VÀ POS -->
+    <script>
+        const API_BASE_URL = window.location.port === '3000' ? '' : 'http://localhost:3000';
+        let stockData = [];       // Dữ liệu tồn kho từ API v_product_stock
+        let warehousesList = [];  // Danh sách kho
+
+        // Khởi tạo Mã Đơn hàng
+        function generateDocNo() {
+            const now = new Date();
+            const timeStr = now.getFullYear().toString() +
+                            (now.getMonth() + 1).toString().padStart(2, '0') +
+                            now.getDate().toString().padStart(2, '0') + '-' +
+                            now.getHours().toString().padStart(2, '0') +
+                            now.getMinutes().toString().padStart(2, '0') +
+                            now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('docNoInput').value = 'HD' + timeStr;
+        }
+
+        // Hiện / Ẩn lỗi
+        function showError(element, msg) {
+            if (!element) return;
+            element.classList.add('error-border');
+            let errSmall = element.parentElement.querySelector('.error-message');
+            if (errSmall) {
+                errSmall.innerText = msg;
+            }
+        }
+
+        function clearError(element) {
+            if (!element) return;
+            element.classList.remove('error-border');
+            let errSmall = element.parentElement.querySelector('.error-message');
+            if (errSmall) {
+                errSmall.innerText = '';
+            }
+        }
+
+        // Tải Khách hàng
+        async function loadCustomers() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/customers`);
+                const result = await res.json();
+                const select = document.getElementById('customerSelect');
+                select.innerHTML = '<option value="">-- Chọn Khách Hàng --</option>';
+                if (result.success) {
+                    result.data.forEach(cust => {
+                        select.innerHTML += `<option value="${cust.id}">${cust.code} - ${cust.name}</option>`;
+                    });
+                }
+            } catch (err) {
+                console.error('Lỗi tải khách hàng:', err);
+            }
+        }
+
+        // Tải Kho hàng
+        async function loadWarehouses() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/warehouses`);
+                const result = await res.json();
+                const select = document.getElementById('warehouseSelect');
+                select.innerHTML = '<option value="">-- Chọn Kho Xuất Hàng --</option>';
+                if (result.success && result.data.length > 0) {
+                    warehousesList = result.data;
+                    result.data.forEach(wh => {
+                        select.innerHTML += `<option value="${wh.id}">${wh.name}</option>`;
+                    });
+                }
+            } catch (err) {
+                console.error('Lỗi tải kho:', err);
+            }
+        }
+
+        // Tải dữ liệu tồn kho từ view v_product_stock
+        async function loadStockData() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/stock`);
+                const result = await res.json();
+                if (result.success) {
+                    stockData = result.data;
+                    refreshAllProductDropdowns();
+                }
+            } catch (err) {
+                console.error('Lỗi tải tồn kho:', err);
+            }
+        }
+
+        // Lấy danh sách sản phẩm còn tồn kho > 0 theo Kho đang chọn
+        function getAvailableProductsBySelectedWarehouse() {
+            const currentWhId = document.getElementById('warehouseSelect').value;
+            if (!currentWhId) return [];
+
+            return stockData.filter(item => {
+                const itemWhId = item.warehouse_id || item.warehouseid;
+                const availableStock = Number(item.available_stock || item.availablestock || 0);
+                return String(itemWhId) === String(currentWhId) && availableStock > 0;
+            });
+        }
+
+        // Cập nhật lại danh sách sản phẩm ở tất cả các dòng
+        function refreshAllProductDropdowns() {
+            const currentWhId = document.getElementById('warehouseSelect').value;
+            const availableProducts = getAvailableProductsBySelectedWarehouse();
+            const selects = document.querySelectorAll('.product-select');
+
+            selects.forEach(select => {
+                const currentVal = select.value;
+                let optionsHtml = '';
+
+                if (!currentWhId) {
+                    optionsHtml = '<option value="">-- Vui lòng chọn kho trước --</option>';
+                } else if (availableProducts.length === 0) {
+                    optionsHtml = '<option value="">-- Kho này đã hết hàng --</option>';
+                } else {
+                    optionsHtml = '<option value="">-- Chọn Sản Phẩm --</option>';
+                    availableProducts.forEach(p => {
+                        const pId = p.product_id || p.productid;
+                        const pCode = p.product_code || p.productcode;
+                        const pName = p.product_name || p.productname;
+                        const stock = Number(p.available_stock || p.availablestock || 0);
+
+                        optionsHtml += `<option value="${pId}" data-stock="${stock}">${pCode} - ${pName} (Tồn: ${stock})</option>`;
+                    });
+                }
+
+                select.innerHTML = optionsHtml;
+
+                if (currentVal && select.querySelector(`option[value="${currentVal}"]`)) {
+                    select.value = currentVal;
+                } else {
+                    select.value = '';
+                    const tr = select.closest('tr');
+                    if (tr) {
+                        const qtyInput = tr.querySelector('.qty-input');
+                        qtyInput.dataset.maxStock = 0;
+                        qtyInput.value = '';
+                    }
+                }
+            });
+
+            calculateTotal();
+        }
+
+        // Thêm dòng mua sản phẩm mới
+        function addRow() {
+            const tbody = document.getElementById('cartTableBody');
+            const currentWhId = document.getElementById('warehouseSelect').value;
+            const availableProducts = getAvailableProductsBySelectedWarehouse();
+
+            let optionsHtml = '';
+            if (!currentWhId) {
+                optionsHtml = '<option value="">-- Vui lòng chọn kho trước --</option>';
+            } else if (availableProducts.length === 0) {
+                optionsHtml = '<option value="">-- Kho này đã hết hàng --</option>';
+            } else {
+                optionsHtml = '<option value="">-- Chọn Sản Phẩm --</option>';
+                availableProducts.forEach(p => {
+                    const pId = p.product_id || p.productid;
+                    const pCode = p.product_code || p.productcode;
+                    const pName = p.product_name || p.productname;
+                    const stock = Number(p.available_stock || p.availablestock || 0);
+
+                    optionsHtml += `<option value="${pId}" data-stock="${stock}">${pCode} - ${pName} (Tồn: ${stock})</option>`;
+                });
+            }
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>
+                    <select class="form-control form-control-sm product-select">
+                        ${optionsHtml}
+                    </select>
+                    <small class="error-message"></small>
+                </td>
+                <td>
+                    <input type="number" class="form-control form-control-sm text-center qty-input" value="" min="1" placeholder="Số lượng" data-max-stock="0">
+                    <small class="error-message"></small>
+                </td>
+                <td>
+                    <input type="number" class="form-control form-control-sm text-right price-input" value="" min="1" step="1000" placeholder="Đơn giá (≥ 1)">
+                    <small class="error-message"></small>
+                </td>
+                <td>
+                    <input type="number" class="form-control form-control-sm text-right discount-input" value="0" min="0" step="1000" placeholder="Giảm theo dòng">
+                    <small class="error-message"></small>
+                </td>
+                <td class="font-weight-bold align-middle text-right text-primary subtotal-text">
+                    0
+                </td>
+                <td class="text-center align-middle">
+                    <button class="btn btn-danger btn-sm btn-delete-row"><i class="fas fa-trash-alt"></i></button>
+                </td>
+            `;
+
+            tbody.appendChild(tr);
+
+            const productSelect = tr.querySelector('.product-select');
+            const qtyInput = tr.querySelector('.qty-input');
+            const priceInput = tr.querySelector('.price-input');
+            const discountInput = tr.querySelector('.discount-input');
+            const btnDelete = tr.querySelector('.btn-delete-row');
+
+            // Khi đổi sản phẩm
+            productSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const maxStock = Number(selectedOption.dataset.stock || 0);
+                qtyInput.dataset.maxStock = maxStock;
+
+                if (this.value) {
+                    clearError(productSelect);
+                    if (!qtyInput.value) qtyInput.value = 1;
+                    clearError(qtyInput);
+                } else {
+                    qtyInput.value = '';
+                }
+                calculateTotal();
+            });
+
+            // Chặn ký tự không hợp lệ khi gõ vào Số lượng
+            qtyInput.addEventListener('keydown', function(e) {
+                if (['e', 'E', '+', '-', '.', ','].includes(e.key)) {
+                    e.preventDefault();
+                }
+            });
+
+            // Kiểm tra chưa chọn sản phẩm mà đã tương tác Số lượng / Đơn giá
+            function checkProductSelectedBeforeInput(inputElem) {
+                if (!productSelect.value) {
+                    showError(productSelect, 'Vui lòng chọn sản phẩm trước!');
+                    inputElem.value = '';
+                    return false;
+                }
+                clearError(productSelect);
+                return true;
+            }
+
+            // Xử lý ô Số Lượng
+            qtyInput.addEventListener('input', function() {
+                if (!checkProductSelectedBeforeInput(this)) return;
+
+                const maxStock = Number(this.dataset.maxStock || 0);
+                this.value = this.value.replace(/[^0-9]/g, '');
+
+                let val = parseInt(this.value, 10);
+
+                if (isNaN(val) || val < 1) {
+                    showError(this, 'Số lượng phải ≥ 1!');
+                } else if (maxStock > 0 && val > maxStock) {
+                    this.value = maxStock;
+                    showError(this, `Vượt quá tồn kho khả dụng (tối đa ${maxStock})`);
+                } else {
+                    clearError(this);
+                }
+
+                calculateTotal();
+            });
+
+            // Chặn ký tự không hợp lệ khi gõ vào Đơn Giá
+            priceInput.addEventListener('keydown', function(e) {
+                if (['e', 'E', '+', '-'].includes(e.key)) {
+                    e.preventDefault();
+                }
+            });
+
+            // Xử lý ô Đơn Giá (Tối thiểu là 1)
+            priceInput.addEventListener('input', function() {
+                if (!checkProductSelectedBeforeInput(this)) return;
+
+                let val = parseFloat(this.value);
+
+                if (isNaN(val) || val < 1) {
+                    showError(this, 'Đơn giá phải ≥ 1!');
+                } else {
+                    clearError(this);
+                }
+
+                calculateTotal();
+            });
+
+            discountInput.addEventListener('keydown', function(e) {
+                if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault();
+            });
+            discountInput.addEventListener('input', function() {
+                if (!checkProductSelectedBeforeInput(this)) return;
+                const discount = Number(this.value) || 0;
+                const gross = (parseInt(qtyInput.value, 10) || 0) * (Number(priceInput.value) || 0);
+                if (discount < 0 || discount > gross) {
+                    showError(this, 'Giảm giá không được vượt thành tiền dòng!');
+                } else {
+                    clearError(this);
+                }
+                calculateTotal();
+            });
+
+            btnDelete.addEventListener('click', function() {
+                tr.remove();
+                calculateTotal();
+            });
+
+            calculateTotal();
+        }
+
+        // Tính thành tiền từng dòng & Tổng đơn hàng
+        function calculateTotal() {
+            const rows = document.querySelectorAll('#cartTableBody tr');
+            let grandTotal = 0;
+
+            rows.forEach(tr => {
+                const productSelect = tr.querySelector('.product-select');
+                const qtyInput = tr.querySelector('.qty-input');
+                const priceInput = tr.querySelector('.price-input');
+                const discountInput = tr.querySelector('.discount-input');
+                const subtotalCell = tr.querySelector('.subtotal-text');
+
+                const isProductSelected = Boolean(productSelect.value);
+                const qty = parseInt(qtyInput.value, 10) || 0;
+                const price = parseFloat(priceInput.value) || 0;
+                const discount = Number(discountInput.value) || 0;
+
+                // Hiển thị thành tiền sau khi trừ giảm giá theo dòng.
+                if (isProductSelected && qty > 0 && price >= 1) {
+                    const subtotal = Math.max(0, qty * price - discount);
+                    subtotalCell.innerText = subtotal.toLocaleString('vi-VN');
+                    grandTotal += subtotal;
+                } else {
+                    subtotalCell.innerText = '0';
+                }
+            });
+
+            document.getElementById('totalAmountText').innerText = grandTotal.toLocaleString('vi-VN') + ' VNĐ';
+        }
+
+        // Xử lý validate và Hoàn tất đơn
+        async function submitOrder() {
+            const submitButton = document.getElementById('btnSubmitOrder');
+            if (submitButton.disabled) return;
+
+            let hasError = false;
+
+            const custSelect = document.getElementById('customerSelect');
+            const whSelect = document.getElementById('warehouseSelect');
+            const docno = document.getElementById('docNoInput').value;
+
+            // Validate Khách hàng
+            if (!custSelect.value) {
+                showError(custSelect, 'Vui lòng chọn Khách Hàng!');
+                hasError = true;
+            } else {
+                clearError(custSelect);
+            }
+
+            // Validate Kho
+            if (!whSelect.value) {
+                showError(whSelect, 'Vui lòng chọn Kho Xuất Hàng!');
+                hasError = true;
+            } else {
+                clearError(whSelect);
+            }
+
+            const rows = document.querySelectorAll('#cartTableBody tr');
+            if (rows.length === 0) {
+                alert('Vui lòng thêm ít nhất một sản phẩm vào đơn hàng!');
+                hasError = true;
+            }
+
+            const items = [];
+
+            rows.forEach(tr => {
+                const productSelect = tr.querySelector('.product-select');
+                const qtyInput = tr.querySelector('.qty-input');
+                const priceInput = tr.querySelector('.price-input');
+                const discountInput = tr.querySelector('.discount-input');
+
+                const pId = productSelect.value;
+                const qty = parseInt(qtyInput.value, 10) || 0;
+                const maxStock = Number(qtyInput.dataset.maxStock || 0);
+                const price = parseFloat(priceInput.value) || 0;
+                const discount = Number(discountInput.value) || 0;
+
+                // Validate Sản phẩm
+                if (!pId) {
+                    showError(productSelect, 'Vui lòng chọn sản phẩm!');
+                    hasError = true;
+                } else {
+                    clearError(productSelect);
+                }
+
+                // Validate Số lượng
+                if (qty < 1) {
+                    showError(qtyInput, 'Vui lòng nhập số lượng!');
+                    hasError = true;
+                } else if (maxStock <= 0) {
+                    showError(qtyInput, 'Sản phẩm không có tồn kho khả dụng!');
+                    hasError = true;
+                } else if (qty > maxStock) {
+                    showError(qtyInput, `Vượt quá tồn kho khả dụng (${maxStock})!`);
+                    hasError = true;
+                } else {
+                    clearError(qtyInput);
+                }
+
+                // Validate Đơn giá
+                if (price < 1) {
+                    showError(priceInput, 'Vui lòng nhập đơn giá!');
+                    hasError = true;
+                } else {
+                    clearError(priceInput);
+                }
+
+                if (discount < 0 || discount > qty * price) {
+                    showError(discountInput, 'Giảm giá không được vượt thành tiền dòng!');
+                    hasError = true;
+                } else {
+                    clearError(discountInput);
+                }
+
+                if (pId && qty >= 1 && price >= 1 && qty <= maxStock && discount <= qty * price) {
+                    items.push({
+                        productid: parseInt(pId),
+                        warehouseid: parseInt(whSelect.value),
+                        quantity: qty,
+                        unitprice: price,
+                        discountamount: discount
+                    });
+                }
+            });
+
+            if (hasError) return;
+
+            const payload = {
+                docno: docno,
+                customerid: parseInt(custSelect.value),
+                items: items
+            };
+
+            const originalButtonHtml = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>ĐANG TẠO ĐƠN...';
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/orders`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+
+                if (res.ok && result.success) {
+                    window.location.href = 'danh-sach-don-hang.html';
+                } else {
+                    alert('❌ Lỗi tạo đơn từ server: ' + result.message);
+                }
+            } catch (err) {
+                console.error('Lỗi gửi đơn hàng:', err);
+                alert('❌ Không thể tạo đơn hàng: ' + err.message);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonHtml;
+            }
+        }
+
+        // Khởi chạy khi load trang
+        document.addEventListener('DOMContentLoaded', async () => {
+            generateDocNo();
+            await loadCustomers();
+            await loadWarehouses();
+            await loadStockData();
+
+            // Gắn sự kiện bỏ viền đỏ khi chọn lại Khách Hàng
+            document.getElementById('customerSelect').addEventListener('change', function() {
+                if (this.value) clearError(this);
+            });
+
+            // Gắn sự kiện khi thay đổi Kho xuất
+            document.getElementById('warehouseSelect').addEventListener('change', function() {
+                if (this.value) clearError(this);
+                refreshAllProductDropdowns();
+            });
+
+            document.getElementById('btnAddRow').addEventListener('click', addRow);
+            document.getElementById('btnSubmitOrder').addEventListener('click', submitOrder);
+
+            // Thêm sẵn dòng chọn mua đầu tiên
+            addRow();
+        });
+    </script>
+
+</body>
+
+</html>

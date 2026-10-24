@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản Lý Kho Hàng</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <style>
+        .warehouse-filter-menu {
+            position: fixed;
+            width: 260px;
+            max-width: min(260px, calc(100vw - 2rem));
+            max-height: calc(100vh - 1rem);
+            margin-top: 0;
+            overflow-y: auto;
+            padding: .875rem !important;
+            border: 1px solid #e5eaf2;
+            border-radius: .75rem;
+            background: #fff;
+            box-shadow: 0 .5rem 1.25rem rgba(31, 45, 61, .12);
+            z-index: 1050;
+        }
+        .warehouse-filter-menu label {
+            margin-bottom: .35rem;
+            color: #596579;
+            font-size: .75rem;
+            font-weight: 700;
+        }
+        .warehouse-filter-menu .form-control {
+            min-height: 2.4rem;
+            border-color: #dce3ed;
+            border-radius: .45rem;
+        }
+        .warehouse-filter-trigger {
+            width: 1.75rem;
+            height: 1.75rem;
+            margin-left: .15rem;
+            border-radius: .45rem;
+            color: #718096;
+            vertical-align: middle;
+        }
+        .warehouse-filter-trigger:hover,
+        .warehouse-filter-trigger:focus {
+            background: #edf3ff;
+            color: #4e73df;
+            text-decoration: none;
+        }
+        .warehouse-filter-trigger.text-primary {
+            background: #eaf0ff;
+            color: #3b5fc0 !important;
+        }
+        .warehouse-filter-selection {
+            display: block;
+            margin-top: .25rem;
+            color: #3b5fc0;
+            font-size: .7rem;
+            font-weight: 700;
+            white-space: normal;
+        }
+        .warehouse-sort-trigger {
+            margin-left: .25rem;
+            padding: 0 .2rem;
+            color: #718096;
+            vertical-align: middle;
+        }
+        .warehouse-sort-trigger:hover,
+        .warehouse-sort-trigger:focus,
+        .warehouse-sort-trigger.text-primary {
+            color: #3b5fc0 !important;
+        }
+        .warehouse-search-box {
+            width: min(100%, 320px);
+        }
+        .warehouse-filter-menu .warehouse-clear-filters {
+            display: block;
+            width: 100%;
+            margin-top: .75rem !important;
+            padding: .65rem 0 0;
+            border: 0;
+            border-top: 1px solid #edf0f4;
+            border-radius: 0;
+            background: transparent;
+            color: #4e73df;
+            text-align: left;
+            font-weight: 700;
+        }
+        .warehouse-filter-menu .warehouse-clear-filters:hover:not(:disabled) {
+            color: #3456b4;
+        }
+        .warehouse-filter-menu .warehouse-clear-filters:disabled {
+            color: #a0a8b5;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html"><div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div><div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div></a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a></li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item active"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="pos-tao-don.html"><i class="fas fa-fw fa-shopping-cart"></i><span>Tạo Đơn Bán Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a></li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"><button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button><h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5></nav>
+                <div class="container-fluid">
+                    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4">
+                        <h1 class="h3 mb-2 mb-sm-0 text-gray-800">Quản Lý Kho Hàng</h1>
+                        <div class="d-flex flex-wrap">
+                            <a class="btn btn-outline-primary mr-2 mb-2 mb-sm-0" href="lich-su-kho.html"><i class="fas fa-history mr-1"></i>Xem lịch sử nhập kho</a>
+                            <a class="btn btn-primary" href="them-kho-hang.html"><i class="fas fa-plus mr-1"></i>Thêm kho hàng</a>
+                        </div>
+                    </div>
+                    <div id="page-error" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="page-success" class="alert alert-success d-none" role="status"></div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                            <h2 class="h6 m-0 font-weight-bold text-primary">Danh sách kho hàng</h2>
+                            <div class="d-flex flex-column flex-sm-row align-items-sm-center mt-2 mt-md-0">
+                                <div class="input-group input-group-sm warehouse-search-box mr-sm-3 mb-2 mb-sm-0">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-search"></i></span></div>
+                                    <input id="warehouse-search" type="search" class="form-control" placeholder="Tìm mã, tên, địa điểm, trạng thái..." aria-label="Tìm kho theo thông tin">
+                                </div>
+                                <span class="small text-muted text-nowrap">Hiển thị: <span id="warehouse-count">0 / 0</span></span>
+                            </div>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Mã kho <button class="btn btn-sm btn-link warehouse-sort-trigger" type="button" data-sort="code" aria-label="Sắp xếp mã kho A-Z" title="Sắp xếp mã kho A-Z"><i class="fas fa-sort-alpha-down"></i></button></th>
+                                        <th>Tên kho <button class="btn btn-sm btn-link warehouse-sort-trigger" type="button" data-sort="name" aria-label="Sắp xếp tên kho A-Z" title="Sắp xếp tên kho A-Z"><i class="fas fa-sort-alpha-down"></i></button></th>
+                                        <th>Địa điểm <div class="dropdown d-inline-block ml-1">
+                                            <button class="btn btn-sm btn-link p-0 warehouse-filter-trigger" type="button" data-filter="location" aria-haspopup="true" aria-expanded="false" aria-label="Lọc địa điểm"><i class="fas fa-filter"></i></button>
+                                            <div class="dropdown-menu p-3 warehouse-filter-menu" style="min-width: 240px;">
+                                                <label for="warehouse-city-filter">Tỉnh / thành phố</label><select id="warehouse-city-filter" class="form-control form-control-sm mb-2"><option value="">Tất cả tỉnh/thành phố</option></select>
+                                                <label for="warehouse-ward-filter">Phường / xã</label><select id="warehouse-ward-filter" class="form-control form-control-sm" disabled><option value="">Tất cả phường/xã</option></select>
+                                                <button class="btn btn-sm btn-outline-secondary warehouse-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                            </div>
+                                        </div><span class="warehouse-filter-selection" data-filter-selection="location"></span></th>
+                                        <th>Trạng thái <div class="dropdown d-inline-block ml-1">
+                                            <button class="btn btn-sm btn-link p-0 warehouse-filter-trigger" type="button" data-filter="status" aria-haspopup="true" aria-expanded="false" aria-label="Lọc trạng thái"><i class="fas fa-filter"></i></button>
+                                            <div class="dropdown-menu p-3 warehouse-filter-menu">
+                                                <label for="warehouse-status-filter">Trạng thái</label><select id="warehouse-status-filter" class="form-control form-control-sm"><option value="">Tất cả trạng thái</option><option value="true">Hoạt động</option><option value="false">Ngưng hoạt động</option></select>
+                                                <button class="btn btn-sm btn-outline-secondary warehouse-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                            </div>
+                                        </div><span class="warehouse-filter-selection" data-filter-selection="status"></span></th>
+                                        <th class="text-nowrap">Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="warehouse-rows"><tr><td colspan="5" class="text-center text-muted">Đang tải danh sách kho...</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white"><div class="container my-auto text-center"><span>Quản Lý Bán Hàng 2026</span></div></footer>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+        <script src="js/sidebar-account.js"></script>
+    <script src="js/vietnam-address.js"></script>
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+        let openWarehouseFilter = null;
+        function positionWarehouseFilter(menu, trigger) {
+            const triggerRect = trigger.getBoundingClientRect();
+            const menuRect = menu.getBoundingClientRect();
+            const gutter = 8;
+            const left = Math.max(gutter, Math.min(triggerRect.left, window.innerWidth - menuRect.width - gutter));
+            const below = triggerRect.bottom + gutter;
+            const top = below + menuRect.height <= window.innerHeight - gutter
+                ? below
+                : Math.max(gutter, triggerRect.top - menuRect.height - gutter);
+            menu.style.left = `${left}px`;
+            menu.style.top = `${top}px`;
+        }
+        function closeWarehouseFilter(returnFocus) {
+            if (!openWarehouseFilter) return;
+            const { menu, trigger } = openWarehouseFilter;
+            menu.classList.remove('show');
+            trigger.setAttribute('aria-expanded', 'false');
+            openWarehouseFilter = null;
+            if (returnFocus) trigger.focus();
+        }
+        document.querySelectorAll('.warehouse-filter-trigger').forEach(trigger => {
+            const menu = trigger.closest('.dropdown').querySelector('.warehouse-filter-menu');
+            document.body.appendChild(menu);
+            trigger.addEventListener('click', event => {
+                event.preventDefault();
+                if (openWarehouseFilter && openWarehouseFilter.trigger === trigger) {
+                    closeWarehouseFilter(false);
+                    return;
+                }
+                closeWarehouseFilter(false);
+                openWarehouseFilter = { menu, trigger };
+                menu.classList.add('show');
+                trigger.setAttribute('aria-expanded', 'true');
+                positionWarehouseFilter(menu, trigger);
+            });
+        });
+        document.addEventListener('click', event => {
+            if (!openWarehouseFilter) return;
+            if (openWarehouseFilter.menu.contains(event.target) ||
+                event.target.closest('.warehouse-filter-trigger')) return;
+            closeWarehouseFilter(false);
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && openWarehouseFilter) {
+                closeWarehouseFilter(true);
+            }
+        });
+        window.addEventListener('resize', () => {
+            if (openWarehouseFilter) positionWarehouseFilter(openWarehouseFilter.menu, openWarehouseFilter.trigger);
+        });
+        window.addEventListener('scroll', () => {
+            if (openWarehouseFilter) positionWarehouseFilter(openWarehouseFilter.menu, openWarehouseFilter.trigger);
+        }, true);
+        let warehouses = [];
+        let administrativeUnits = [];
+        let warehouseSort = { field: '', direction: 'asc' };
+        const cityFilter = document.getElementById('warehouse-city-filter');
+        const wardFilter = document.getElementById('warehouse-ward-filter');
+        function normalizeSearchText(value) {
+            return String(value == null ? '' : value).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ]/g, 'd').toLocaleLowerCase('vi');
+        }
+        function escapeHtml(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+        }
+        async function api(url, options) {
+            const response = await fetch(`${API_BASE_URL}${url}`, options);
+            if (!(response.headers.get('content-type') || '').includes('application/json')) {
+                throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}). Hãy khởi động lại backend.`);
+            }
+            const result = await response.json();
+            if (!response.ok || !result.success) throw new Error(result.message || 'Yêu cầu không thành công.');
+            return result;
+        }
+        async function loadWarehouses() {
+            const rows = document.getElementById('warehouse-rows');
+            try {
+                const [result, units] = await Promise.all([api('/api/catalogs/warehouses'), VietnamAddress.loadUnits()]);
+                warehouses = result.data;
+                administrativeUnits = units;
+                VietnamAddress.setOptions(cityFilter, units, 'Tất cả tỉnh/thành phố');
+                cityFilter.addEventListener('change', () => {
+                    VietnamAddress.fillWardSelect(units, cityFilter, wardFilter);
+                    wardFilter.options[0].text = 'Tất cả phường/xã';
+                    wardFilter.value = '';
+                    renderWarehouses();
+                });
+                document.querySelectorAll('.warehouse-filter-menu').forEach(menu => menu.addEventListener('click', event => event.stopPropagation()));
+                renderWarehouses();
+            } catch (error) {
+                console.error('Không tải được danh sách kho:', error);
+                rows.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Không tải được danh sách kho.</td></tr>';
+                const errorBox = document.getElementById('page-error');
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+            }
+        }
+        function renderWarehouses() {
+            const query = normalizeSearchText(document.getElementById('warehouse-search').value.trim());
+            const wardName = wardFilter.selectedOptions[0] && wardFilter.value ? wardFilter.selectedOptions[0].text : '';
+            const status = document.getElementById('warehouse-status-filter').value;
+            const filteredWarehouses = warehouses.filter(warehouse => {
+                const searchable = normalizeSearchText([
+                    warehouse.code, warehouse.name, warehouse.location, warehouse.isactive ? 'Hoạt động' : 'Ngưng hoạt động'
+                ].join(' '));
+                const location = normalizeSearchText(warehouse.location);
+                return searchable.includes(query) &&
+                    VietnamAddress.matchesCity(warehouse.location, cityFilter.value, administrativeUnits) &&
+                    (!wardName || location.includes(normalizeSearchText(wardName))) &&
+                    (status === '' || String(warehouse.isactive) === status);
+            });
+            if (warehouseSort.field) {
+                const field = warehouseSort.field;
+                const direction = warehouseSort.direction === 'asc' ? 1 : -1;
+                filteredWarehouses.sort((first, second) =>
+                    String(first[field] == null ? '' : first[field])
+                        .localeCompare(String(second[field] == null ? '' : second[field]), 'vi', { sensitivity: 'base', numeric: true }) * direction
+                );
+            }
+            document.getElementById('warehouse-count').textContent =
+                `${filteredWarehouses.length.toLocaleString('vi-VN')} / ${warehouses.length.toLocaleString('vi-VN')}`;
+            const hasFilters = Boolean(document.getElementById('warehouse-search').value.trim() || cityFilter.value || wardFilter.value || status);
+            document.querySelectorAll('.warehouse-clear-filters').forEach(button => { button.disabled = !hasFilters; });
+            const cityName = cityFilter.selectedOptions[0] && cityFilter.value ? cityFilter.selectedOptions[0].text : '';
+            const locationSelection = [cityName, wardName].filter(Boolean).join(' / ');
+            const statusSelection = document.getElementById('warehouse-status-filter').selectedOptions[0];
+            const filterSelections = {
+                location: locationSelection,
+                status: status ? statusSelection.text : ''
+            };
+            document.querySelectorAll('.warehouse-filter-trigger').forEach(button => {
+                const active = Boolean(filterSelections[button.dataset.filter]);
+                button.classList.toggle('text-primary', active);
+                const selection = document.querySelector(`[data-filter-selection="${button.dataset.filter}"]`);
+                selection.textContent = filterSelections[button.dataset.filter];
+                selection.classList.toggle('d-none', !active);
+            });
+            document.querySelectorAll('.warehouse-sort-trigger').forEach(button => {
+                const active = button.dataset.sort === warehouseSort.field;
+                const icon = button.querySelector('i');
+                const directionLabel = warehouseSort.direction === 'asc' ? 'A-Z' : 'Z-A';
+                const columnLabel = button.dataset.sort === 'code' ? 'mã kho' : 'tên kho';
+                button.classList.toggle('text-primary', active);
+                button.setAttribute('aria-label', `Sắp xếp ${columnLabel} ${active ? directionLabel : 'A-Z'}`);
+                button.title = `Sắp xếp ${columnLabel} ${active ? directionLabel : 'A-Z'}`;
+                icon.className = `fas ${active && warehouseSort.direction === 'desc' ? 'fa-sort-alpha-up' : 'fa-sort-alpha-down'}`;
+            });
+            document.getElementById('warehouse-rows').innerHTML = filteredWarehouses.map(warehouse => `
+                    <tr>
+                        <td class="font-weight-bold">${escapeHtml(warehouse.code)}</td>
+                        <td>${escapeHtml(warehouse.name)}</td>
+                        <td>${escapeHtml(warehouse.location || '-')}</td>
+                        <td><select class="form-control form-control-sm warehouse-status" data-id="${escapeHtml(warehouse.id)}" aria-label="Trạng thái ${escapeHtml(warehouse.name)}"><option value="true" ${warehouse.isactive ? 'selected' : ''}>Hoạt động</option><option value="false" ${!warehouse.isactive ? 'selected' : ''}>Ngưng hoạt động</option></select></td>
+                        <td class="text-nowrap">
+                            <a class="btn btn-sm btn-outline-primary" href="ton-kho-kho.html?warehouseid=${encodeURIComponent(warehouse.id)}" title="Tra cứu tồn kho"><i class="fas fa-search mr-1"></i>Tồn kho</a>
+                            <a class="btn btn-sm btn-info ml-1" href="sua-kho-hang.html?id=${encodeURIComponent(warehouse.id)}" title="Sửa kho"><i class="fas fa-edit mr-1"></i>Sửa</a>
+                        </td>
+                    </tr>
+                `).join('') || '<tr><td colspan="5" class="text-center text-muted">Không tìm thấy kho phù hợp.</td></tr>';
+        }
+        async function updateWarehouseStatus(select) {
+            const warehouse = warehouses.find(item => String(item.id) === select.dataset.id);
+            if (!warehouse) return;
+            const previousStatus = Boolean(warehouse.isactive);
+            const nextStatus = select.value === 'true';
+            select.disabled = true;
+            try {
+                await api(`/api/catalogs/warehouses/${encodeURIComponent(warehouse.id)}`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ isactive: nextStatus })
+                });
+                warehouse.isactive = nextStatus;
+                renderWarehouses();
+            } catch (error) {
+                console.error('Không thể cập nhật trạng thái kho:', error);
+                select.value = String(previousStatus);
+                const errorBox = document.getElementById('page-error');
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('d-none');
+            } finally {
+                select.disabled = false;
+            }
+        }
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('updated') === '1') {
+            document.getElementById('page-success').textContent = 'Đã cập nhật kho hàng thành công.';
+            document.getElementById('page-success').classList.remove('d-none');
+        } else if (params.get('created') === '1') {
+            document.getElementById('page-success').textContent = 'Đã thêm kho hàng thành công.';
+            document.getElementById('page-success').classList.remove('d-none');
+        }
+        document.getElementById('warehouse-search').addEventListener('input', renderWarehouses);
+        document.querySelectorAll('.warehouse-sort-trigger').forEach(button => button.addEventListener('click', () => {
+            if (warehouseSort.field === button.dataset.sort) {
+                warehouseSort.direction = warehouseSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                warehouseSort = { field: button.dataset.sort, direction: 'asc' };
+            }
+            renderWarehouses();
+        }));
+        document.getElementById('warehouse-status-filter').addEventListener('change', renderWarehouses);
+        cityFilter.addEventListener('change', renderWarehouses);
+        wardFilter.addEventListener('change', renderWarehouses);
+        document.querySelectorAll('.warehouse-clear-filters').forEach(button => button.addEventListener('click', () => {
+            document.getElementById('warehouse-search').value = '';
+            cityFilter.value = '';
+            VietnamAddress.fillWardSelect(administrativeUnits, cityFilter, wardFilter);
+            wardFilter.options[0].text = 'Tất cả phường/xã';
+            wardFilter.value = '';
+            document.getElementById('warehouse-status-filter').value = '';
+            renderWarehouses();
+        }));
+        document.getElementById('warehouse-rows').addEventListener('change', event => {
+            if (event.target.matches('.warehouse-status')) updateWarehouseStatus(event.target);
+        });
+        loadWarehouses();
+    </script>
+</body>
+</html>

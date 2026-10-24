@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Báo Cáo Chi Tiết</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <link href="css/table-tools.css" rel="stylesheet">
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a></li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="pos-tao-don.html"><i class="fas fa-fw fa-shopping-cart"></i><span>Tạo Đơn Bán Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a></li>
+            
+            
+            
+            
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+                <div class="container-fluid">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                        <div>
+                            <h1 id="report-title" class="h3 mb-1 text-gray-800">Báo Cáo Chi Tiết</h1>
+                            <p id="report-description" class="text-muted mb-0"></p>
+                        </div>
+                        <a href="index.html" class="btn btn-outline-secondary mt-2 mt-md-0"><i class="fas fa-arrow-left mr-1"></i>Dashboard tổng quan</a>
+                    </div>
+                    <div id="report-error" class="alert alert-danger d-none" role="alert"></div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3"><h6 id="report-filter-title" class="m-0 font-weight-bold text-primary">Điều kiện lọc báo cáo</h6></div>
+                        <div class="card-body">
+                            <form id="report-filter" class="form-row align-items-end">
+                                <div class="col-md-4 col-lg-3 mb-3">
+                                    <label for="report-chart-type">Dạng biểu đồ</label>
+                                    <select id="report-chart-type" class="form-control">
+                                        <option value="bar">Biểu đồ cột</option>
+                                        <option value="line">Biểu đồ đường</option>
+                                        <option value="doughnut">Biểu đồ vành khuyên</option>
+                                        <option value="horizontalBar">Biểu đồ thanh ngang</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2 mb-3 filter-field" data-reports="orders,order-statuses,revenue,products,customers,returns">
+                                    <label for="filter-from">Từ ngày</label><input type="date" id="filter-from" class="form-control">
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2 mb-3 filter-field" data-reports="orders,order-statuses,revenue,products,customers,returns">
+                                    <label for="filter-to">Đến ngày</label><input type="date" id="filter-to" class="form-control">
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2 mb-3 filter-field" data-reports="orders,revenue,products">
+                                    <label for="filter-status">Trạng thái đơn</label>
+                                    <select id="filter-status" class="form-control">
+                                        <option value="">Tất cả trạng thái</option>
+                                        <option value="Pending">Chờ xử lý</option><option value="Paid">Đã thanh toán</option>
+                                        <option value="Delivered">Đã giao</option><option value="Completed">Hoàn tất</option>
+                                        <option value="Cancelled">Đã hủy</option><option value="Returned">Đã trả hàng</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 filter-field" data-reports="orders,order-statuses,revenue,products,customers,debts,returns">
+                                    <label for="filter-customer">Khách hàng</label><select id="filter-customer" class="form-control"><option value="">Tất cả khách hàng</option></select>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 filter-field" data-reports="products,inventory">
+                                    <label for="filter-product">Sản phẩm</label><select id="filter-product" class="form-control"><option value="">Tất cả sản phẩm</option></select>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 filter-field" data-reports="products,inventory">
+                                    <label for="filter-warehouse">Kho</label><select id="filter-warehouse" class="form-control"><option value="">Tất cả kho</option></select>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 filter-field" data-reports="orders,order-statuses,products,inventory,customers,debts,returns">
+                                    <label for="filter-search">Tìm kiếm</label><input id="filter-search" type="search" maxlength="100" class="form-control" placeholder="Mã hoặc tên">
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3 mb-3 filter-field" data-reports="inventory,debts">
+                                    <label id="filter-min-label" for="filter-min">Ngưỡng tối thiểu</label>
+                                    <input id="filter-min" type="number" min="0" step="1" class="form-control" placeholder="Không giới hạn">
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-2 mb-3">
+                                    <label for="filter-limit">Số dòng</label>
+                                    <select id="filter-limit" class="form-control">
+                                        <option value="25">25</option><option value="50" selected>50</option>
+                                        <option value="100">100</option><option value="200">200</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-4 col-lg-3 mb-3">
+                                    <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-filter mr-1"></i>Áp dụng lọc</button>
+                                    <button type="reset" id="reset-filters" class="btn btn-outline-secondary">Xóa lọc</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 mb-3"><div class="card border-left-primary shadow h-100 py-2"><div class="card-body"><div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Số dòng đang hiển thị</div><div id="result-count" class="h5 mb-0 font-weight-bold text-gray-800">—</div></div></div></div>
+                        <div class="col-md-4 mb-3"><div class="card border-left-success shadow h-100 py-2"><div class="card-body"><div id="result-total-label" class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng giá trị</div><div id="result-total" class="h5 mb-0 font-weight-bold text-gray-800">—</div></div></div></div>
+                        <div class="col-md-4 mb-3"><div class="card border-left-warning shadow h-100 py-2"><div class="card-body"><div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Bộ lọc đang dùng</div><div id="active-filter-summary" class="small font-weight-bold text-gray-800">Mặc định</div></div></div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4 mb-4">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3"><h6 id="report-chart-title" class="m-0 font-weight-bold text-primary">Biểu đồ theo kết quả lọc</h6></div>
+                                <div class="card-body"><div style="height:340px"><canvas id="detail-chart" role="img" aria-label="Biểu đồ báo cáo chi tiết"></canvas></div></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 mb-4">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                                    <h6 id="report-table-title" class="m-0 font-weight-bold text-primary">Dữ liệu chi tiết</h6>
+                                    <span id="result-limit-note" class="small text-muted"></span>
+                                </div>
+                                <div class="card-body table-responsive">
+                                    <table class="table table-bordered table-hover table-sm" data-table-tools="filters-only">
+                                        <thead id="report-table-head" class="thead-light"></thead>
+                                        <tbody id="report-table-body"><tr><td class="text-center text-muted">Chọn bộ lọc để xem báo cáo.</td></tr></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white"><div class="container my-auto text-center"><span>Quản Lý Bán Hàng 2026</span></div></footer>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+        <script src="js/sidebar-account.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="js/table-tools.js"></script>
+    <script>
+        const API_BASE_URL = window.location.port === '3000' ? '' : 'http://localhost:3000';
+        const reportDefinitions = {
+            orders: { title: 'Báo Cáo Đơn Hàng', description: 'Tra cứu từng đơn hàng, trạng thái, tiền đã thu, hoàn tiền và công nợ còn lại.', filterTitle: 'Lọc đơn hàng', chartTitle: 'Xu hướng giá trị đơn hàng theo tháng', tableTitle: 'Danh sách đơn hàng chi tiết', total: 'net_amount', totalLabel: 'Tổng giá trị thuần', chartLabel: 'Giá trị đơn hàng', chartType: 'line', chartGrouping: 'month', columns: [['docdate', 'Ngày', 'date'], ['docno', 'Mã đơn'], ['customer_name', 'Khách hàng'], ['status', 'Trạng thái', 'status'], ['gross_amount', 'Tổng tiền', 'money'], ['total_refund', 'Hoàn tiền', 'money'], ['total_paid', 'Đã thu', 'money'], ['outstanding', 'Còn nợ', 'money']], value:'net_amount', label:'month' },
+            'order-statuses': { title: 'Phân Tích Đơn Hàng Theo Trạng Thái', description: 'So sánh số đơn và giá trị tiền hàng theo từng trạng thái; lọc theo thời gian hoặc khách hàng để xem cơ cấu đơn phù hợp.', filterTitle: 'Lọc phạm vi phân tích trạng thái', chartTitle: 'Cơ cấu đơn hàng theo trạng thái', tableTitle: 'Tổng hợp số đơn và giá trị theo trạng thái', total: 'order_count', totalLabel: 'Tổng số đơn trong kết quả', totalFormat: 'count', chartLabel: 'Số đơn', valueFormat: 'number', labelType: 'status', chartType: 'doughnut', columns: [['status', 'Trạng thái', 'status'], ['order_count', 'Số đơn', 'number'], ['gross_amount', 'Tổng tiền hàng', 'money'], ['total_refund', 'Hoàn tiền', 'money'], ['net_amount', 'Giá trị thuần', 'money']], value:'order_count', label:'status' },
+            revenue: { title: 'Báo Cáo Doanh Thu', description: 'Tổng hợp doanh thu gộp, tiền hoàn và doanh thu thuần theo tháng; chỉ tính đơn đã giao hoặc hoàn tất.', filterTitle: 'Lọc kỳ và khách hàng', chartTitle: 'Doanh thu thuần và tổng tiền hàng đã giao theo tháng', tableTitle: 'Chi tiết doanh thu từng tháng', total: 'net_revenue', totalLabel: 'Doanh thu thuần', chartLabel: 'Doanh thu thuần', secondaryValue: 'gross_revenue', secondaryChartLabel: 'Tổng tiền hàng đã giao', chartType: 'line', chartGrouping: 'month', columns: [['month', 'Tháng'], ['order_count', 'Số đơn', 'number'], ['gross_revenue', 'Doanh thu gộp', 'money'], ['total_refund', 'Hoàn tiền', 'money'], ['net_revenue', 'Doanh thu thuần', 'money']], value:'net_revenue', label:'month' },
+            products: { title: 'Báo Cáo Sản Phẩm Bán Ra', description: 'Xem số lượng bán sau khi trừ hàng trả và doanh số thuần theo từng sản phẩm, kho.', filterTitle: 'Lọc sản phẩm bán ra', chartTitle: 'Doanh số thuần theo sản phẩm', tableTitle: 'Chi tiết sản phẩm và số lượng trả', total: 'net_sales', totalLabel: 'Doanh số thuần', chartLabel: 'Doanh số thuần', chartType: 'bar', columns: [['product_code', 'Mã SP'], ['product_name', 'Sản phẩm'], ['warehouse_name', 'Kho'], ['net_quantity_sold', 'SL bán thuần', 'number'], ['quantity_returned', 'SL đã trả', 'number'], ['gross_sales', 'Doanh số gộp', 'money'], ['refund_amount', 'Hoàn tiền', 'money'], ['net_sales', 'Doanh số thuần', 'money']], value:'net_sales', label:'product_name' },
+            inventory: { title: 'Báo Cáo Tồn Kho', description: 'Xem tồn khả dụng theo sản phẩm và kho, cùng tổng nhập/bán; lọc ngưỡng để xác định mặt hàng cần bổ sung.', filterTitle: 'Lọc tồn kho', chartTitle: 'Tồn khả dụng theo kho', tableTitle: 'Chi tiết tồn từng sản phẩm và kho', total: 'available_stock', totalLabel: 'Tổng tồn trong kết quả', chartLabel: 'Tồn khả dụng', valueFormat: 'number', chartType: 'doughnut', chartGrouping: 'warehouse_name', columns: [['product_code', 'Mã SP'], ['product_name', 'Sản phẩm'], ['warehouse_name', 'Kho'], ['total_imported', 'Tổng nhập', 'number'], ['total_sold', 'Tổng bán', 'number'], ['available_stock', 'Tồn khả dụng', 'number']], value:'available_stock', label:'product_name' },
+            customers: { title: 'Xếp Hạng Khách Hàng', description: 'Xếp hạng bằng DENSE_RANK theo doanh thu thuần; lọc khách hàng nhưng giữ nguyên thứ hạng toàn kỳ.', filterTitle: 'Lọc xếp hạng khách hàng', chartTitle: 'Doanh thu thuần theo khách hàng', tableTitle: 'Bảng xếp hạng và tỷ trọng doanh thu', total: 'net_revenue', totalLabel: 'Doanh thu thuần trong kết quả', chartLabel: 'Doanh thu thuần', chartType: 'horizontalBar', columns: [['revenue_rank', 'Hạng', 'number'], ['customer_code', 'Mã KH'], ['customer_name', 'Khách hàng'], ['order_count', 'Số đơn', 'number'], ['gross_revenue', 'Doanh thu gộp', 'money'], ['total_refund', 'Hoàn tiền', 'money'], ['net_revenue', 'Doanh thu thuần', 'money'], ['revenue_share', 'Tỷ trọng', 'percent']], value:'net_revenue', label:'customer_name' },
+            debts: { title: 'Báo Cáo Công Nợ', description: 'Tra cứu tổng mua, tổng đã thanh toán và công nợ còn lại theo từng khách hàng.', filterTitle: 'Lọc công nợ khách hàng', chartTitle: 'Công nợ còn lại theo khách hàng', tableTitle: 'Chi tiết số đã mua, đã thu và còn nợ', total: 'remaining_debt', totalLabel: 'Tổng công nợ trong kết quả', chartLabel: 'Công nợ còn lại', columns: [['customer_code', 'Mã KH'], ['customer_name', 'Khách hàng'], ['total_bought', 'Tổng đã mua', 'money'], ['total_paid', 'Đã thanh toán', 'money'], ['remaining_debt', 'Còn nợ', 'money']], chart:'bar', value:'remaining_debt', label:'customer_name' },
+            returns: { title: 'Báo Cáo Trả Hàng & Hoàn Tiền', description: 'Đối chiếu từng phiếu trả với đơn hàng gốc, số tiền hoàn và phiếu chi đã phát sinh.', filterTitle: 'Lọc phiếu trả và hoàn tiền', chartTitle: 'Tiền hoàn theo từng phiếu trả', tableTitle: 'Chi tiết hàng trả và tình trạng hoàn tiền', total: 'totalrefund', totalLabel: 'Tổng tiền hoàn', chartLabel: 'Tiền hoàn theo phiếu', columns: [['docdate', 'Ngày', 'date'], ['return_docno', 'Phiếu trả'], ['order_docno', 'Đơn hàng'], ['customer_name', 'Khách hàng'], ['status', 'Trạng thái', 'status'], ['totalrefund', 'Giá trị hoàn', 'money'], ['total_disbursed', 'Đã chi', 'money'], ['disbursement_docno', 'Mã phiếu chi']], chart:'bar', value:'totalrefund', label:'return_docno' }
+        };
+        const statusLabels = { Pending:'Chờ xử lý', Paid:'Đã thanh toán', Delivered:'Đã giao', Completed:'Hoàn tất', Cancelled:'Đã hủy', Returned:'Đã trả hàng' };
+        let detailChart = null;
+        let currentRows = [];
+        let currentReport = 'orders';
+
+        function escapeHtml(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char]));
+        }
+        function money(value) { return `${Number(value || 0).toLocaleString('vi-VN')} VNĐ`; }
+        async function api(url) {
+            const response = await fetch(`${API_BASE_URL}${url}`);
+            if (!(response.headers.get('content-type') || '').includes('application/json')) throw new Error(`API không trả JSON (HTTP ${response.status}).`);
+            const data = await response.json();
+            if (!response.ok || !data.success) throw new Error(data.message || 'Không tải được dữ liệu.');
+            return data;
+        }
+        function formatCell(value, type) {
+            if (value == null || value === '') return '—';
+            if (type === 'money') return money(value);
+            if (type === 'number') return Number(value).toLocaleString('vi-VN');
+            if (type === 'percent') return `${Number(value).toLocaleString('vi-VN', { maximumFractionDigits: 2 })}%`;
+            if (type === 'date') return new Date(value).toLocaleString('vi-VN');
+            if (type === 'status') return statusLabels[value] || value;
+            return String(value);
+        }
+        function configureFilters() {
+            const definition = reportDefinitions[currentReport];
+            document.getElementById('report-title').textContent = definition.title;
+            document.getElementById('report-description').textContent = definition.description;
+            document.title = definition.title;
+            document.getElementById('report-filter-title').textContent = definition.filterTitle;
+            document.getElementById('report-chart-title').textContent = definition.chartTitle;
+            document.getElementById('report-table-title').textContent = definition.tableTitle;
+            document.querySelectorAll('.filter-field').forEach(field => {
+                const reports = field.dataset.reports.split(',');
+                field.classList.toggle('d-none', !reports.includes(currentReport));
+            });
+            const minimumLabel = document.getElementById('filter-min-label');
+            minimumLabel.textContent = currentReport === 'debts' ? 'Công nợ từ (VNĐ)' : 'Tồn kho tối đa';
+            document.getElementById('filter-min').placeholder = currentReport === 'debts' ? 'Không giới hạn' : 'Không giới hạn';
+        }
+        async function loadFilterOptions() {
+            try {
+                const [customers, products, warehouses] = await Promise.all([
+                    api('/api/customers'), api('/api/products'), api('/api/warehouses')
+                ]);
+                document.getElementById('filter-customer').innerHTML = '<option value="">Tất cả khách hàng</option>' +
+                    customers.data.map(item => `<option value="${Number(item.id)}">${escapeHtml(item.code)} - ${escapeHtml(item.name)}</option>`).join('');
+                document.getElementById('filter-product').innerHTML = '<option value="">Tất cả sản phẩm</option>' +
+                    products.data.map(item => `<option value="${Number(item.id)}">${escapeHtml(item.code)} - ${escapeHtml(item.name)}</option>`).join('');
+                document.getElementById('filter-warehouse').innerHTML = '<option value="">Tất cả kho</option>' +
+                    warehouses.data.map(item => `<option value="${Number(item.id)}">${escapeHtml(item.code)} - ${escapeHtml(item.name)}</option>`).join('');
+            } catch (error) {
+                document.getElementById('report-error').textContent = `Không tải được danh sách bộ lọc: ${error.message}`;
+                document.getElementById('report-error').classList.remove('d-none');
+            }
+        }
+        function buildParams() {
+            const isVisible = id => !document.getElementById(id).closest('.filter-field').classList.contains('d-none');
+            const values = {
+                report: currentReport,
+                from: isVisible('filter-from') ? document.getElementById('filter-from').value : '',
+                to: isVisible('filter-to') ? document.getElementById('filter-to').value : '',
+                status: isVisible('filter-status') ? document.getElementById('filter-status').value : '',
+                customerId: isVisible('filter-customer') ? document.getElementById('filter-customer').value : '',
+                productId: isVisible('filter-product') ? document.getElementById('filter-product').value : '',
+                warehouseId: isVisible('filter-warehouse') ? document.getElementById('filter-warehouse').value : '',
+                search: isVisible('filter-search') ? document.getElementById('filter-search').value.trim() : '',
+                minStock: isVisible('filter-min') ? document.getElementById('filter-min').value : '',
+                limit: document.getElementById('filter-limit').value
+            };
+            const params = new URLSearchParams();
+            Object.entries(values).forEach(([key, value]) => { if (value !== '') params.set(key, value); });
+            return params;
+        }
+        function renderTable(rows, definition) {
+            const head = document.getElementById('report-table-head');
+            const body = document.getElementById('report-table-body');
+            head.innerHTML = `<tr>${definition.columns.map(([, title]) => `<th>${escapeHtml(title)}</th>`).join('')}</tr>`;
+            body.innerHTML = rows.map(row => `<tr>${definition.columns.map(([key, , type]) =>
+                `<td class="${type === 'money' || type === 'number' || type === 'percent' ? 'text-right' : ''}">${escapeHtml(formatCell(row[key], type))}</td>`
+            ).join('')}</tr>`).join('') ||
+                `<tr><td colspan="${definition.columns.length}" class="text-center text-muted">Không có dữ liệu phù hợp với bộ lọc.</td></tr>`;
+        }
+        function formatDateInput(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        function setDefaultReportPeriod() {
+            if (!['orders', 'revenue'].includes(currentReport)) return;
+            const monthCount = currentReport === 'orders' ? 6 : 12;
+            const today = new Date();
+            const firstMonth = new Date(today.getFullYear(), today.getMonth() - monthCount + 1, 1);
+            document.getElementById('filter-from').value = formatDateInput(firstMonth);
+            document.getElementById('filter-to').value = formatDateInput(today);
+        }
+        function renderChart(rows, definition, chartData) {
+            if (detailChart) detailChart.destroy();
+            let chartRows = (chartData || rows).slice().reverse().slice(-15);
+            if (definition.chartGrouping) {
+                const grouped = new Map();
+                (chartData || rows).forEach(row => {
+                    const groupKey = definition.chartGrouping === 'month'
+                        ? String(row.month || row.docdate).slice(0, 7)
+                        : row[definition.chartGrouping] || 'Chưa phân loại';
+                    const totals = grouped.get(groupKey) || { value: 0, secondary: 0 };
+                    totals.value += Number(row[definition.value] || 0);
+                    if (definition.secondaryValue) totals.secondary += Number(row[definition.secondaryValue] || 0);
+                    grouped.set(groupKey, totals);
+                });
+                chartRows = Array.from(grouped, ([key, totals]) => ({
+                    [definition.label]: key,
+                    [definition.value]: totals.value,
+                    ...(definition.secondaryValue ? { [definition.secondaryValue]: totals.secondary } : {})
+                })).sort((left, right) => String(left[definition.label]).localeCompare(String(right[definition.label])));
+                if (definition.chartGrouping === 'month') {
+                    const monthIndex = value => {
+                        const [year, month] = value.split('-').map(Number);
+                        return year * 12 + month - 1;
+                    };
+                    const from = document.getElementById('filter-from').value;
+                    const to = document.getElementById('filter-to').value;
+                    const today = new Date();
+                    const currentMonth = today.getFullYear() * 12 + today.getMonth();
+                    const defaultMonthCount = currentReport === 'orders' ? 6 : 12;
+                    const endMonth = to ? monthIndex(to) : currentMonth;
+                    const startMonth = from ? monthIndex(from) : endMonth - defaultMonthCount + 1;
+                    const monthlyValues = new Map(chartRows.map(row => [row[definition.label], row]));
+                    chartRows = [];
+                    for (let index = startMonth; index <= endMonth; index++) {
+                        const year = Math.floor(index / 12);
+                        const month = index % 12 + 1;
+                        const key = `${year}-${String(month).padStart(2, '0')}`;
+                        const monthValues = monthlyValues.get(key);
+                        chartRows.push({
+                            [definition.label]: `T${month}/${year}`,
+                            [definition.value]: monthValues ? Number(monthValues[definition.value] || 0) : 0,
+                            ...(definition.secondaryValue ? {
+                                [definition.secondaryValue]: monthValues ? Number(monthValues[definition.secondaryValue] || 0) : 0
+                            } : {})
+                        });
+                    }
+                }
+            }
+            const chartType = document.getElementById('report-chart-type').value || definition.chartType || 'bar';
+            const horizontal = chartType === 'horizontalBar';
+            const isDoughnut = chartType === 'doughnut';
+            const isLine = chartType === 'line';
+            const primaryColor = definition.secondaryValue ? '#1cc88a' : '#4e73df';
+            const primaryHoverColor = definition.secondaryValue ? '#17a673' : '#2e59d9';
+            const palette = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#5a5c69'];
+            detailChart = new Chart(document.getElementById('detail-chart'), {
+                type: chartType,
+                data: {
+                    labels: chartRows.map(row => formatCell(row[definition.label], definition.labelType)),
+                    datasets: [{
+                        label: definition.chartLabel,
+                        data: chartRows.map(row => Number(row[definition.value] || 0)),
+                        backgroundColor: isDoughnut ? palette : isLine ? 'rgba(28, 200, 138, 0.12)' : '#1cc88a',
+                        backgroundColor: isDoughnut ? palette : isLine ? (definition.secondaryValue ? 'rgba(28, 200, 138, 0.12)' : 'rgba(78, 115, 223, 0.15)') : primaryColor,
+                        borderColor: primaryColor,
+                        hoverBackgroundColor: isDoughnut ? palette : primaryHoverColor,
+                                                pointBackgroundColor: primaryColor,
+                        hoverBorderColor: 'rgba(234, 236, 244, 1)',
+                        pointBackgroundColor: '#1cc88a',
+                        pointRadius: 3,
+                        fill: isLine,
+                        lineTension: 0.25
+                    }, ...(definition.secondaryValue ? [{
+                        label: definition.secondaryChartLabel,
+                        data: chartRows.map(row => Number(row[definition.secondaryValue] || 0)),
+                        backgroundColor: isLine ? 'rgba(78, 115, 223, 0.05)' : '#4e73df',
+                        borderColor: '#4e73df',
+                        hoverBackgroundColor: '#2e59d9',
+                        pointBackgroundColor: '#4e73df',
+                        pointRadius: 3,
+                        fill: false,
+                        lineTension: 0.25
+                    }] : [])]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    cutoutPercentage: isDoughnut ? 55 : undefined,
+                    legend: { display: isDoughnut, position: 'bottom' },
+                    scales: isDoughnut ? {} : horizontal
+                        ? { xAxes: [{ ticks: { beginAtZero: true } }] }
+                        : isLine
+                            ? { yAxes: [{ ticks: {
+                                beginAtZero: true,
+                                callback: value => `${Number(value).toLocaleString('vi-VN')} VNĐ`
+                            } }] }
+                            : { xAxes: [{ ticks: { autoSkip: false } }], yAxes: [{ ticks: { beginAtZero: true } }] },
+                    tooltips: {
+                        callbacks: {
+                            label: function(item, data) {
+                                const rawValue = isDoughnut
+                                    ? data.datasets[0].data[item.index]
+                                    : horizontal ? item.xLabel : item.yLabel;
+                                if (definition.valueFormat === 'number' || definition.totalLabel.includes('tồn')) {
+                                    return `${Number(rawValue).toLocaleString('vi-VN')} ${definition.totalLabel.includes('tồn') ? 'sản phẩm' : 'đơn'}`;
+                                }
+                                return money(rawValue);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        function renderFilterSummary() {
+            const labels = [];
+            const isVisible = id => !document.getElementById(id).closest('.filter-field').classList.contains('d-none');
+            const from = isVisible('filter-from') ? document.getElementById('filter-from').value : '';
+            const to = isVisible('filter-to') ? document.getElementById('filter-to').value : '';
+            const status = document.getElementById('filter-status');
+            const customer = document.getElementById('filter-customer');
+            const product = document.getElementById('filter-product');
+            const warehouse = document.getElementById('filter-warehouse');
+            if (from || to) labels.push(`${from || 'đầu kỳ'} → ${to || 'hiện tại'}`);
+            if (isVisible('filter-status') && status.value) labels.push(status.options[status.selectedIndex].text);
+            if (isVisible('filter-customer') && customer.value) labels.push(customer.options[customer.selectedIndex].text);
+            if (isVisible('filter-product') && product.value) labels.push(product.options[product.selectedIndex].text);
+            if (isVisible('filter-warehouse') && warehouse.value) labels.push(warehouse.options[warehouse.selectedIndex].text);
+            const search = document.getElementById('filter-search').value.trim();
+            if (isVisible('filter-search') && search) labels.push(`Tìm: ${search}`);
+            const minimum = document.getElementById('filter-min').value;
+            if (isVisible('filter-min') && minimum) labels.push(`${currentReport === 'debts' ? 'Công nợ ≥' : 'Tồn kho ≤'} ${Number(minimum).toLocaleString('vi-VN')}`);
+            const chartType = document.getElementById('report-chart-type');
+            labels.push(`Biểu đồ: ${chartType.options[chartType.selectedIndex].text}`);
+            document.getElementById('active-filter-summary').textContent = labels.join(' · ') || 'Mặc định';
+        }
+        async function loadReport() {
+            const error = document.getElementById('report-error');
+            const body = document.getElementById('report-table-body');
+            const definition = { ...reportDefinitions[currentReport], report: currentReport };
+            error.classList.add('d-none');
+            body.innerHTML = '<tr><td class="text-center text-muted">Đang tải dữ liệu...</td></tr>';
+            document.getElementById('result-count').textContent = '…';
+            try {
+                const result = await api(`/api/dashboard/detail?${buildParams().toString()}`);
+                currentRows = result.data;
+                renderTable(currentRows, definition);
+                renderChart(currentRows, definition, result.chartData);
+                const total = currentRows.reduce((sum, row) => sum + Number(row[definition.total] || 0), 0);
+                document.getElementById('result-count').textContent = `${Number(result.count).toLocaleString('vi-VN')} dòng`;
+                document.getElementById('result-total-label').textContent = definition.totalLabel;
+                document.getElementById('result-total').textContent = definition.totalFormat === 'count'
+                    ? `${total.toLocaleString('vi-VN')} đơn`
+                    : currentReport === 'inventory'
+                        ? `${total.toLocaleString('vi-VN')} sản phẩm`
+                        : money(total);
+                document.getElementById('result-limit-note').textContent = `Tối đa ${document.getElementById('filter-limit').value} dòng`;
+                renderFilterSummary();
+            } catch (failure) {
+                console.error('Lỗi tải báo cáo chi tiết:', failure);
+                error.textContent = failure.message;
+                error.classList.remove('d-none');
+                body.innerHTML = `<tr><td class="text-center text-muted">Không thể tải báo cáo.</td></tr>`;
+                document.getElementById('result-count').textContent = '—';
+                document.getElementById('result-total').textContent = '—';
+                if (detailChart) { detailChart.destroy(); detailChart = null; }
+            }
+        }
+        document.getElementById('report-chart-type').addEventListener('change', () => {
+            if (detailChart) renderChart(currentRows, reportDefinitions[currentReport]);
+            renderFilterSummary();
+        });
+        document.getElementById('report-filter').addEventListener('submit', event => {
+            event.preventDefault();
+            loadReport();
+        });
+        document.getElementById('report-filter').addEventListener('reset', () => {
+            setTimeout(loadReport, 0);
+        });
+        document.addEventListener('DOMContentLoaded', async () => {
+            const requested = new URLSearchParams(location.search).get('report');
+            if (Object.hasOwn(reportDefinitions, requested)) currentReport = requested;
+            const chartType = new URLSearchParams(location.search).get('chart');
+            const supportedChartTypes = ['bar', 'line', 'doughnut', 'horizontalBar'];
+            document.getElementById('report-chart-type').value = supportedChartTypes.includes(chartType)
+                ? chartType
+                : reportDefinitions[currentReport].chartType || 'bar';
+            configureFilters();
+            setDefaultReportPeriod();
+            await loadFilterOptions();
+            await loadReport();
+        });
+    </script>
+</body>
+</html>

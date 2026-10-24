@@ -1,0 +1,117 @@
+#accordionSidebar a[href="quan-ly-danh-muc.html"],
+#accordionSidebar a[href="pos-tao-don.html"] {
+    display: none !important;
+}
+
+#accordionSidebar li:has(> a[href="quan-ly-danh-muc.html"]),
+#accordionSidebar li:has(> a[href="pos-tao-don.html"]) {
+    display: none !important;
+}
+
+#accordionSidebar {
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+}
+
+.sidebar-account-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin-top: auto;
+    padding-top: .5rem;
+    background: #3f5db5;
+}
+
+.sidebar-account-trigger {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    text-align: left;
+}
+
+.sidebar-account-nav .dropdown-menu {
+    min-width: 100%;
+}
+
+.sidebar.toggled .sidebar-account-name {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    #accordionSidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 14rem !important;
+        z-index: 1030;
+    }
+
+    #content-wrapper {
+        width: calc(100% - 14rem) !important;
+        margin-left: 14rem;
+    }
+
+    body.sidebar-toggled #accordionSidebar {
+        width: 6.5rem !important;
+    }
+
+    body.sidebar-toggled #content-wrapper {
+        width: calc(100% - 6.5rem) !important;
+        margin-left: 6.5rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #accordionSidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: min(14rem, 85vw) !important;
+        z-index: 1050;
+        transform: translateX(-105%);
+    }
+
+    body.sidebar-toggled #accordionSidebar,
+    #accordionSidebar.toggled {
+        transform: translateX(0);
+    }
+
+    #content-wrapper {
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.dashboard-page .topbar .navbar-search.d-sm-inline-block {
+    margin-right: 0 !important;
+    margin-left: auto !important;
+}
+
+.dashboard-page .topbar .dashboard-search {
+    width: min(100%, 340px);
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+.dashboard-page .topbar > .navbar-nav.ml-auto {
+    display: none !important;
+}
+
+.dashboard-page .topbar li:has(> #alertsDropdown),
+.dashboard-page .topbar li:has(> #messagesDropdown),
+.dashboard-page .topbar li:has(> #userDropdown),
+.dashboard-page .topbar li:has(> #searchDropdown),
+.dashboard-page .topbar .topbar-divider {
+    display: none !important;
+}
+
+@media (max-width: 575.98px) {
+    .dashboard-page .topbar .dashboard-search {
+        width: 100%;
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Quản Lý Khách Hàng</title>
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,700,800" rel="stylesheet">
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <link href="css/table-tools.css" rel="stylesheet">
+    <style>
+        .customer-filter-menu {
+            width: 280px;
+            max-width: min(280px, calc(100vw - 2rem));
+            margin-top: .5rem;
+            padding: .875rem !important;
+            border: 1px solid #e5eaf2;
+            border-radius: .75rem;
+            background: #fff;
+            box-shadow: 0 .5rem 1.25rem rgba(31, 45, 61, .12);
+            z-index: 1050;
+        }
+        .customer-search-box {
+            width: min(100%, 360px);
+        }
+        .customer-filter-menu label {
+            margin-bottom: .35rem;
+            color: #596579;
+            font-size: .75rem;
+            font-weight: 700;
+        }
+        .customer-filter-menu .form-control {
+            min-height: 2.4rem;
+            border-color: #dce3ed;
+            border-radius: .45rem;
+        }
+        .customer-filter-trigger {
+            width: 1.75rem;
+            height: 1.75rem;
+            margin-left: .15rem;
+            border-radius: .45rem;
+            color: #718096;
+            vertical-align: middle;
+        }
+        .customer-filter-trigger:hover,
+        .customer-filter-trigger:focus {
+            background: #edf3ff;
+            color: #4e73df;
+            text-decoration: none;
+        }
+        .customer-filter-trigger.text-primary {
+            background: #eaf0ff;
+            color: #3b5fc0 !important;
+        }
+        .customer-filter-menu .customer-clear-filters {
+            display: block;
+            width: 100%;
+            margin-top: .75rem !important;
+            padding: .65rem 0 0;
+            border: 0;
+            border-top: 1px solid #edf0f4;
+            border-radius: 0;
+            background: transparent;
+            color: #4e73df;
+            text-align: left;
+            font-weight: 700;
+        }
+        .customer-filter-menu .customer-clear-filters:hover:not(:disabled) {
+            color: #3456b4;
+        }
+        .customer-filter-menu .customer-clear-filters:disabled {
+            color: #a0a8b5;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+            <hr class="sidebar-divider my-0">
+            <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard Báo Cáo</span></a></li>
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">Nghiệp Vụ Bán Hàng</div>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-kho.html"><i class="fas fa-fw fa-boxes"></i><span>Quản Lý Kho Hàng</span></a></li>
+            <li class="nav-item active"><a class="nav-link" href="quan-ly-khach-hang.html"><i class="fas fa-fw fa-users"></i><span>Quản Lý Khách Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-san-pham.html"><i class="fas fa-fw fa-box-open"></i><span>Quản Lý Sản Phẩm</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="quan-ly-danh-muc.html"><i class="fas fa-fw fa-address-book"></i><span>Danh Mục</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="pos-tao-don.html"><i class="fas fa-fw fa-shopping-cart"></i><span>Tạo Đơn Bán Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="danh-sach-don-hang.html"><i class="fas fa-fw fa-list-alt"></i><span>Quản Lý Đơn Hàng</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="thu-chi.html"><i class="fas fa-fw fa-money-bill-wave"></i><span>Phiếu Thu</span></a></li>
+            <li class="nav-item"><a class="nav-link" href="tra-hang.html"><i class="fas fa-fw fa-undo"></i><span>Trả Hàng / Phiếu Chi</span></a></li>
+            <hr class="sidebar-divider d-none d-md-block">
+            <div class="text-center d-none d-md-inline"><button class="rounded-circle border-0" id="sidebarToggle"></button></div>
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+                    <h5 class="m-0 font-weight-bold text-primary">Hệ Thống Quản Lý Bán Hàng Nội Bộ</h5>
+                </nav>
+                <div class="container-fluid">
+                    <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4">
+                        <h1 class="h3 mb-2 mb-sm-0 text-gray-800">Quản Lý Khách Hàng</h1>
+                        <a class="btn btn-primary" href="them-khach-hang.html"><i class="fas fa-plus mr-1"></i> Thêm khách hàng</a>
+                    </div>
+                    <div id="success-message" class="alert alert-success d-none" role="status"></div>
+                    <div id="error-message" class="alert alert-danger d-none" role="alert"></div>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex flex-column flex-sm-row align-items-sm-center justify-content-between">
+                            <h2 class="h6 m-0 font-weight-bold text-primary">Danh sách khách hàng</h2>
+                            <div class="d-flex flex-column flex-sm-row align-items-sm-center mt-2 mt-sm-0">
+                                <div class="input-group input-group-sm customer-search-box mr-sm-3 mb-2 mb-sm-0">
+                                    <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-search"></i></span></div>
+                                    <input id="customer-search" type="search" class="form-control" placeholder="Tìm mã, tên, điện thoại, email..." aria-label="Tìm khách hàng">
+                                </div>
+                                <div class="small text-muted text-nowrap">Hiển thị: <span id="customer-count">0</span></div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-hover" data-table-tools="columns" data-table-tools-count="customer-count" width="100%">
+                                    <thead class="thead-light">
+                                        <tr><th>Mã khách hàng</th><th>Tên khách hàng</th><th>Điện thoại</th><th>Email</th>
+                                            <th>Địa chỉ <div class="dropdown d-inline-block ml-1">
+                                                <button class="btn btn-sm btn-link p-0 customer-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc địa chỉ"><i class="fas fa-filter"></i></button>
+                                                <div class="dropdown-menu p-3 customer-filter-menu" style="min-width: 240px;">
+                                                    <label for="customer-city-filter">Tỉnh / thành phố</label><select id="customer-city-filter" class="form-control form-control-sm mb-2"><option value="">Tất cả tỉnh/thành phố</option></select>
+                                                    <label for="customer-ward-filter">Phường / xã</label><select id="customer-ward-filter" class="form-control form-control-sm" disabled><option value="">Tất cả phường/xã</option></select>
+                                                    <button class="btn btn-sm btn-outline-secondary customer-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                </div>
+                                            </div></th>
+                                            <th>Trạng thái <div class="dropdown d-inline-block ml-1">
+                                                <button class="btn btn-sm btn-link p-0 customer-filter-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Lọc trạng thái"><i class="fas fa-filter"></i></button>
+                                                <div class="dropdown-menu p-3 customer-filter-menu">
+                                                    <label for="customer-status-filter">Trạng thái</label><select id="customer-status-filter" class="form-control form-control-sm"><option value="">Tất cả trạng thái</option><option value="true">Hoạt động</option><option value="false">Ngưng hoạt động</option></select>
+                                                    <button class="btn btn-sm btn-outline-secondary customer-clear-filters mt-2" type="button" disabled><i class="fas fa-times mr-1"></i>Bỏ lọc</button>
+                                                </div>
+                                            </div></th><th>Thao tác</th></tr>
+                                    </thead>
+                                    <tbody id="customer-rows"><tr><td colspan="7" class="text-center text-muted">Đang tải danh sách...</td></tr></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white"><div class="container my-auto text-center"><span>Quản Lý Bán Hàng 2026</span></div></footer>
+        </div>
+    </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sb-admin-2.min.js"></script>
+        <script src="js/sidebar-account.js"></script>
+    <script src="js/vietnam-address.js"></script>
+    <script src="js/table-tools.js"></script>
+    <script>
+        const API_BASE_URL = window.location.protocol === 'file:' ? 'http://localhost:3000' : '';
+        let customers = [];
+        let administrativeUnits = [];
+        const cityFilter = document.getElementById('customer-city-filter');
+        const wardFilter = document.getElementById('customer-ward-filter');
+        function escapeHtml(value) {
+            return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[char]));
+        }
+        function normalizeSearchText(value) {
+            return String(value == null ? '' : value)
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd')
+                .replace(/Đ/g, 'D')
+                .toLocaleLowerCase('vi');
+        }
+        function renderCustomers() {
+            const query = normalizeSearchText(document.getElementById('customer-search').value.trim());
+            const wardName = wardFilter.selectedOptions[0] && wardFilter.value ? wardFilter.selectedOptions[0].text : '';
+            const status = document.getElementById('customer-status-filter').value;
+            const filteredCustomers = customers.filter(customer => {
+                const searchable = normalizeSearchText([
+                    customer.code, customer.name, customer.phone,
+                    customer.email, customer.address,
+                    customer.isactive ? 'Hoạt động' : 'Ngưng hoạt động'
+                ].join(' '));
+                const address = normalizeSearchText(customer.address);
+                return searchable.includes(query) &&
+                    VietnamAddress.matchesCity(customer.address, cityFilter.value, administrativeUnits) &&
+                    (!wardName || address.includes(normalizeSearchText(wardName))) &&
+                    (status === '' || String(customer.isactive) === status);
+            });
+            document.getElementById('customer-count').textContent =
+                `${filteredCustomers.length.toLocaleString('vi-VN')} / ${customers.length.toLocaleString('vi-VN')}`;
+            document.querySelector('[data-table-tools-count="customer-count"]').dataset.totalRows = String(customers.length);
+            const hasFilters = Boolean(query || cityFilter.value || wardFilter.value || status);
+            document.querySelectorAll('.customer-clear-filters').forEach(button => { button.disabled = !hasFilters; });
+            document.querySelectorAll('.customer-filter-trigger').forEach(button => {
+                const heading = button.closest('th').textContent;
+                const active = heading.includes('Mã khách hàng') ? Boolean(query)
+                    : heading.includes('Địa chỉ')
+                    ? Boolean(cityFilter.value || wardFilter.value)
+                    : Boolean(status);
+                button.classList.toggle('text-primary', active);
+            });
+            document.getElementById('customer-rows').innerHTML = filteredCustomers.map(customer => `
+                <tr>
+                    <td class="font-weight-bold">${escapeHtml(customer.code)}</td>
+                    <td>${escapeHtml(customer.name)}</td>
+                    <td>${escapeHtml(customer.phone || '-')}</td>
+                    <td>${escapeHtml(customer.email || '-')}</td>
+                    <td>${escapeHtml(customer.address || '-')}</td>
+                    <td><select class="form-control form-control-sm customer-status" data-id="${escapeHtml(customer.id)}" aria-label="Trạng thái ${escapeHtml(customer.name)}"><option value="true" ${customer.isactive ? 'selected' : ''}>Hoạt động</option><option value="false" ${!customer.isactive ? 'selected' : ''}>Ngưng hoạt động</option></select></td>
+                    <td><a class="btn btn-sm btn-info" href="them-khach-hang.html?id=${encodeURIComponent(customer.id)}"><i class="fas fa-edit mr-1"></i>Sửa</a></td>
+                </tr>
+            `).join('') || `<tr><td colspan="7" class="text-center text-muted">${hasFilters ? 'Không tìm thấy khách hàng phù hợp.' : 'Chưa có khách hàng.'}</td></tr>`;
+        }
+        async function loadCustomers() {
+            const rows = document.getElementById('customer-rows');
+            try {
+                const [response, units] = await Promise.all([
+                    fetch(`${API_BASE_URL}/api/catalogs/customers`),
+                    VietnamAddress.loadUnits()
+                ]);
+                if (!(response.headers.get('content-type') || '').includes('application/json')) throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không tải được danh sách khách hàng.');
+                customers = result.data;
+                administrativeUnits = units;
+                VietnamAddress.setOptions(cityFilter, units, 'Tất cả tỉnh/thành phố');
+                renderCustomers();
+            } catch (error) {
+                console.error('Không tải được danh sách khách hàng:', error);
+                rows.innerHTML = '<tr><td colspan="7" class="text-center text-danger">Không tải được danh sách khách hàng.</td></tr>';
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = error.message;
+                errorMessage.classList.remove('d-none');
+            }
+        }
+        async function updateCustomerStatus(select) {
+            const customer = customers.find(item => String(item.id) === select.dataset.id);
+            if (!customer) return;
+            const previousStatus = Boolean(customer.isactive);
+            const nextStatus = select.value === 'true';
+            select.disabled = true;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/catalogs/customers/${encodeURIComponent(customer.id)}`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ isactive: nextStatus })
+                });
+                if (!(response.headers.get('content-type') || '').includes('application/json')) throw new Error(`API trả về nội dung không phải JSON (HTTP ${response.status}).`);
+                const result = await response.json();
+                if (!response.ok || !result.success) throw new Error(result.message || 'Không thể cập nhật trạng thái khách hàng.');
+                customer.isactive = nextStatus;
+                document.getElementById('success-message').textContent = 'Đã cập nhật trạng thái khách hàng.';
+                document.getElementById('success-message').classList.remove('d-none');
+                renderCustomers();
+            } catch (error) {
+                console.error('Không thể cập nhật trạng thái khách hàng:', error);
+                select.value = String(previousStatus);
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = error.message;
+                errorMessage.classList.remove('d-none');
+            } finally {
+                select.disabled = false;
+            }
+        }
+        const listParams = new URLSearchParams(window.location.search);
+        if (listParams.get('created') === '1' || listParams.get('updated') === '1') {
+            document.getElementById('success-message').textContent =
+                listParams.get('updated') === '1' ? 'Đã cập nhật khách hàng thành công.' : 'Đã thêm khách hàng thành công.';
+            document.getElementById('success-message').classList.remove('d-none');
+        }
+        document.getElementById('customer-search').addEventListener('input', renderCustomers);
+        document.getElementById('customer-status-filter').addEventListener('change', renderCustomers);
+        document.querySelectorAll('.customer-clear-filters').forEach(button => button.addEventListener('click', () => {
+            document.getElementById('customer-search').value = '';
+            cityFilter.value = '';
+            VietnamAddress.fillWardSelect(administrativeUnits, cityFilter, wardFilter);
+            wardFilter.options[0].text = 'Tất cả phường/xã';
+            wardFilter.value = '';
+            document.getElementById('customer-status-filter').value = '';
+            renderCustomers();
+        }));
+        cityFilter.addEventListener('change', async () => {
+            try {
+                VietnamAddress.fillWardSelect(administrativeUnits, cityFilter, wardFilter);
+                wardFilter.options[0].text = 'Tất cả phường/xã';
+                wardFilter.value = '';
+                renderCustomers();
+            } catch (error) {
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = error.message;
+                errorMessage.classList.remove('d-none');
+            }
+        });
+        wardFilter.addEventListener('change', renderCustomers);
+        document.getElementById('customer-rows').addEventListener('change', event => {
+            if (event.target.matches('.customer-status')) updateCustomerStatus(event.target);
+        });
+        loadCustomers();
+    </script>
+</body>
+</html>

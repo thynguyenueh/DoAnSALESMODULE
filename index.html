@@ -1,0 +1,1205 @@
+<body id="page-top" class="dashboard-page">
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sales Module - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="css/sidebar-navigation.css" rel="stylesheet">
+    <style>
+        .dashboard-summary-link {
+            color: inherit;
+            display: block;
+            height: 100%;
+            text-decoration: none;
+        }
+
+        .dashboard-summary-link:hover,
+        .dashboard-summary-link:focus {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .dashboard-summary-link:hover .card,
+        .dashboard-summary-link:focus .card {
+            transform: translateY(-2px);
+            transition: transform 0.15s ease-in-out;
+        }
+
+        #widget-editor-list [data-widget-drag-handle] {
+            cursor: grab;
+            touch-action: none;
+        }
+
+        #widget-editor-list .widget-editor-item.is-dragging {
+            opacity: 0.45;
+        }
+
+        #widget-editor-list .widget-editor-item.drag-over-before {
+            border-top: 3px solid #4e73df;
+        }
+
+        #widget-editor-list .widget-editor-item.drag-over-after {
+            border-bottom: 3px solid #4e73df;
+        }
+    </style>
+
+</head>
+
+<body id="page-top" class="dashboard-page">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 text-nowrap">Sales Module</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard Báo Cáo</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Nghiệp Vụ Bán Hàng
+            </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-kho.html">
+                    <i class="fas fa-fw fa-boxes"></i>
+                    <span>Quản Lý Kho Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-khach-hang.html">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>Quản Lý Khách Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-san-pham.html">
+                    <i class="fas fa-fw fa-box-open"></i>
+                    <span>Quản Lý Sản Phẩm</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Danh mục -->
+            <li class="nav-item">
+                <a class="nav-link" href="quan-ly-danh-muc.html">
+                    <i class="fas fa-fw fa-address-book"></i>
+                    <span>Danh Mục</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Tạo đơn -->
+            <li class="nav-item">
+                <a class="nav-link" href="pos-tao-don.html">
+                    <i class="fas fa-fw fa-shopping-cart"></i>
+                    <span>Tạo Đơn Bán Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="danh-sach-don-hang.html">
+                    <i class="fas fa-fw fa-list-alt"></i>
+                    <span>Quản Lý Đơn Hàng</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="thu-chi.html">
+                    <i class="fas fa-fw fa-money-bill-wave"></i>
+                    <span>Phiếu Thu</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="tra-hang.html">
+                    <i class="fas fa-fw fa-undo"></i>
+                    <span>Trả Hàng / Phiếu Chi</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Trả hàng -->
+            
+            
+            
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form class="form-inline ml-auto my-2 my-md-0 mw-100 navbar-search dashboard-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm widget biểu đồ..."
+                                aria-label="Tìm widget biểu đồ" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Tìm widget biểu đồ..." aria-label="Tìm widget biểu đồ"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">3+</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        $290.29 has been deposited into your account!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <!-- Counter - Messages -->
+                                <span class="badge badge-danger badge-counter">7</span>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun · 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <img class="img-profile rounded-circle"
+                                    src="img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Settings
+                                </a>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Activity Log
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard Báo Cáo Thống Kê Bán Hàng (B2B/POS)</h1>
+                    </div>
+
+                    <!-- 1. CARDS THỐNG KÊ TỔNG QUAN -->
+                    <div class="row">
+                        <!-- Card 1 -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <a class="dashboard-summary-link" href="bao-cao-chi-tiet.html?report=inventory" aria-label="Xem chi tiết báo cáo tồn kho">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Tổng Tồn Kho Khả Dụng</div>
+                                            <div id="dashboard-stock-total" class="h5 mb-0 font-weight-bold text-gray-800">--</div>
+                                            <span class="small text-primary">Xem chi tiết <i class="fas fa-arrow-right"></i></span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-boxes fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <a class="dashboard-summary-link" href="bao-cao-chi-tiet.html?report=debts" aria-label="Xem chi tiết báo cáo công nợ">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Tổng Công Nợ Khách Hàng</div>
+                                            <div id="dashboard-debt-total" class="h5 mb-0 font-weight-bold text-gray-800">--</div>
+                                            <span class="small text-warning">Xem chi tiết <i class="fas fa-arrow-right"></i></span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-file-invoice-dollar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <a class="dashboard-summary-link" href="bao-cao-chi-tiet.html?report=returns" aria-label="Xem chi tiết báo cáo hoàn tiền trả hàng">
+                            <div class="card border-left-danger shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                                Tổng Hoàn Tiền Trả Hàng</div>
+                                            <div id="dashboard-refund-total" class="h5 mb-0 font-weight-bold text-gray-800">--</div>
+                                            <span class="small text-danger">Xem chi tiết <i class="fas fa-arrow-right"></i></span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-undo-alt fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. BIỂU ĐỒ BÁO CÁO TỪ DỮ LIỆU ĐƠN HÀNG VÀ TỒN KHO -->
+                    <div id="dashboard-report-error" class="alert alert-danger d-none" role="alert"></div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+                        <div>
+                            <h2 class="h5 mb-1 font-weight-bold text-gray-800">Widget Báo Cáo</h2>
+                            <p class="small text-muted mb-0">Chọn báo cáo muốn ghim và sắp xếp theo nhu cầu.</p>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary mt-2 mt-md-0" id="open-widget-customizer">
+                            <i class="fas fa-sliders-h mr-1"></i>Tùy chỉnh widget
+                        </button>
+                    </div>
+                    <div class="row" id="dashboard-widget-grid">
+                        <div class="col-xl-6 col-lg-6 mb-4 report-widget" data-widget-key="monthly-orders">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-start">
+                                    <div><h6 class="m-0 font-weight-bold text-primary">Xu Hướng Giá Trị Đơn Hàng 6 Tháng Gần Đây</h6>
+                                    <small class="text-muted">Tóm tắt đơn không hủy sau hoàn tiền</small></div>
+                                    <a class="btn btn-sm btn-outline-primary ml-2 flex-shrink-0" href="bao-cao-chi-tiet.html?report=orders">Chi tiết</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="monthly-orders-chart" role="img" aria-label="Biểu đồ đường tổng giá trị đơn hàng theo tháng"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 mb-4 report-widget" data-widget-key="order-status">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold text-primary">Cơ Cấu Đơn Hàng Theo Trạng Thái</h6>
+                                    <a class="btn btn-sm btn-outline-primary ml-2" href="bao-cao-chi-tiet.html?report=order-statuses">Chi tiết theo trạng thái</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie">
+                                        <canvas id="order-status-chart" role="img" aria-label="Biểu đồ tròn số lượng đơn hàng theo trạng thái"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 mb-4 report-widget" data-widget-key="monthly-revenue">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-start">
+                                    <div>
+                                    <h6 class="m-0 font-weight-bold text-primary">Báo Cáo Doanh Thu 12 Tháng Gần Đây</h6>
+                                    <small class="text-muted">Doanh thu thuần = tiền hàng đã giao/hoàn tất trừ các khoản hoàn trả</small>
+                                    </div>
+                                    <a class="btn btn-sm btn-outline-primary ml-2 flex-shrink-0" href="bao-cao-chi-tiet.html?report=revenue">Chi tiết</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="monthly-revenue-chart" role="img" aria-label="Biểu đồ doanh thu thuần theo tháng sau khi trừ các khoản hoàn trả"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 mb-4 report-widget" data-widget-key="top-products">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-start">
+                                    <div>
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Sản Phẩm Theo Số Lượng Đã Bán</h6>
+                                    <small class="text-muted">Tóm tắt sản phẩm bán chạy</small>
+                                    </div>
+                                    <a class="btn btn-sm btn-outline-primary ml-2 flex-shrink-0" href="bao-cao-chi-tiet.html?report=products">Chi tiết</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-bar">
+                                        <canvas id="top-products-chart" role="img" aria-label="Biểu đồ cột các sản phẩm có số lượng bán cao nhất"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 mb-4 report-widget" data-widget-key="warehouse-stock">
+                            <div class="card shadow h-100">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tồn Kho Khả Dụng Theo Kho</h6>
+                                    <a class="btn btn-sm btn-outline-primary ml-2" href="bao-cao-chi-tiet.html?report=inventory">Chi tiết</a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-pie">
+                                        <canvas id="warehouse-stock-chart" role="img" aria-label="Biểu đồ tròn lượng tồn kho khả dụng theo kho"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 mb-4 report-widget" data-widget-key="customer-ranking">
+                    <div class="card shadow h-100">
+                        <div class="card-header py-3 d-flex flex-wrap align-items-center justify-content-between">
+                            <div>
+                                <h6 class="m-0 font-weight-bold text-primary">Xếp Hạng Khách Hàng Theo Doanh Thu</h6>
+                                <small class="text-muted">Tóm tắt top khách theo doanh thu thuần trong năm gần nhất có dữ liệu.</small>
+                            </div>
+                            <a class="btn btn-sm btn-outline-primary mt-2 mt-md-0" href="bao-cao-chi-tiet.html?report=customers">Xem chi tiết và bộ lọc</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                <div class="col-12">
+                                    <div style="height: 300px;">
+                                        <canvas id="customer-ranking-chart" role="img" aria-label="Biểu đồ tổng quan top khách hàng theo doanh thu thuần"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="widgetCustomizerModal" tabindex="-1" role="dialog" aria-labelledby="widgetCustomizerTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title font-weight-bold text-primary" id="widgetCustomizerTitle">Tùy Chỉnh Widget Báo Cáo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Đóng">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">Chọn báo cáo muốn hiển thị, sau đó kéo thả từng mục để sắp xếp.</p>
+                    <div id="widget-layout-error" class="alert alert-danger d-none" role="alert"></div>
+                    <div id="widget-editor-list" class="list-group"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" id="save-widget-layout">Áp dụng bố cục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="js/sidebar-account.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <!--<script src="js/demo/chart-area-demo.js"></script> -->
+    <!--<script src="js/demo/chart-pie-demo.js"></script> -->
+
+    <!-- Script kết nối API Backend Node.js -->
+    <script>
+        const API_BASE_URL = window.location.port === '3000' ? '' : 'http://localhost:3000';
+        let customerRankingChart = null;
+        const WIDGET_LAYOUT_STORAGE_KEY = 'sales-dashboard-widget-layout-v1';
+        const WIDGET_DEFINITIONS = [
+            { key: 'monthly-orders', label: 'Xu hướng đơn hàng' },
+            { key: 'order-status', label: 'Đơn hàng theo trạng thái' },
+            { key: 'monthly-revenue', label: 'Doanh thu theo tháng' },
+            { key: 'top-products', label: 'Sản phẩm bán chạy' },
+            { key: 'warehouse-stock', label: 'Tồn kho theo kho' },
+            { key: 'customer-ranking', label: 'Xếp hạng khách hàng theo doanh thu' }
+        ];
+        let draggedWidgetKey = null;
+        let currentWidgetLayout = {
+            order: WIDGET_DEFINITIONS.map(widget => widget.key),
+            visible: WIDGET_DEFINITIONS.map(widget => widget.key)
+        };
+
+        function normalizeWidgetLayout(candidate) {
+            const knownKeys = new Set(WIDGET_DEFINITIONS.map(widget => widget.key));
+            const order = Array.isArray(candidate && candidate.order)
+                ? candidate.order.filter((key, index, keys) => knownKeys.has(key) && keys.indexOf(key) === index)
+                : [];
+            WIDGET_DEFINITIONS.forEach(widget => {
+                if (!order.includes(widget.key)) order.push(widget.key);
+            });
+            const visible = Array.isArray(candidate && candidate.visible)
+                ? candidate.visible.filter((key, index, keys) => knownKeys.has(key) && keys.indexOf(key) === index)
+                : WIDGET_DEFINITIONS.map(widget => widget.key);
+            return { order, visible };
+        }
+
+        function loadWidgetLayout() {
+            try {
+                const storedLayout = localStorage.getItem(WIDGET_LAYOUT_STORAGE_KEY);
+                return storedLayout ? normalizeWidgetLayout(JSON.parse(storedLayout)) : normalizeWidgetLayout(null);
+            } catch (error) {
+                console.error('Không đọc được bố cục widget đã lưu:', error);
+                return normalizeWidgetLayout(null);
+            }
+        }
+
+        function applyWidgetLayout(layout, updateVisibility) {
+            const grid = document.getElementById('dashboard-widget-grid');
+            layout.order.forEach(key => {
+                const widget = grid.querySelector(`[data-widget-key="${key}"]`);
+                if (widget) {
+                    grid.appendChild(widget);
+                    if (updateVisibility) widget.classList.toggle('d-none', !layout.visible.includes(key));
+                }
+            });
+        }
+
+        function renderWidgetEditor(layout) {
+            const editor = document.getElementById('widget-editor-list');
+            editor.innerHTML = '';
+            layout.order.forEach(key => {
+                const definition = WIDGET_DEFINITIONS.find(widget => widget.key === key);
+                if (!definition) return;
+
+                const row = document.createElement('div');
+                row.className = 'list-group-item d-flex align-items-center justify-content-between widget-editor-item';
+                row.dataset.widgetKey = key;
+                row.innerHTML = `
+                    <div class="custom-control custom-checkbox mr-3">
+                        <input type="checkbox" class="custom-control-input" id="widget-${key}" ${layout.visible.includes(key) ? 'checked' : ''}>
+                        <label class="custom-control-label" for="widget-${key}">${definition.label}</label>
+                    </div>
+                    <button type="button" class="btn btn-link text-muted p-2 ml-2" data-widget-drag-handle aria-label="Kéo để sắp xếp ${definition.label}" title="Kéo để sắp xếp">
+                        <i class="fas fa-grip-vertical" aria-hidden="true"></i>
+                    </button>`;
+                editor.appendChild(row);
+            });
+        }
+
+        function readWidgetEditor() {
+            const rows = Array.from(document.querySelectorAll('#widget-editor-list [data-widget-key]'));
+            return {
+                order: rows.map(row => row.dataset.widgetKey),
+                visible: rows.filter(row => row.querySelector('input').checked).map(row => row.dataset.widgetKey)
+            };
+        }
+
+        function showWidgetLayoutError(message) {
+            const error = document.getElementById('widget-layout-error');
+            error.textContent = message;
+            error.classList.remove('d-none');
+        }
+
+        function normalizeWidgetSearch(value) {
+            return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[đĐ]/g, 'd').toLocaleLowerCase('vi').trim();
+        }
+
+        function filterDashboardWidgets(value) {
+            const query = normalizeWidgetSearch(value);
+            document.querySelectorAll('#dashboard-widget-grid .report-widget').forEach(widget => {
+                const definition = WIDGET_DEFINITIONS.find(item => item.key === widget.dataset.widgetKey);
+                const content = normalizeWidgetSearch(`${definition ? definition.label : ''} ${widget.textContent}`);
+                const matches = !query || content.includes(query);
+                const visibleByLayout = currentWidgetLayout.visible.includes(widget.dataset.widgetKey);
+                widget.classList.toggle('d-none', !matches || !visibleByLayout);
+            });
+        }
+
+        function openWidgetCustomizer() {
+            document.getElementById('widget-layout-error').classList.add('d-none');
+            renderWidgetEditor(currentWidgetLayout);
+            $('#widgetCustomizerModal').modal('show');
+        }
+
+        function formatMoney(value) {
+            return `${Number(value || 0).toLocaleString('vi-VN')} VNĐ`;
+        }
+
+        async function loadCustomerRanking() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/dashboard/customer-ranking`);
+                if (!(response.headers.get('content-type') || '').includes('application/json')) {
+                    throw new Error('API báo cáo khách hàng không trả về JSON. Hãy khởi động lại backend.');
+                }
+                const result = await response.json();
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Không tải được báo cáo xếp hạng khách hàng.');
+                }
+                if (customerRankingChart) customerRankingChart.destroy();
+                const topCustomers = result.data.slice(0, 10);
+                customerRankingChart = new Chart(document.getElementById('customer-ranking-chart'), {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: topCustomers.map(customer => `${customer.customer_code} - ${customer.customer_name}`),
+                        datasets: [{
+                            label: 'Doanh thu thuần',
+                            data: topCustomers.map(customer => Number(customer.net_revenue)),
+                            backgroundColor: '#4e73df',
+                            hoverBackgroundColor: '#2e59d9'
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: { display: false },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${Number(value).toLocaleString('vi-VN')} VNĐ`
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: item => formatMoney(item.xLabel)
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Lỗi tải xếp hạng doanh thu khách hàng:', error);
+                if (customerRankingChart) {
+                    customerRankingChart.destroy();
+                    customerRankingChart = null;
+                }
+            }
+        }
+
+        // 1. Hàm load Tồn kho & tự tính Tổng Tồn Kho lên Card
+        async function loadStockData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/stock`);
+                const result = await response.json();
+
+                if (result.success) {
+                    const tbody = document.getElementById('stock-table-body');
+                    if (tbody) tbody.innerHTML = '';
+                    let grandTotalStock = 0; // Biến tính tổng tồn kho
+
+                    result.data.forEach(item => {
+                        const stockNum = Number(item.available_stock || 0);
+                        grandTotalStock += stockNum;
+                        if (!tbody) return;
+                        const row = `
+                            <tr>
+                                <td><strong>${item.product_code}</strong></td>
+                                <td>${item.product_name}</td>
+                                <td><span class="badge badge-info px-2 py-1">${item.warehouse_name}</span></td>
+                                <td>${item.total_imported}</td>
+                                <td>${item.total_sold}</td>
+                                <td>
+                                    <span class="badge ${stockNum > 0 ? 'badge-success' : 'badge-secondary'} px-2 py-1">
+                                        ${stockNum}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    // Cập nhật số liệu thực lên Card 1 (Tổng Tồn Kho Khả Dụng)
+                    const totalStockCard = document.getElementById('dashboard-stock-total');
+                    if (totalStockCard) {
+                        totalStockCard.innerText = `${grandTotalStock.toLocaleString('vi-VN')} Sản Phẩm`;
+                    }
+                    renderWarehouseStockChart(result.data);
+                }
+            } catch (error) {
+                console.error('Lỗi khi tải dữ liệu tồn kho:', error);
+            }
+        }
+
+        // 2. Hàm load Công nợ Khách hàng
+        async function loadDebtData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/debt-summary`);
+                const result = await response.json();
+
+                if (result.success) {
+                    const tbody = document.getElementById('debt-table-body');
+                    if (tbody) tbody.innerHTML = '';
+                    let grandTotalDebt = 0;
+
+                    result.data.forEach(item => {
+                        const remainingDebt = Number(item.remaining_debt || item.remainingdebt || 0);
+                        grandTotalDebt += remainingDebt;
+                        if (!tbody) return;
+                        const row = `
+                            <tr>
+                                <td><strong>${item.customer_code || item.code || 'KH'}</strong></td>
+                                <td>${item.customer_name || item.name}</td>
+                                <td>${Number(item.total_bought || 0).toLocaleString('vi-VN')} VNĐ</td>
+                                <td>${Number(item.total_paid || 0).toLocaleString('vi-VN')} VNĐ</td>
+                                <td>
+                                    <strong class="${remainingDebt > 0 ? 'text-danger' : 'text-success'}">
+                                        ${remainingDebt.toLocaleString('vi-VN')} VNĐ
+                                    </strong>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.innerHTML += row;
+                    });
+
+                    // Cập nhật số liệu thực lên Card 2 (Tổng Công Nợ)
+                    const totalDebtCard = document.getElementById('dashboard-debt-total');
+                    if (totalDebtCard) {
+                        totalDebtCard.innerText = `${grandTotalDebt.toLocaleString('vi-VN')} VNĐ`;
+                    }
+                }
+            } catch (error) {
+                console.error('Lỗi khi tải công nợ:', error);
+            }
+        }
+
+        function renderWarehouseStockChart(stockRows) {
+            const stockByWarehouse = new Map();
+            stockRows.forEach(item => {
+                const warehouseName = item.warehouse_name || item.warehousename || 'Chưa phân kho';
+                const availableStock = Number(item.available_stock || item.availablestock || 0);
+                stockByWarehouse.set(warehouseName, (stockByWarehouse.get(warehouseName) || 0) + availableStock);
+            });
+
+            const labels = Array.from(stockByWarehouse.keys());
+            const values = Array.from(stockByWarehouse.values());
+            new Chart(document.getElementById('warehouse-stock-chart'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels.length ? labels : ['Chưa có dữ liệu'],
+                    datasets: [{
+                        data: labels.length ? values : [0],
+                        backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+                        hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617'],
+                        hoverBorderColor: 'rgba(234, 236, 244, 1)'
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    cutoutPercentage: 55,
+                    legend: { position: 'bottom' },
+                    tooltips: {
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                const label = data.labels[tooltipItem.index];
+                                const value = data.datasets[0].data[tooltipItem.index];
+                                return `${label}: ${Number(value).toLocaleString('vi-VN')} sản phẩm`;
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadDashboardReports() {
+            const errorContainer = document.getElementById('dashboard-report-error');
+            try {
+                const [response, revenueResponse] = await Promise.all([
+                    fetch(`${API_BASE_URL}/api/dashboard/reports`),
+                    fetch(`${API_BASE_URL}/api/dashboard/revenue`)
+                ]);
+                if (!response.headers.get('content-type')?.includes('application/json') ||
+                    !revenueResponse.headers.get('content-type')?.includes('application/json')) {
+                    throw new Error('API báo cáo không trả về JSON. Hãy khởi động lại server.js rồi tải lại dashboard.');
+                }
+                const [result, revenueResult] = await Promise.all([response.json(), revenueResponse.json()]);
+                if (!response.ok || !result.success || !revenueResponse.ok || !revenueResult.success) {
+                    throw new Error(result.message || revenueResult.message || 'Không tải được dữ liệu báo cáo.');
+                }
+
+                const { monthlyOrders, orderStatuses, topProducts, totalRefund } = result.data;
+                const refundCard = document.getElementById('dashboard-refund-total');
+                if (refundCard) {
+                    refundCard.innerText = `${Number(totalRefund || 0).toLocaleString('vi-VN')} VNĐ`;
+                }
+
+                const monthlyValues = new Map(
+                    monthlyOrders.map(item => [String(item.month).slice(0, 7), Number(item.totalamount)])
+                );
+                const monthLabels = [];
+                const monthValues = [];
+                const currentMonth = new Date();
+                for (let offset = 5; offset >= 0; offset--) {
+                    const monthDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - offset, 1);
+                    const monthKey = `${monthDate.getFullYear()}-${String(monthDate.getMonth() + 1).padStart(2, '0')}`;
+                    monthLabels.push(`T${monthDate.getMonth() + 1}/${monthDate.getFullYear()}`);
+                    monthValues.push(monthlyValues.get(monthKey) || 0);
+                }
+
+                new Chart(document.getElementById('monthly-orders-chart'), {
+                    type: 'line',
+                    data: {
+                        labels: monthLabels,
+                        datasets: [{
+                            label: 'Giá trị đơn hàng',
+                            data: monthValues,
+                            lineTension: 0.3,
+                            backgroundColor: 'rgba(78, 115, 223, 0.12)',
+                            borderColor: '#4e73df',
+                            pointBackgroundColor: '#4e73df',
+                            pointBorderColor: '#4e73df',
+                            pointRadius: 4,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: { display: false },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${Number(value).toLocaleString('vi-VN')} VNĐ`
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: item => `${Number(item.yLabel).toLocaleString('vi-VN')} VNĐ`
+                            }
+                        }
+                    }
+                });
+
+                const statusLabels = {
+                    Pending: 'Chờ xử lý',
+                    Paid: 'Đã thanh toán',
+                    Delivered: 'Đã giao hàng',
+                    Completed: 'Hoàn tất',
+                    Cancelled: 'Đã hủy',
+                    Returned: 'Đã trả hàng'
+                };
+                const statusColors = {
+                    Pending: '#f6c23e',
+                    Paid: '#36b9cc',
+                    Completed: '#1cc88a',
+                    Cancelled: '#e74a3b',
+                    Returned: '#858796'
+                };
+                new Chart(document.getElementById('order-status-chart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: orderStatuses.length
+                            ? orderStatuses.map(item => statusLabels[item.status] || item.status || 'Khác')
+                            : ['Chưa có dữ liệu'],
+                        datasets: [{
+                            data: orderStatuses.length ? orderStatuses.map(item => Number(item.order_count)) : [0],
+                            backgroundColor: orderStatuses.length
+                                ? orderStatuses.map(item => statusColors[item.status] || '#4e73df')
+                                : ['#d1d3e2'],
+                            hoverBorderColor: 'rgba(234, 236, 244, 1)'
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        cutoutPercentage: 55,
+                        legend: { position: 'bottom' }
+                    }
+                });
+
+                new Chart(document.getElementById('top-products-chart'), {
+                    type: 'bar',
+                    data: {
+                        labels: topProducts.map(item => `${item.product_code} - ${item.product_name}`),
+                        datasets: [{
+                            label: 'Số lượng đã bán',
+                            data: topProducts.map(item => Number(item.quantity_sold)),
+                            backgroundColor: '#4e73df',
+                            hoverBackgroundColor: '#2e59d9'
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        legend: { display: false },
+                        scales: {
+                            yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }],
+                            xAxes: [{ ticks: { autoSkip: false } }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: item => `${Number(item.yLabel).toLocaleString('vi-VN')} sản phẩm`
+                            }
+                        }
+                    }
+                });
+
+                const revenueByMonth = new Map(
+                    revenueResult.data.map(item => [String(item.month).slice(0, 7), {
+                        gross: Number(item.gross_revenue || 0),
+                        net: Number(item.net_revenue || 0)
+                    }])
+                );
+                const revenueLabels = [];
+                const grossRevenueValues = [];
+                const netRevenueValues = [];
+                for (let offset = 11; offset >= 0; offset--) {
+                    const monthDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - offset, 1);
+                    const monthKey = `${monthDate.getFullYear()}-${String(monthDate.getMonth() + 1).padStart(2, '0')}`;
+                    const monthRevenue = revenueByMonth.get(monthKey) || { gross: 0, net: 0 };
+                    revenueLabels.push(`T${monthDate.getMonth() + 1}/${monthDate.getFullYear()}`);
+                    grossRevenueValues.push(monthRevenue.gross);
+                    netRevenueValues.push(monthRevenue.net);
+                }
+                new Chart(document.getElementById('monthly-revenue-chart'), {
+                    type: 'line',
+                    data: {
+                        labels: revenueLabels,
+                        datasets: [{
+                            label: 'Doanh thu thuần',
+                            data: netRevenueValues,
+                            lineTension: 0.3,
+                            backgroundColor: 'rgba(28, 200, 138, 0.12)',
+                            borderColor: '#1cc88a',
+                            pointBackgroundColor: '#1cc88a',
+                            pointRadius: 3,
+                            fill: true
+                        }, {
+                            label: 'Tổng tiền hàng đã giao',
+                            data: grossRevenueValues,
+                            lineTension: 0.3,
+                            backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                            borderColor: '#4e73df',
+                            pointBackgroundColor: '#4e73df',
+                            pointRadius: 3,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${Number(value).toLocaleString('vi-VN')} VNĐ`
+                                }
+                            }]
+                        },
+                        tooltips: {
+                            callbacks: {
+                                label: item => `${item.datasetLabel}: ${Number(item.yLabel).toLocaleString('vi-VN')} VNĐ`
+                            }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Lỗi khi tải báo cáo Dashboard:', error);
+                errorContainer.textContent = `Không tải được các biểu đồ báo cáo: ${error.message}`;
+                errorContainer.classList.remove('d-none');
+            }
+        }
+
+        // Tự động chạy khi tải xong trang
+        document.addEventListener('DOMContentLoaded', async () => {
+            currentWidgetLayout = loadWidgetLayout();
+            applyWidgetLayout(currentWidgetLayout, false);
+            const dashboardSearchForms = document.querySelectorAll('.navbar-search');
+            dashboardSearchForms.forEach(form => {
+                form.addEventListener('submit', event => event.preventDefault());
+                form.querySelector('input').addEventListener('input', event => {
+                    dashboardSearchForms.forEach(otherForm => {
+                        const otherInput = otherForm.querySelector('input');
+                        if (otherInput !== event.target) otherInput.value = event.target.value;
+                    });
+                    filterDashboardWidgets(event.target.value);
+                });
+            });
+            document.getElementById('open-widget-customizer').addEventListener('click', openWidgetCustomizer);
+            const widgetEditor = document.getElementById('widget-editor-list');
+            widgetEditor.addEventListener('pointerdown', event => {
+                if (!event.target.closest('[data-widget-drag-handle]')) return;
+                const row = event.target.closest('.widget-editor-item');
+                if (!row) return;
+                event.preventDefault();
+                draggedWidgetKey = row.dataset.widgetKey;
+                row.classList.add('is-dragging');
+            });
+            document.addEventListener('pointermove', event => {
+                if (!draggedWidgetKey) return;
+                event.preventDefault();
+                const source = widgetEditor.querySelector(`[data-widget-key="${draggedWidgetKey}"]`);
+                const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('#widget-editor-list .widget-editor-item');
+                widgetEditor.querySelectorAll('.drag-over-before, .drag-over-after').forEach(item => {
+                    item.classList.remove('drag-over-before', 'drag-over-after');
+                });
+                if (!source || !target || source === target) return;
+
+                const targetBounds = target.getBoundingClientRect();
+                const insertAfter = event.clientY > targetBounds.top + targetBounds.height / 2;
+                target.classList.add(insertAfter ? 'drag-over-after' : 'drag-over-before');
+                widgetEditor.insertBefore(source, insertAfter ? target.nextSibling : target);
+            });
+            document.addEventListener('pointerup', () => {
+                if (!draggedWidgetKey) return;
+                widgetEditor.querySelectorAll('.is-dragging, .drag-over-before, .drag-over-after').forEach(item => {
+                    item.classList.remove('is-dragging', 'drag-over-before', 'drag-over-after');
+                });
+                draggedWidgetKey = null;
+            });
+            document.getElementById('save-widget-layout').addEventListener('click', () => {
+                currentWidgetLayout = normalizeWidgetLayout(readWidgetEditor());
+                applyWidgetLayout(currentWidgetLayout, true);
+                window.dispatchEvent(new Event('resize'));
+                try {
+                    localStorage.setItem(WIDGET_LAYOUT_STORAGE_KEY, JSON.stringify(currentWidgetLayout));
+                    $('#widgetCustomizerModal').modal('hide');
+                } catch (error) {
+                    console.error('Không lưu được bố cục widget:', error);
+                    showWidgetLayoutError('Không lưu được bố cục trên trình duyệt này. Lựa chọn vẫn có hiệu lực đến khi tải lại trang.');
+                }
+            });
+
+            await Promise.all([
+                loadStockData(),
+                loadDebtData(),
+                loadDashboardReports(),
+                loadCustomerRanking()
+            ]);
+            applyWidgetLayout(currentWidgetLayout, true);
+            window.dispatchEvent(new Event('resize'));
+        });
+    </script>
+
+</body>
+
+</html>
